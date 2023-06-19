@@ -194,7 +194,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       }
 
       else {
-        System.out.println("CANSparkMax objects are not properly initialized!");
+        
       }
     } catch (Exception e) {
       logger.log(Level.SEVERE, "DriveTrainSubsystem set failed", e);

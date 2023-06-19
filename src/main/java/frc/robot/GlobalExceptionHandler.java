@@ -5,4 +5,12 @@
 package frc.robot;
 
 /** Add your docs here. */
-public class GlobalExceptionHandler {}
+public class GlobalExceptionHandler implements Thread.UncaughtExceptionHandler {
+
+    @Override
+    public void uncaughtException(Thread arg0, Throwable arg1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+}
