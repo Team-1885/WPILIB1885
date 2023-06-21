@@ -4,8 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
+import static frc.robot.Constants.OperatorConstants.*;
+import static frc.robot.Constants.DriverConstants.*;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -22,10 +26,7 @@ public class RobotContainer {
   // ! The robot's subsystems and commands are defined here...
 
   private final DriveTrainSubsystem DRIVETRAIN_SUBSYSTEM = new DriveTrainSubsystem();
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final OI OPERATOR_INTERFACE = new OI();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -43,8 +44,38 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    XboxController mDriverXboxController = OPERATOR_INTERFACE.getDriverXboxController();
+    XboxController mOperatorXboxController = OPERATOR_INTERFACE.getOperatorXboxController();
+    
+    PS4Controller mDriverPS4Controller = OPERATOR_INTERFACE.getDriverPS4Controller();
+    PS4Controller mOperatorPS4Controller = OPERATOR_INTERFACE.getOperatorPS4Controller();
 
+    Joystick mDriverLogitechController = OPERATOR_INTERFACE.getDriverLogitechController();
+    Joystick mOperatorLogitechController = OPERATOR_INTERFACE.getOperatorLogitechController();
 
+    // TODO: Configure driver Xbox controller button bindings
+    // Example:
+    //mDriverXboxController.getAButton().whenPressed(new ExampleCommand());
+
+    // TODO: Configure operator Xbox controller button bindings
+    // Example:
+    // mOperatorXboxController.getTriggerAxis(Hand.kRight).whileActiveContinuous(new ExampleCommand());
+
+    // TODO Configure driver PS4 controller button bindings
+    // Example:
+    // mDriverPS4Controller.getDPadUp().whenPressed(new ExampleCommand());
+
+    // TODO: Configure operator PS4 controller button bindings
+    // Example:
+    // mOperatorPS4Controller.getSquareButton().whileHeld(new ExampleCommand());
+
+    // TODO: Configure driver Logitech controller button bindings
+    // Example:
+    //mDriverLogitechController.getRawButton().whenReleased(new ExampleCommand());
+
+    // TODO: Configure operator Logitech controller button bindings
+    // Example:
+    // mOperatorLogitechController.getPOV(0).whenPressed(new ExampleCommand());
   }
 
   /**
@@ -54,6 +85,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new SequentialCommandGroup();
+    return new SequentialCommandGroup(); // basically a placeholder
   }
 }
