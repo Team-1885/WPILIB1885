@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.logging.Logger;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
-
+  private static final Logger mLogger = Logger.getLogger(Robot.class.getName());
   private RobotContainer m_robotContainer;
 
   /**
@@ -30,8 +32,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    mLogger.info("Initializing robot...");
     // Instantiate our RobotContainer. This will perform all our button bindings, and put our autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    mLogger.info("Robot initialization complete.");
   }
 
   /**
@@ -45,42 +49,6 @@ public class Robot extends TimedRobot {
     // Runs the Scheduler. This is responsible for polling buttons, adding newly-scheduled commands, running already-scheduled commands, removing finished or
     // interrupted commands, and running subsystem periodic() methods. This must be called from the robot's periodic block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
-    // Perform diagnostics
-    performDiagnostics();
-
-    // Update status
-    updateStatus();
-
-    // Update dashboard values
-    updateDashboard();
-
-    // Log data
-    logData();
-  }
-
-  private void performDiagnostics() {
-    // Perform diagnostic checks on subsystems and components  
-  }
-  
-  private void updateStatus() {
-    // Update status indicators or flags based on conditions  
-  }
-  
-  private void updateDashboard() {
-    // Update values on the SmartDashboard or Shuffleboard
-    // Get the instances of all subsystems from the RobotContainer
-      // ExampleSubsystem exampleSubsystem = RobotContainer.getInstance().getExampleSubsystem();
-      // AnotherSubsystem anotherSubsystem = RobotContainer.getInstance().getAnotherSubsystem();
-
-    // Call the updateDashboard() method for each subsystem
-      // exampleSubsystem.updateDashboard();
-      // anotherSubsystem.updateDashboard();
-    // ... Repeat for other subsystems
-  }
-  
-  private void logData() {
-    // Log important data or events to a log file or console
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
