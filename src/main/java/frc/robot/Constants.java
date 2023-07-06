@@ -160,8 +160,10 @@ public final class Constants {
     public static final int DRIVER_LOGITECH_AXIS_LEFT_X = 0;
     public static final int DRIVER_LOGITECH_AXIS_LEFT_Y = 1;
     public static final int DRIVER_LOGITECH_AXIS_LEFT_TRIGGER = 2;
-    public static final int DRIVER_LOGITECH_AXIS_RIGHT_TRIGGER = 3;
+    public static final int DRIVER_LOGITEC_AXIS_RIGHT_TRIGGER = 3;
     public static final int DRIVER_LOGITECH_AXIS_RIGHT_X = 4;
-    public static final int DRIVER_LOGITECH_AXIS_RIGHT_Y = 5;
-  }
+     public static final int DRIVER_LOGITECH_AXIS_RIGHT_Y = 5;
+  } 
 }
+
+  
