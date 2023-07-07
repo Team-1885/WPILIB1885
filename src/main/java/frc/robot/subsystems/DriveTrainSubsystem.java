@@ -18,7 +18,7 @@ import static frc.robot.Constants.OperatorConstants.*;
  * It handles the motor controllers, encoders, and PID controllers for precise control and movement.
  */
 
-// TODO: Gyro, Odometry, SmartDashboard/Format of Code??
+// TODO: Gyro, Odometry, SmartDashboard/Format of Code, SlewRateLimiter in commmand??
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
