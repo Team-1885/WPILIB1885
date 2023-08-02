@@ -22,11 +22,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-
+  
   // ! The robot's subsystems and commands are defined here...
-
   private final DriveTrainSubsystem DRIVETRAIN_SUBSYSTEM = new DriveTrainSubsystem();
   private final OI OPERATOR_INTERFACE = new OI();
+  private final ADAM ADAM = new ADAM(null);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

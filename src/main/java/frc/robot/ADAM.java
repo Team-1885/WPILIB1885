@@ -144,23 +144,49 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
     }
 
     private void logError(Throwable e) {
+        // ADAM ASCII art title
+        String adamTitle = "       /)\n" +
+                "  .-\"\".L,\"\"-.\n" +
+                " ;       :.  :\n" +
+                " (       7:  )\n" +
+                "  :         ;\n" +
+                "   \"..-\"-..\"";
+
         // Get the current timestamp
         Date timestamp = new Date();
 
+        // Create a separator line
+        String separatorLine = "==================================================";
+
         // Log error with the specified logging level
-        String logMessage = "[" + timestamp + "] Uncaught exception (Error Code " + errorCode.getCode() + "): "
-                + customErrorMessage;
-        logger.log(logger.getLevel(), logMessage, e);
+        StringBuilder logMessageBuilder = new StringBuilder();
+        logMessageBuilder.append(separatorLine).append("\n");
+        logMessageBuilder.append(adamTitle).append(" ADAM v1.0: Michael has nothing on me").append("\n");
+        logMessageBuilder.append(separatorLine).append("\n");
+
+        logMessageBuilder.append("[").append(timestamp).append("] Uncaught exception (Error Code ")
+                .append(errorCode.getCode()).append("): ").append(customErrorMessage);
 
         // Log class, method, and line number where the error occurred
         StackTraceElement[] stackTrace = e.getStackTrace();
         if (stackTrace.length > 0) {
             StackTraceElement topFrame = stackTrace[0];
-            String classMethodLine = "Error occurred in class: " + topFrame.getClassName() +
-                    ", method: " + topFrame.getMethodName() +
-                    ", line: " + topFrame.getLineNumber();
-            logger.log(logger.getLevel(), classMethodLine);
+            logMessageBuilder.append("\nError occurred in class: ").append(topFrame.getClassName())
+                    .append(", method: ").append(topFrame.getMethodName())
+                    .append(", line: ").append(topFrame.getLineNumber());
         }
+
+        // Log the original exception message and stack trace
+        logMessageBuilder.append("\n\nOriginal Exception Message: ").append(e.getMessage())
+                .append("\n\nOriginal Stack Trace:");
+        for (StackTraceElement traceElement : e.getStackTrace()) {
+            logMessageBuilder.append("\n  ").append(traceElement.toString());
+        }
+
+        logMessageBuilder.append("\n").append(separatorLine).append("\n");
+
+        String logMessage = logMessageBuilder.toString();
+        logger.log(logger.getLevel(), logMessage);
 
         // Log error to driver station with custom message and error code
         DriverStation.reportError(logMessage, false);

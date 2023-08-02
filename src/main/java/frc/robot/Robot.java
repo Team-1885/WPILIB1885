@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.logging.Logger;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -33,21 +34,30 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     mLogger.info("Initializing robot...");
-    // Instantiate our RobotContainer. This will perform all our button bindings, and put our autonomous chooser on the dashboard.
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    Thread.setDefaultUncaughtExceptionHandler(new ADAM(null));
     mLogger.info("Robot initialization complete.");
   }
 
   /**
-   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+   * This function is called every 20 ms, no matter the mode. Use this for items
+   * like diagnostics that you want ran during disabled, autonomous, teleoperated
+   * and test.
    *
    * <p>
-   * This runs after the mode specific periodic functions, but before LiveWindow and SmartDashboard integrated updating.
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler. This is responsible for polling buttons, adding newly-scheduled commands, running already-scheduled commands, removing finished or
-    // interrupted commands, and running subsystem periodic() methods. This must be called from the robot's periodic block in order for anything in the Command-based framework to work.
+    // Runs the Scheduler. This is responsible for polling buttons, adding
+    // newly-scheduled commands, running already-scheduled commands, removing
+    // finished or
+    // interrupted commands, and running subsystem periodic() methods. This must be
+    // called from the robot's periodic block in order for anything in the
+    // Command-based framework to work.
     CommandScheduler.getInstance().run();
   }
 

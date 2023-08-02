@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ADAM;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -75,6 +76,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
       initializeEncoders();
       // * Initializes the PID controllers
       initializePIDControllers();
+
     } catch (Exception e) {
       logger.log(Level.SEVERE, "DriveTrainSubsystem initialization failed", e);
       DriverStation.reportError("DriveTrainSubsystem initialization failed: " + e.getMessage(), true);
@@ -346,5 +348,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
       DriverStation.reportError("Failed to get RightMotorOutput: " + e.getMessage(), true);
       return 0.0;
     }
+  }
+
+  public void testException() {
+    // Create an array with size 5
+    int[] arr = new int[5];
+
+    // Attempt to access the element at index 10, which will cause an ArrayIndexOutOfBoundsException
+    int value = arr[10];
   }
 }

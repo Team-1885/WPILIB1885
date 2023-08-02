@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch DriveTrainSubsystemTest",
+      "request": "launch",
+      "mainClass": "frc.robot.DriveTrainSubsystemTest",
+      "projectName": "WPILIB_2024"
+    },
+    {
+      "type": "java",
+      "name": "Launch TestADAM",
+      "request": "launch",
+      "mainClass": "frc.robot.TestADAM",
+      "projectName": "WPILIB_2024"
+    },
+    {
+      "type": "java",
       "name": "Launch ADAM",
       "request": "launch",
       "mainClass": "frc.robot.ADAM",

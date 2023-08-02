@@ -1,13 +1,13 @@
 package frc.robot;
 
-public class Logger {
+public class WPILogger {
     public enum DashboardType {
         SMART_DASHBOARD,
         SHUFFLEBOARD,
         NETWORK_TABLES
     }   
 
-    public Logger() {}
+    public WPILogger() {}
 
     private void selectDashboards() {}
 
