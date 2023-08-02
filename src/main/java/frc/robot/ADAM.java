@@ -148,24 +148,25 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         Date timestamp = new Date();
 
         // Log error with the specified logging level
-        logger.log(logger.getLevel(), "[" + timestamp + "] Uncaught exception (Error Code " + errorCode.getCode()
-                + "): " + customErrorMessage, e);
+        String logMessage = "[" + timestamp + "] Uncaught exception (Error Code " + errorCode.getCode() + "): "
+                + customErrorMessage;
+        logger.log(logger.getLevel(), logMessage, e);
 
-        // Log class and method where the error occurred
+        // Log class, method, and line number where the error occurred
         StackTraceElement[] stackTrace = e.getStackTrace();
         if (stackTrace.length > 0) {
             StackTraceElement topFrame = stackTrace[0];
-            logger.log(logger.getLevel(),
-                    "Error occurred in class: " + topFrame.getClassName() + ", method: " + topFrame.getMethodName());
+            String classMethodLine = "Error occurred in class: " + topFrame.getClassName() +
+                    ", method: " + topFrame.getMethodName() +
+                    ", line: " + topFrame.getLineNumber();
+            logger.log(logger.getLevel(), classMethodLine);
         }
 
         // Log error to driver station with custom message and error code
-        DriverStation.reportError("[" + timestamp + "] Uncaught exception (Error Code " + errorCode.getCode() + "): "
-                + customErrorMessage, false);
+        DriverStation.reportError(logMessage, false);
 
         // Log error to console with custom message and error code
-        System.err.println("[" + timestamp + "] Uncaught exception (Error Code " + errorCode.getCode() + "): "
-                + customErrorMessage);
+        System.err.println(logMessage);
         e.printStackTrace(System.err);
     }
 }
