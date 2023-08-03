@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch TestADAMStandalone",
+      "request": "launch",
+      "mainClass": "standalone.TestADAMStandalone",
+      "projectName": "WPILIB_2024"
+    },
+    {
+      "type": "java",
       "name": "Launch DriveTrainSubsystemTest",
       "request": "launch",
       "mainClass": "frc.robot.DriveTrainSubsystemTest",

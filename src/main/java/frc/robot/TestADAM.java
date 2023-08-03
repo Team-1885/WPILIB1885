@@ -10,6 +10,7 @@ public class TestADAM {
         Thread.setDefaultUncaughtExceptionHandler(new ADAM(null));
         // Call the method that will throw the ArrayIndexOutOfBoundsException
         //testArrayOutOfBounds();
+        System.out.println("Running in thread: " + Thread.currentThread().getName());
         throw new RuntimeException("This is a test exception!");
     }
 

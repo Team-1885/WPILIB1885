@@ -4,15 +4,15 @@
 
 package frc.robot;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 
-// Genesis 2:7 - And the Lord God formed man of the dust of the ground, and breathed into his nostrils the breath of life; and man became a living soul.
-// TODO: LOG FILTERING, DETAILED ERROR INFO, CONFIGURABLE PARAMETERS, DOCUMENTATION (LATER), CUSTOM EXCEPTIONS, MORE ERROR CODES, CONFIGURING BASED ON THAT (NOW) 
 public class ADAM implements Thread.UncaughtExceptionHandler {
 
     // Define an enum for error codes
@@ -97,6 +97,10 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         this.customErrorMessage = determineErrorCode(e).getMessage();
         this.errorCode = determineErrorCode(e);
         logger.setLevel(getSeverityForError(e).getLevel());
+
+        // Set the time zone to Eastern Standard Time (EST)
+        TimeZone estTimeZone = TimeZone.getTimeZone("EST");
+        TimeZone.setDefault(estTimeZone);
     }
 
     // Method to determine the error code based on the type of exception
@@ -114,6 +118,8 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
+        System.out.println("Thread in uncaughtException: " + t.getName());
+        System.out.println("Thread ID: " + t.getId());
         // Implement rate limiting for logging
         if (shouldLogError()) {
             logError(e);
@@ -152,8 +158,13 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
                 "  :         ;\n" +
                 "   \"..-\"-..\"";
 
-        // Get the current timestamp
-        Date timestamp = new Date();
+        // Set the time zone to Eastern Standard Time (EST)
+        TimeZone estTimeZone = TimeZone.getTimeZone("America/New_York");
+
+        // Format date in 12-hour time with AM/PM and Eastern Standard Time (EST)
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+        sdf.setTimeZone(estTimeZone);
+        String formattedTime = sdf.format(new Date());
 
         // Create a separator line
         String separatorLine = "==================================================";
@@ -164,7 +175,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         logMessageBuilder.append(adamTitle).append(" ADAM v1.0: Michael has nothing on me").append("\n");
         logMessageBuilder.append(separatorLine).append("\n");
 
-        logMessageBuilder.append("[").append(timestamp).append("] Uncaught exception (Error Code ")
+        logMessageBuilder.append("[").append(formattedTime).append("] Uncaught exception (Error Code ")
                 .append(errorCode.getCode()).append("): ").append(customErrorMessage);
 
         // Log class, method, and line number where the error occurred

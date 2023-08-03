@@ -7,6 +7,7 @@ package frc.robot;
 import static frc.robot.Constants.OperatorConstants.*;
 import static frc.robot.Constants.DriverConstants.*;
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
@@ -26,10 +27,12 @@ public class RobotContainer {
   // ! The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem DRIVETRAIN_SUBSYSTEM = new DriveTrainSubsystem();
   private final OI OPERATOR_INTERFACE = new OI();
-  private final ADAM ADAM = new ADAM(null);
+  private final ExampleSubsystem EXAMPLE_SUBSYSTEM = new ExampleSubsystem();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    Thread.setDefaultUncaughtExceptionHandler(new ADAM(null));
+    EXAMPLE_SUBSYSTEM.testException();
     // Configure the trigger bindings
     configureBindings();
   }
