@@ -30,7 +30,6 @@ public class ExampleSubsystem extends SubsystemBase {
     } catch (ArrayIndexOutOfBoundsException e) {
       // Use ADAM to log the exception
       adam.uncaughtException(Thread.currentThread(), e);
-      throw e;
     }
   }
 }
