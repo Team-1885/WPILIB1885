@@ -6,6 +6,8 @@ package frc.robot;
 
 import static frc.robot.Constants.OperatorConstants.*;
 import static frc.robot.Constants.DriverConstants.*;
+
+import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -25,14 +27,20 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   
   // ! The robot's subsystems and commands are defined here...
+  private final ExampleSubsystem EXAMPLE_SUBSYSTEM = new ExampleSubsystem();
+  private final ExampleClass EXAMPLE_CLASS = new ExampleClass();
   private final DriveTrainSubsystem DRIVETRAIN_SUBSYSTEM = new DriveTrainSubsystem();
   private final OI OPERATOR_INTERFACE = new OI();
-  private final ExampleSubsystem EXAMPLE_SUBSYSTEM = new ExampleSubsystem();
+
+  //private final ExampleCommand exampleCommand = new ExampleCommand(EXAMPLE_SUBSYSTEM);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    Thread.setDefaultUncaughtExceptionHandler(new ADAM(null));
-    EXAMPLE_SUBSYSTEM.testException();
+    //EXAMPLE_SUBSYSTEM.debugSubsystem();
+    EXAMPLE_CLASS.debugClass();
+    //exampleCommand.schedule();
+    //testADAMCommand.schedule();
+
     // Configure the trigger bindings
     configureBindings();
   }

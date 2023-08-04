@@ -13,6 +13,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 
+/**
+ * The ADAM class represents an error handling and logging utility for the robot.
+ * It provides methods to determine error codes, log errors, and enforce rate limiting
+ * for logging based on error counts.
+ */
 public class ADAM implements Thread.UncaughtExceptionHandler {
 
     // Define an enum for error codes
@@ -23,9 +28,8 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         WARN(300, "Something unexpected—though not necessarily an error—happened and needs to be watched."),
         INFO(400, "A normal, expected, relevant event happened."),
         DEBUG(500, "Used for debugging purposes"),
-        TRACE(600, "Used for debugging purposes—includes the most detailed information")
+        TRACE(600, "Used for debugging purposes—includes the most detailed information");
         // Add more error codes as needed
-        ;
 
         private final int code;
         private final String message;
@@ -73,10 +77,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
             return ADAMSeverity.SEVERE;
         } else if (e instanceof Exception) {
             return ADAMSeverity.SEVERE;
-        }
-        // Add more cases for other custom exceptions and their severity levels as
-        // needed
-        else {
+        } else {
             return ADAMSeverity.WARNING; // Default severity level
         }
     }
@@ -91,8 +92,13 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
     private static final long TIME_WINDOW_MS = 10000; // Time window in milliseconds (e.g., 10 seconds)
     private long lastErrorTime = 0;
 
-    // Constructor to automatically assign error code and logging level based on
-    // custom exceptions
+    // Add a new field to store the start time of the robot
+    private final long robotStartTime;
+
+    /**
+     * Constructs an ADAM instance to handle uncaught exceptions and log errors.
+     * @param e The uncaught exception.
+     */
     public ADAM(Throwable e) {
         this.customErrorMessage = determineErrorCode(e).getMessage();
         this.errorCode = determineErrorCode(e);
@@ -101,6 +107,9 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         // Set the time zone to Eastern Standard Time (EST)
         TimeZone estTimeZone = TimeZone.getTimeZone("EST");
         TimeZone.setDefault(estTimeZone);
+
+        // Record the start time of the robot
+        robotStartTime = System.currentTimeMillis();
     }
 
     // Method to determine the error code based on the type of exception
@@ -109,17 +118,13 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
             return ADAMErrorCodes.ERROR;
         } else if (e instanceof NullPointerException) {
             return ADAMErrorCodes.FATAL;
-        }
-        // Add more cases for other custom exceptions as needed
-        else {
+        } else {
             return ADAMErrorCodes.OFF;
         }
     }
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        System.out.println("Thread in uncaughtException: " + t.getName());
-        System.out.println("Thread ID: " + t.getId());
         // Implement rate limiting for logging
         if (shouldLogError()) {
             logError(e);
@@ -143,12 +148,20 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
             errorCounts.put(errorCode, count + 1);
             return true;
         } else {
-            // Don't log the error if the error count exceeds the limit within the time
-            // window
+            // Don't log the error if the error count exceeds the limit within the time window
             return false;
         }
     }
 
+    // Method to format elapsed time in a human-readable format
+    private String formatElapsedTime(long elapsedTimeMillis) {
+        long seconds = (elapsedTimeMillis / 1000) % 60;
+        long minutes = (elapsedTimeMillis / (1000 * 60)) % 60;
+        long hours = (elapsedTimeMillis / (1000 * 60 * 60)) % 24;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    // Method to log the error and related information
     private void logError(Throwable e) {
         // ADAM ASCII art title
         String adamTitle = "       /)\n" +
@@ -178,6 +191,11 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         logMessageBuilder.append("[").append(formattedTime).append("] Uncaught exception (Error Code ")
                 .append(errorCode.getCode()).append("): ").append(customErrorMessage);
 
+        // Log the elapsed time since the robot started
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = currentTime - robotStartTime;
+        logMessageBuilder.append("\nElapsed Time Since Robot Started: ").append(formatElapsedTime(elapsedTime));
+
         // Log class, method, and line number where the error occurred
         StackTraceElement[] stackTrace = e.getStackTrace();
         if (stackTrace.length > 0) {
@@ -200,10 +218,9 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         logger.log(logger.getLevel(), logMessage);
 
         // Log error to driver station with custom message and error code
-        DriverStation.reportError(logMessage, false);
+        //DriverStation.reportError(logMessage, false);
 
         // Log error to console with custom message and error code
-        System.err.println(logMessage);
-        e.printStackTrace(System.err);
+        //System.err.println(logMessage);
     }
 }
