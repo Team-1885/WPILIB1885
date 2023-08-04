@@ -8,27 +8,40 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
 
 public class ExampleSubsystem extends SubsystemBase {
- 
+
   // Create an instance of ADAM to handle exception logging
-  private final ADAM adam;
+  private final ADAM adam = new ADAM(null);
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
-    // Initialize the ADAM instance with a null exception (null indicates no exception initially)
-    adam = new ADAM(null);
+    runTest(() -> {
+
+    });
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    runTest(() -> {
+      // This method will be called once per scheduler run
+    });
   }
 
-  public void testException() {
-    try {
+  public void myMethod() {
+    runTest(() -> {
       int[] arr = new int[5];
-      int value = arr[10]; // This will throw ArrayIndexOutOfBoundsException
-    } catch (ArrayIndexOutOfBoundsException e) {
-      // Use ADAM to log the exception
+      int value = arr[10];
+    });
+  }
+
+  public void debugSubsystem() {
+    runTest(() -> periodic());
+    runTest(() -> myMethod());
+  }
+
+  public void runTest(Runnable code) {
+    try {
+      code.run();
+    } catch (Exception e) {
       adam.uncaughtException(Thread.currentThread(), e);
     }
   }

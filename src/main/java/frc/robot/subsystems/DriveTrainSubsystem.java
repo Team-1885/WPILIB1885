@@ -24,19 +24,16 @@ import static frc.robot.Constants.OperatorConstants.*;
  * control and movement.
  */
 
-// TODO: Gyro, Odometry, SmartDashboard/Format of Code, SlewRateLimiter in
-// commmand??
-
 public class DriveTrainSubsystem extends SubsystemBase {
 
-  // * Each motor controller is assigned a unique device ID and is set to use the
+  // Each motor controller is assigned a unique device ID and is set to use the
   // kBrushless motor type, enabling control via the CAN interface.
-  // ! The drivetrain employs primary and follower motors on both sides, ensuring
+  // The drivetrain employs primary and follower motors on both sides, ensuring
   // synchronized movement.
-  // * You can adjust the device IDs in the code to match your robot's physical
+  // You can adjust the device IDs in the code to match your robot's physical
   // configuration.
 
-  // * Left side motor controllers
+  // Left side motor controllers
 
   private CANSparkMax mLeftDrivePrimaryMotor = new CANSparkMax(Constants.OperatorConstants.LEFT_DRIVE_PRIMARY_ID,
       MotorType.kBrushless);
@@ -45,7 +42,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private CANSparkMax mLeftDriveFollowerMotor2 = new CANSparkMax(Constants.OperatorConstants.LEFT_DRIVE_FOLLOWER2_ID,
       MotorType.kBrushless);
 
-  // * Right side motor controllers
+  // Right side motor controllers
 
   private CANSparkMax mRightDrivePrimaryMotor = new CANSparkMax(Constants.OperatorConstants.RIGHT_DRIVE_PRIMARY_ID,
       MotorType.kBrushless);
@@ -54,17 +51,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private CANSparkMax mRightDriveFollowerMotor2 = new CANSparkMax(Constants.OperatorConstants.RIGHT_DRIVE_FOLLOWER2_ID,
       MotorType.kBrushless);
 
-  // * Encoders for left and right sides of the drivetrain
+  // Encoders for left and right sides of the drivetrain
 
   private RelativeEncoder mLeftEncoder;
   private RelativeEncoder mRightEncoder;
 
-  // * PID controllers for left and right motors
+  // PID controllers for left and right motors
 
   private PIDController mLeftPIDController;
   private PIDController mRightPIDController;
 
-  // * Logger instance for logging events and errors
+  // Logger instance for logging events and errors
 
   private static final Logger logger = Logger.getLogger(DriveTrainSubsystem.class.getName());
 
@@ -75,11 +72,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public DriveTrainSubsystem() {
     try {
-      // * Initializes the motor controllers
+      // Initializes the motor controllers
       initializeMotors();
-      // * Initializes the encoders
+      // Initializes the encoders
       initializeEncoders();
-      // * Initializes the PID controllers
+      // Initializes the PID controllers
       initializePIDControllers();
 
     } catch (Exception e) {
@@ -90,9 +87,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   private void initializeMotors() {
     try {
-      // * The above code restores the factory defaults for the CANSparkMax objects
+      // The above code restores the factory defaults for the CANSparkMax objects
       // associated with the left and right sides of the drivetrain.
-      // ! By invoking the restoreFactoryDefaults() method on each motor controller,
+      // By invoking the restoreFactoryDefaults() method on each motor controller,
       // the drivetrain is reset to its default settings.
 
       mLeftDrivePrimaryMotor.restoreFactoryDefaults();
@@ -103,10 +100,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
       mRightDriveFollowerMotor1.restoreFactoryDefaults();
       mRightDriveFollowerMotor2.restoreFactoryDefaults();
 
-      // ! By calling the follow() method on the follower motors and passing the
+      // By calling the follow() method on the follower motors and passing the
       // primary motor as the argument, the follower motors are set to synchronize
       // their movement with the primary motor.
-      // * This ensures that the left and right sides of the drivetrain move together
+      // This ensures that the left and right sides of the drivetrain move together
       // in a coordinated manner.
 
       mLeftDriveFollowerMotor1.follow(mLeftDrivePrimaryMotor);
@@ -115,12 +112,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
       mRightDriveFollowerMotor1.follow(mRightDrivePrimaryMotor);
       mRightDriveFollowerMotor2.follow(mRightDrivePrimaryMotor);
 
-      // ! By calling the setInverted() method on each motor, the direction of motor
+      // By calling the setInverted() method on each motor, the direction of motor
       // rotation is adjusted.
-      // * For the left side, all motors (primary and followers) are set to be
+      // For the left side, all motors (primary and followers) are set to be
       // inverted (reversed) by passing 'true' as the argument, meaning they rotate in
       // the desired direction for the robot's movement.
-      // * For the right side, all motors are set to 'false' (not inverted), meaning
+      // For the right side, all motors are set to 'false' (not inverted), meaning
       // they rotate in the default direction.
 
       mLeftDrivePrimaryMotor.setInverted(true);
@@ -139,9 +136,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   private void initializeEncoders() {
     try {
-      // * Assigning encoders to track the position and velocity of the right and left
+      // Assigning encoders to track the position and velocity of the right and left
       // drivetrain sides
-      // ! By calling the 'getEncoder()' method on the right and left primary motor
+      // By calling the 'getEncoder()' method on the right and left primary motor
       // controllers, we obtain the corresponding encoders and store them in
       // 'mRightEncoder' and 'mLeftEncoder' variables respectively.
 
@@ -155,7 +152,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   private void initializePIDControllers() {
     try {
-      // * Create PID controllers for left and right sides of the drive train with the
+      // Create PID controllers for left and right sides of the drive train with the
       // specified proportional (kP), integral (kI), and derivative (kD) gains.
 
       mLeftPIDController = new PIDController(kP, kI, kD);
@@ -192,22 +189,22 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   public void setDriveSpeeds(double leftSpeed, double rightSpeed) {
     try {
-      // * Check if CANSparkMax objects are initialized
+      // Check if CANSparkMax objects are initialized
 
       if (mLeftDrivePrimaryMotor != null && mRightDrivePrimaryMotor != null) {
 
-        // * Limit the speed values within a valid range (-1.0 to 1.0)
+        // Limit the speed values within a valid range (-1.0 to 1.0)
 
         leftSpeed = Math.max(-1.0, Math.min(leftSpeed, 1.0));
         rightSpeed = Math.max(-1.0, Math.min(rightSpeed, 1.0));
 
-        // * Calculate the error by subtracting the current position from the desired
+        // Calculate the error by subtracting the current position from the desired
         // setpoint
 
         double leftError = leftSpeed - getLeftVelocity();
         double rightError = rightSpeed - getRightVelocity();
 
-        // * Use the PID controllers to calculate the control outputs
+        // Use the PID controllers to calculate the control outputs
 
         double leftOutput = mLeftPIDController.calculate(leftError);
         double rightOutput = mRightPIDController.calculate(rightError);
@@ -239,19 +236,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private void updateSmartDashboard() {
     try {
 
-      // * Update SmartDashboard with encoder values
+      // Update SmartDashboard with encoder values
 
       SmartDashboard.putNumber("Left Encoder Position", getLeftPosition());
       SmartDashboard.putNumber("Right Encoder Position", getRightPosition());
       SmartDashboard.putNumber("Left Encoder Velocity", getLeftVelocity());
       SmartDashboard.putNumber("Right Encoder Velocity", getRightVelocity());
 
-      // * Displaying motor output values on the SmartDashboard
+      // Displaying motor output values on the SmartDashboard
 
       SmartDashboard.putNumber("Left Motor Output", mLeftDrivePrimaryMotor.getAppliedOutput());
       SmartDashboard.putNumber("Right Motor Output", mRightDrivePrimaryMotor.getAppliedOutput());
 
-      // * Calculating and displaying PID controller output values on the
+      // Calculating and displaying PID controller output values on the
       // SmartDashboard
 
       SmartDashboard.putNumber("Left PID Output", mLeftPIDController.calculate(getLeftVelocity()));
@@ -285,7 +282,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
   }
 
-  // * Utilizing encoders allows for autonomous navigation, closed-loop control,
+  // Utilizing encoders allows for autonomous navigation, closed-loop control,
   // odometry, and collision detection, enhancing robot performance and
   // reliability.
 
