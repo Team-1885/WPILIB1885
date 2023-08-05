@@ -32,14 +32,14 @@ public class RobotContainer {
   private final DriveTrainSubsystem DRIVETRAIN_SUBSYSTEM = new DriveTrainSubsystem();
   private final OI OPERATOR_INTERFACE = new OI();
 
-  //private final ExampleCommand exampleCommand = new ExampleCommand(EXAMPLE_SUBSYSTEM);
+  private final ExampleCommand EXAMPLE_COMMAND = new ExampleCommand(EXAMPLE_SUBSYSTEM);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     //EXAMPLE_SUBSYSTEM.debugSubsystem();
-    EXAMPLE_CLASS.debugClass();
-    //exampleCommand.schedule();
-    //testADAMCommand.schedule();
+    //EXAMPLE_CLASS.debugClass();
+    //EXAMPLE_COMMAND.debugCommand();
+    EXAMPLE_COMMAND.schedule();
 
     // Configure the trigger bindings
     configureBindings();
