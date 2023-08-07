@@ -14,29 +14,31 @@ public class NVIM extends JFrame implements ActionListener {
     private JTabbedPane tabbedPane;
     private List<JPanel> tabComponents;
     private int tabCounter = 0;
+    private Map<String, Map<String, String>> mainFormDataMap;
     private Map<String, Map<String, String>> miniDialogDataMap;
+    private JPanel currentPanel; // To keep track of the current panel with an open mini dialog
+    private Map<String, JButton> editButtonsMap;
 
     public NVIM() {
         super("NVIM");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Toolbar with Add, Edit, and Remove buttons
         JToolBar toolbar = new JToolBar();
         JButton addButton = new JButton("Add");
         JButton editButton = new JButton("Edit");
         JButton removeButton = new JButton("Remove");
         addButton.addActionListener(this);
+        editButton.addActionListener(this);
+        removeButton.addActionListener(this);
         toolbar.add(addButton);
         toolbar.add(editButton);
         toolbar.add(removeButton);
         add(toolbar, BorderLayout.NORTH);
 
-        // Tabbed pane to hold multiple "Add" dialogs
         tabbedPane = new JTabbedPane();
         add(tabbedPane, BorderLayout.CENTER);
 
-        // Footer with Submit and Reset buttons
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton submitButton = new JButton("Submit");
         JButton resetButton = new JButton("Reset");
@@ -47,9 +49,10 @@ public class NVIM extends JFrame implements ActionListener {
         add(footerPanel, BorderLayout.SOUTH);
 
         tabComponents = new ArrayList<>();
+        mainFormDataMap = new HashMap<>();
         miniDialogDataMap = new HashMap<>();
+        editButtonsMap = new HashMap<>();
 
-        // Set a default size for the JFrame
         setPreferredSize(new Dimension(450, 350));
         pack();
         setLocationRelativeTo(null);
@@ -72,13 +75,15 @@ public class NVIM extends JFrame implements ActionListener {
             if (showConfirmation("Are you sure you want to close this tab?")) {
                 closeTab(command);
             }
+        } else if (command.startsWith("Edit_")) {
+            String dashboardName = command.substring(5);
+            showMiniDialog(dashboardName);
         }
     }
 
     private void addTab() {
         JPanel panel = new JPanel(new GridLayout(6, 2, 5, 5));
 
-        // Add components to the panel
         panel.add(new JLabel("Project Origin:"));
         panel.add(new JTextField());
 
@@ -108,7 +113,6 @@ public class NVIM extends JFrame implements ActionListener {
         tabbedPane.addTab(tabTitle, panel);
         tabbedPane.setSelectedComponent(panel);
 
-        // Add action listeners to the dashboard checkboxes
         shuffleboardCheckBox.addActionListener(e -> onDashboardCheckboxClicked(shuffleboardCheckBox));
         smartDashboardCheckBox.addActionListener(e -> onDashboardCheckboxClicked(smartDashboardCheckBox));
         networkTablesCheckBox.addActionListener(e -> onDashboardCheckboxClicked(networkTablesCheckBox));
@@ -117,14 +121,23 @@ public class NVIM extends JFrame implements ActionListener {
     private void onDashboardCheckboxClicked(JCheckBox checkBox) {
         if (checkBox.isSelected()) {
             String dashboardName = (String) checkBox.getClientProperty("dashboardName");
-            showMiniDialog(dashboardName);
+            if (dashboardName != null) {
+                showMiniDialog(dashboardName);
+            }
+        } else {
+            String dashboardName = (String) checkBox.getClientProperty("dashboardName");
+            if (dashboardName != null && editButtonsMap.containsKey(dashboardName)) {
+                currentPanel.remove(editButtonsMap.get(dashboardName));
+                currentPanel.revalidate();
+                currentPanel.repaint();
+            }
         }
     }
 
     private void showMiniDialog(String dashboardName) {
         JDialog miniDialog = new JDialog(this, "Mini Dialog for " + dashboardName, true);
-
-        // Add components to the mini dialog
+        currentPanel = (JPanel) tabbedPane.getSelectedComponent();
+    
         JPanel panel = new JPanel(new GridLayout(4, 2, 5, 5));
         panel.add(new JLabel("Menu 1:"));
         JTextField menu1Field = new JTextField();
@@ -135,27 +148,47 @@ public class NVIM extends JFrame implements ActionListener {
         panel.add(new JLabel("Menu 3:"));
         JTextField menu3Field = new JTextField();
         panel.add(menu3Field);
-
+    
+        // Check if there are previously saved values for this dashboard
+        if (miniDialogDataMap.containsKey(dashboardName)) {
+            Map<String, String> dataMap = miniDialogDataMap.get(dashboardName);
+            menu1Field.setText(dataMap.getOrDefault("Menu 1", ""));
+            menu2Field.setText(dataMap.getOrDefault("Menu 2", ""));
+            menu3Field.setText(dataMap.getOrDefault("Menu 3", ""));
+        }
+    
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(e -> {
             if (showConfirmation("Are you sure you want to close this mini dialog?")) {
                 miniDialog.dispose();
             }
         });
-
+    
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
             Map<String, String> dataMap = new HashMap<>();
             dataMap.put("Menu 1", menu1Field.getText());
             dataMap.put("Menu 2", menu2Field.getText());
             dataMap.put("Menu 3", menu3Field.getText());
-            miniDialogDataMap.put(dashboardName, dataMap); // Use dashboardName as the key
+    
+            miniDialogDataMap.put(dashboardName, dataMap);
+    
+            if (!editButtonsMap.containsKey(dashboardName)) {
+                JButton editButton = new JButton("Edit '" + dashboardName + "'");
+                editButton.setActionCommand("Edit_" + dashboardName);
+                editButton.addActionListener(this);
+                editButtonsMap.put(dashboardName, editButton);
+                currentPanel.add(editButton);
+                currentPanel.revalidate();
+                currentPanel.repaint();
+            }
+    
             miniDialog.dispose();
         });
-
-        panel.add(closeButton);
+    
         panel.add(saveButton);
-
+        panel.add(closeButton);
+    
         miniDialog.add(panel);
         miniDialog.pack();
         miniDialog.setLocationRelativeTo(this);
@@ -165,16 +198,19 @@ public class NVIM extends JFrame implements ActionListener {
     private void submitData() {
         for (int i = 0; i < tabComponents.size(); i++) {
             JPanel panel = tabComponents.get(i);
-            JCheckBox shuffleboardCheckBox = (JCheckBox) panel.getComponent(5);
-            String dashboardName = (String) shuffleboardCheckBox.getClientProperty("dashboardName");
-
             String title = tabbedPane.getTitleAt(tabbedPane.indexOfComponent(panel));
             String fileOrigin = ((JTextField) panel.getComponent(1)).getText();
             String value = ((JTextField) panel.getComponent(3)).getText();
-            boolean shuffleboard = ((JCheckBox) panel.getComponent(5)).isSelected();
-            boolean smartDashboard = ((JCheckBox) panel.getComponent(6)).isSelected();
-            boolean networkTables = ((JCheckBox) panel.getComponent(7)).isSelected();
 
+            JCheckBox shuffleboardCheckBox = (JCheckBox) panel.getComponent(5);
+            JCheckBox smartDashboardCheckBox = (JCheckBox) panel.getComponent(6);
+            JCheckBox networkTablesCheckBox = (JCheckBox) panel.getComponent(7);
+
+            boolean shuffleboard = shuffleboardCheckBox.isSelected();
+            boolean smartDashboard = smartDashboardCheckBox.isSelected();
+            boolean networkTables = networkTablesCheckBox.isSelected();
+
+            // Output the data (You can customize how the data is processed here)
             System.out.println("Tab Title: " + title);
             System.out.println("File Origin: " + fileOrigin);
             System.out.println("Value: " + value);
@@ -182,11 +218,33 @@ public class NVIM extends JFrame implements ActionListener {
             System.out.println("SmartDashboard: " + smartDashboard);
             System.out.println("NetworkTables: " + networkTables);
 
-            Map<String, String> miniDialogData = miniDialogDataMap.get(dashboardName);
-            if (miniDialogData != null) {
-                System.out.println("Mini Dialog Data for " + dashboardName + ":");
-                for (Map.Entry<String, String> entry : miniDialogData.entrySet()) {
-                    System.out.println(entry.getKey() + ": " + entry.getValue());
+            if (shuffleboard) {
+                Map<String, String> miniDialogData = miniDialogDataMap.get("Shuffleboard");
+                if (miniDialogData != null) {
+                    System.out.println("Mini Dialog Data for Shuffleboard:");
+                    for (Map.Entry<String, String> entry : miniDialogData.entrySet()) {
+                        System.out.println(entry.getKey() + ": " + entry.getValue());
+                    }
+                }
+            }
+
+            if (smartDashboard) {
+                Map<String, String> miniDialogData = miniDialogDataMap.get("SmartDashboard");
+                if (miniDialogData != null) {
+                    System.out.println("Mini Dialog Data for SmartDashboard:");
+                    for (Map.Entry<String, String> entry : miniDialogData.entrySet()) {
+                        System.out.println(entry.getKey() + ": " + entry.getValue());
+                    }
+                }
+            }
+
+            if (networkTables) {
+                Map<String, String> miniDialogData = miniDialogDataMap.get("NetworkTables");
+                if (miniDialogData != null) {
+                    System.out.println("Mini Dialog Data for NetworkTables:");
+                    for (Map.Entry<String, String> entry : miniDialogData.entrySet()) {
+                        System.out.println(entry.getKey() + ": " + entry.getValue());
+                    }
                 }
             }
 
@@ -210,8 +268,8 @@ public class NVIM extends JFrame implements ActionListener {
         int index = tabbedPane.indexOfTab(tabTitle);
         if (index >= 0) {
             tabbedPane.remove(index);
-            // Remove the panel from tabComponents list
             tabComponents.remove(index);
+            mainFormDataMap.remove(tabTitle);
             miniDialogDataMap.remove(tabTitle);
         }
     }
