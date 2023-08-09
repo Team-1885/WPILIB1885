@@ -28,8 +28,7 @@ public class ExampleSubsystem extends SubsystemBase {
 
   public void myMethod() {
     runTest(() -> {
-      int[] arr = new int[5];
-      int value = arr[10];
+      // Code for method
     });
   }
 

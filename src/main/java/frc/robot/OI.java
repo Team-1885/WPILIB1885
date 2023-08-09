@@ -5,107 +5,111 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
-import static frc.robot.Constants.DriverConstants.*;
-import static frc.robot.Constants.OperatorConstants.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-// TODO: More specific try catch logging (will come when I do GlobalExceptionHandler)
 
 /**
- * Operator Interface (OI) class that handles controller input and button bindings.
- * This class provides access to the driver and operator controllers and allows configuring button, axis, and POV bindings.
+ * 🔘 Operator Interface (OI) class that handles controller input and button bindings. 
+ * 🤔 This class provides access to the driver and operator controllers and allows configuring button, axis, and POV bindings. 
  */
-
 public class OI {
 
-    // * Logger instance for logging events and errors
+    private final static ADAM adam = new ADAM(null);
 
-    private static final Logger logger = Logger.getLogger(OI.class.getName());
-
-    // * Driver Controllers
     private XboxController mDriverXboxController;
     private PS4Controller mDriverPS4Controller;
     private Joystick mDriverLogitechController;
 
-    // * Operator Controllers
     private XboxController mOperatorXboxController;
     private PS4Controller mOperatorPS4Controller;
     private Joystick mOperatorLogitechController;
 
     /**
-     * Constructs a new instance of the OI class.
+     * 🏗️ Constructs a new instance of the OI class. 
+     * 🕹️ Initializes driver and operator controllers.
      */
     public OI() {
-        try {
-            mDriverXboxController = new XboxController(kDriverXboxControllerPort);
-            mDriverPS4Controller = new PS4Controller(kDriverPS4ControllerPort);
-            mDriverLogitechController = new Joystick(kDriverLogitechControllerPort);
+        runTest(() -> {
+            mDriverXboxController = new XboxController(Constants.kDriverXboxControllerPort);
+            mDriverPS4Controller = new PS4Controller(Constants.kDriverPS4ControllerPort);
+            mDriverLogitechController = new Joystick(Constants.kDriverLogitechControllerPort);
 
-            mOperatorXboxController = new XboxController(kOperatorXboxControllerPort);
-            mOperatorPS4Controller = new PS4Controller(kOperatorPS4ControllerPort);
-            mOperatorLogitechController = new Joystick(kOperatorLogitechControllerPort);
-
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to initialize controllers", e);
-            DriverStation.reportError("Controller initialization failed: " + e.getMessage(), true);
-        }
+            mOperatorXboxController = new XboxController(Constants.kOperatorXboxControllerPort);
+            mOperatorPS4Controller = new PS4Controller(Constants.kOperatorPS4ControllerPort);
+            mOperatorLogitechController = new Joystick(Constants.kOperatorLogitechControllerPort);
+        });
     }
 
     /**
-     * Get the driver Xbox controller.
-     * 
-     * @return The driver Xbox controller.
+     * 📎 Get the driver Xbox controller. 
+     *
+     * 📋 @return The driver Xbox controller. 
      */
     public XboxController getDriverXboxController() {
         return mDriverXboxController;
     }
 
     /**
-     * Get the driver PS4 controller.
-     * 
-     * @return The driver PS4 controller.
+     * 📎 Get the driver PS4 controller.
+     *
+     * 📋 @return The driver PS4 controller. 
      */
     public PS4Controller getDriverPS4Controller() {
         return mDriverPS4Controller;
     }
 
     /**
-     * Get the driver Logitech controller.
-     * 
-     * @return The driver Logitech controller.
+     * 📎 Get the driver Logitech controller. 
+     *
+     * 📋 @return The driver Logitech controller. 
      */
     public Joystick getDriverLogitechController() {
         return mDriverLogitechController;
     }
 
     /**
-     * Get the operator Xbox controller.
-     * 
-     * @return The operator Xbox controller.
+     * 📎 Get the operator Xbox controller. 
+     *
+     * 📋 @return The operator Xbox controller. 
      */
     public XboxController getOperatorXboxController() {
         return mOperatorXboxController;
     }
 
     /**
-     * Get the operator PS4 controller.
-     * 
-     * @return The operator PS4 controller.
+     * 📎 Get the operator PS4 controller. 
+     *
+     * 📋 @return The operator PS4 controller. 
      */
     public PS4Controller getOperatorPS4Controller() {
         return mOperatorPS4Controller;
     }
 
     /**
-     * Get the operator Logitech controller.
-     * 
-     * @return The operator Logitech controller.
+     * 📎 Get the operator Logitech controller. 
+     *
+     * 📋 @return The operator Logitech controller. 
      */
     public Joystick getOperatorLogitechController() {
         return mOperatorLogitechController;
+    }
+
+    public void debugClass() {
+        runTest(() -> getDriverXboxController());
+        runTest(() -> getOperatorXboxController());
+
+        runTest(() -> getDriverPS4Controller());
+        runTest(() -> getOperatorPS4Controller());
+
+        runTest(() -> getDriverLogitechController());
+        runTest(() -> getOperatorLogitechController());
+    }
+
+    public static void runTest(Runnable code) {
+        try {
+            code.run();
+        } catch (Exception e) {
+            adam.uncaughtException(Thread.currentThread(), e);
+        }
     }
 }

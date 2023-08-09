@@ -33,9 +33,7 @@ public class ExampleCommand extends CommandBase {
   @Override
   public void execute() {
     runTest(() -> {
-      int[] arr = new int[5];
-      int value = arr[10];
-      //mExampleSubsystem.debugSubsystem();
+
     });
   }
 

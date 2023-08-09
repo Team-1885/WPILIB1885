@@ -10,14 +10,13 @@ public class ExampleClass {
 
     public static void main(String[] args) {
         runTest(() -> {
-            throw new RuntimeException("This is a test exception!");
+            // Code
         });
     }
 
     public static void myMethod() {
         runTest(() -> {
-            int[] arr = new int[5];
-            int value = arr[10];
+            // Code
         });
     }
 

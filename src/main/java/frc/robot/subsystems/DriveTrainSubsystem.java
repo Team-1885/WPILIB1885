@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import static frc.robot.Constants.OperatorConstants.*;
 
 /**
  * The DriveTrainSubsystem class represents the subsystem responsible for
@@ -35,20 +34,20 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
   // Left side motor controllers
 
-  private CANSparkMax mLeftDrivePrimaryMotor = new CANSparkMax(Constants.OperatorConstants.LEFT_DRIVE_PRIMARY_ID,
+  private CANSparkMax mLeftDrivePrimaryMotor = new CANSparkMax(Constants.LEFT_DRIVE_PRIMARY_ID,
       MotorType.kBrushless);
-  private CANSparkMax mLeftDriveFollowerMotor1 = new CANSparkMax(Constants.OperatorConstants.LEFT_DRIVE_FOLLOWER1_ID,
+  private CANSparkMax mLeftDriveFollowerMotor1 = new CANSparkMax(Constants.LEFT_DRIVE_FOLLOWER1_ID,
       MotorType.kBrushless);
-  private CANSparkMax mLeftDriveFollowerMotor2 = new CANSparkMax(Constants.OperatorConstants.LEFT_DRIVE_FOLLOWER2_ID,
+  private CANSparkMax mLeftDriveFollowerMotor2 = new CANSparkMax(Constants.LEFT_DRIVE_FOLLOWER2_ID,
       MotorType.kBrushless);
 
   // Right side motor controllers
 
-  private CANSparkMax mRightDrivePrimaryMotor = new CANSparkMax(Constants.OperatorConstants.RIGHT_DRIVE_PRIMARY_ID,
+  private CANSparkMax mRightDrivePrimaryMotor = new CANSparkMax(Constants.RIGHT_DRIVE_PRIMARY_ID,
       MotorType.kBrushless);
-  private CANSparkMax mRightDriveFollowerMotor1 = new CANSparkMax(Constants.OperatorConstants.RIGHT_DRIVE_FOLLOWER1_ID,
+  private CANSparkMax mRightDriveFollowerMotor1 = new CANSparkMax(Constants.RIGHT_DRIVE_FOLLOWER1_ID,
       MotorType.kBrushless);
-  private CANSparkMax mRightDriveFollowerMotor2 = new CANSparkMax(Constants.OperatorConstants.RIGHT_DRIVE_FOLLOWER2_ID,
+  private CANSparkMax mRightDriveFollowerMotor2 = new CANSparkMax(Constants.RIGHT_DRIVE_FOLLOWER2_ID,
       MotorType.kBrushless);
 
   // Encoders for left and right sides of the drivetrain
@@ -155,8 +154,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
       // Create PID controllers for left and right sides of the drive train with the
       // specified proportional (kP), integral (kI), and derivative (kD) gains.
 
-      mLeftPIDController = new PIDController(kP, kI, kD);
-      mRightPIDController = new PIDController(kP, kI, kD);
+      mLeftPIDController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
+      mRightPIDController = new PIDController(Constants.kP, Constants.kI, Constants.kD);
     } catch (Exception e) {
       logger.log(Level.SEVERE, "DriveTrainSubsystem PIDController initialization failed", e);
       DriverStation.reportError("DriveTrainSubsystem PIDController initialization failed: " + e.getMessage(), true);

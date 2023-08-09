@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NVIM extends JFrame implements ActionListener {
+public class GUILogger extends JFrame implements ActionListener {
 
     private JTabbedPane tabbedPane;
     private List<JPanel> tabComponents;
@@ -19,8 +19,8 @@ public class NVIM extends JFrame implements ActionListener {
     private JPanel currentPanel; // To keep track of the current panel with an open mini dialog
     private Map<String, JButton> editButtonsMap;
 
-    public NVIM() {
-        super("NVIM");
+    public GUILogger() {
+        super("GUILogger");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -281,8 +281,8 @@ public class NVIM extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            NVIM nvim = new NVIM();
-            nvim.setVisible(true);
+            GUILogger gui = new GUILogger();
+            gui.setVisible(true);
         });
     }
 }

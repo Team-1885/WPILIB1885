@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch GUILogger",
+      "request": "launch",
+      "mainClass": "frc.robot.GUILogger",
+      "projectName": "WPILIB_2024"
+    },
+    {
+      "type": "java",
       "name": "Launch NetworkMonitor",
       "request": "launch",
       "mainClass": "frc.robot.NetworkMonitor",
