@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
 
 /**
- * ❌ The ADAM class represents an error handling and logging utility for the robot.
- * 🪵 It provides methods to determine error codes, log errors, and enforce rate limiting for logging based on error counts.
+ * The ADAM class represents an error handling and logging utility for the robot.
+ * It provides methods to determine error codes, log errors, and enforce rate limiting for logging based on error counts.
  */
 public class ADAM implements Thread.UncaughtExceptionHandler {
 
-    // 1️⃣ Define an enum for error codes
+    // Define an enum for error codes
     public enum ADAMErrorCodes {
         OFF(0, "No logging"),
         FATAL(100, "The application is unusable. Action needs to be taken immediately."),
@@ -47,7 +47,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         }
     }
 
-    // 1️⃣ Define an enum for exception severity levels
+    // Define an enum for exception severity levels
     public enum ADAMSeverity {
         ALL(Level.ALL),
         CONFIG(Level.CONFIG),
@@ -71,7 +71,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
     }
 
     private static ADAMSeverity getSeverityForError(Throwable e) {
-        // 📌 Map each exception to its corresponding severity level
+        // Map each exception to its corresponding severity level
         if (e instanceof Exception) {
             return ADAMSeverity.SEVERE;
         } else if (e instanceof Exception) {
@@ -85,33 +85,33 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
     private final ADAMErrorCodes errorCode;
     private static final Logger logger = Logger.getLogger(ADAM.class.getName());
 
-    // #️⃣ New HashMap to store error counts for each error code
+    // New HashMap to store error counts for each error code
     private final Map<ADAMErrorCodes, Integer> errorCounts = new HashMap<>();
     private static final int MAX_ERROR_COUNT = 5; // Maximum allowed errors within the time window
     private static final long TIME_WINDOW_MS = 10000; // Time window in milliseconds (e.g., 10 seconds)
     private long lastErrorTime = 0;
 
-    // ⏰ Add a new field to store the start time of the robot
+    // Add a new field to store the start time of the robot
     private final long robotStartTime;
 
     /**
-     * ❌ Constructs an ADAM instance to handle uncaught exceptions and log errors.
-     * ❌ @param e The uncaught exception.
+     *  Constructs an ADAM instance to handle uncaught exceptions and log errors.
+     *  @param e The uncaught exception.
      */
     public ADAM(Throwable e) {
         this.customErrorMessage = determineErrorCode(e).getMessage();
         this.errorCode = determineErrorCode(e);
         logger.setLevel(getSeverityForError(e).getLevel());
 
-        // 🕜 Set the time zone to Eastern Standard Time (EST)
+        // Set the time zone to Eastern Standard Time (EST)
         TimeZone estTimeZone = TimeZone.getTimeZone("EST");
         TimeZone.setDefault(estTimeZone);
 
-        // 📽️ Record the start time of the robot
+        // Record the start time of the robot
         robotStartTime = System.currentTimeMillis();
     }
 
-    // 📌 Method to determine the error code based on the type of exception
+    // Method to determine the error code based on the type of exception
     private ADAMErrorCodes determineErrorCode(Throwable e) {
         if (e instanceof Exception) {
             return ADAMErrorCodes.ERROR;
@@ -124,18 +124,17 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        // 🐀 Implement rate limiting for logging
+        // Implement rate limiting for logging
         if (shouldLogError()) {
             logError(e);
-            // ❌ Perform any other actions you need for error handling
         }
     }
 
-    // 🤔 Method to check if the error should be logged based on rate limiting
+    // Method to check if the error should be logged based on rate limiting
     private boolean shouldLogError() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastErrorTime > TIME_WINDOW_MS) {
-            // 🛟 Reset the error counts if the time window has passed
+            // Reset the error counts if the time window has passed
             errorCounts.clear();
             lastErrorTime = currentTime;
             return true;
@@ -143,17 +142,17 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
 
         int count = errorCounts.getOrDefault(errorCode, 0);
         if (count < MAX_ERROR_COUNT) {
-            // ❌ Log the error if the error count is within the limit
+            // Log the error if the error count is within the limit
             errorCounts.put(errorCode, count + 1);
             return true;
         } else {
-            // ❌ Don't log the error if the error count exceeds the limit within the time
+            // Don't log the error if the error count exceeds the limit within the time
             // window
             return false;
         }
     }
 
-    // 📖 Method to format elapsed time in a human-readable format
+    // Method to format elapsed time in a human-readable format
     private String formatElapsedTime(long elapsedTimeMillis) {
         long seconds = (elapsedTimeMillis / 1000) % 60;
         long minutes = (elapsedTimeMillis / (1000 * 60)) % 60;
@@ -161,9 +160,9 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    // 📎 Method to log the error and related information
+    // Method to log the error and related information
     private void logError(Throwable e) {
-        // 🚛 ADAM ASCII art title
+        // ADAM ASCII art title
         String adamTitle = "       /)\n" +
                 "  .-\"\".L,\"\"-.\n" +
                 " ;       :.  :\n" +
@@ -171,18 +170,18 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
                 "  :         ;\n" +
                 "   \"..-\"-..\"";
 
-        // ⏳ Set the time zone to Eastern Standard Time (EST)
+        // Set the time zone to Eastern Standard Time (EST)
         TimeZone estTimeZone = TimeZone.getTimeZone("America/New_York");
 
-        // ⏳ Format date in 12-hour time with AM/PM and Eastern Standard Time (EST)
+        // Format date in 12-hour time with AM/PM and Eastern Standard Time (EST)
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
         sdf.setTimeZone(estTimeZone);
         String formattedTime = sdf.format(new Date());
 
-        // 🫠 Create a separator line
+        // Create a separator line
         String separatorLine = "==================================================";
 
-        // 🎚️ Log error with the specified logging level
+        // Log error with the specified logging level
         StringBuilder logMessageBuilder = new StringBuilder();
         logMessageBuilder.append(separatorLine).append("\n");
         logMessageBuilder.append(adamTitle).append(" ADAM v1.0: Michael has nothing on me").append("\n");
@@ -191,12 +190,12 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         logMessageBuilder.append("[").append(formattedTime).append("] Uncaught exception (Error Code ")
                 .append(errorCode.getCode()).append("): ").append(customErrorMessage);
 
-        // 🕒 Log the elapsed time since the robot started
+        // Log the elapsed time since the robot started
         long currentTime = System.currentTimeMillis();
         long elapsedTime = currentTime - robotStartTime;
         logMessageBuilder.append("\nElapsed Time Since Robot Started: ").append(formatElapsedTime(elapsedTime));
 
-        // 📋 Log class, method, and line number where the error occurred
+        // Log class, method, and line number where the error occurred
         StackTraceElement[] stackTrace = e.getStackTrace();
         if (stackTrace.length > 0) {
             StackTraceElement topFrame = stackTrace[0];
@@ -205,7 +204,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
                     .append(", line: ").append(topFrame.getLineNumber());
         }
 
-        // 📋 Log the original exception message and stack trace
+        // Log the original exception message and stack trace
         logMessageBuilder.append("\n\nOriginal Exception Message: ").append(e.getMessage())
                 .append("\n\nOriginal Stack Trace:");
         for (StackTraceElement traceElement : e.getStackTrace()) {
@@ -217,10 +216,10 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         String logMessage = logMessageBuilder.toString();
         logger.log(logger.getLevel(), logMessage);
 
-        // 📋 Log error to driver station with custom message and error code
+        // Log error to driver station with custom message and error code
         // DriverStation.reportError(logMessage, false);
 
-        // 📋 Log error to console with custom message and error code
+        // Log error to console with custom message and error code
         // System.err.println(logMessage);
     }
 }

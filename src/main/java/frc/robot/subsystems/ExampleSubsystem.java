@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
+import frc.robot.Safety.CheckType;
+import frc.robot.Safety.StructuredCheck;
 
 public class ExampleSubsystem extends SubsystemBase {
 
@@ -26,6 +28,7 @@ public class ExampleSubsystem extends SubsystemBase {
     });
   }
 
+  @StructuredCheck(value = { CheckType.NULL_SAFETY, CheckType.DATA_TYPE })
   public void myMethod() {
     runTest(() -> {
       // Code for method

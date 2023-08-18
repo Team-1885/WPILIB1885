@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 
 /**
- * 🔘 Operator Interface (OI) class that handles controller input and button bindings. 
- * 🤔 This class provides access to the driver and operator controllers and allows configuring button, axis, and POV bindings. 
+ * Operator Interface (OI) class that handles controller input and button bindings. 
+ * This class provides access to the driver and operator controllers and allows configuring button, axis, and POV bindings. 
  */
 public class OI {
 
@@ -25,8 +25,8 @@ public class OI {
     private Joystick mOperatorLogitechController;
 
     /**
-     * 🏗️ Constructs a new instance of the OI class. 
-     * 🕹️ Initializes driver and operator controllers.
+     * Constructs a new instance of the OI class. 
+     * Initializes driver and operator controllers.
      */
     public OI() {
         runTest(() -> {
@@ -41,54 +41,54 @@ public class OI {
     }
 
     /**
-     * 📎 Get the driver Xbox controller. 
+     * Get the driver Xbox controller. 
      *
-     * 📋 @return The driver Xbox controller. 
+     * @return The driver Xbox controller. 
      */
     public XboxController getDriverXboxController() {
         return mDriverXboxController;
     }
 
     /**
-     * 📎 Get the driver PS4 controller.
+     * Get the driver PS4 controller.
      *
-     * 📋 @return The driver PS4 controller. 
+     * @return The driver PS4 controller. 
      */
     public PS4Controller getDriverPS4Controller() {
         return mDriverPS4Controller;
     }
 
     /**
-     * 📎 Get the driver Logitech controller. 
+     * Get the driver Logitech controller. 
      *
-     * 📋 @return The driver Logitech controller. 
+     * @return The driver Logitech controller. 
      */
     public Joystick getDriverLogitechController() {
         return mDriverLogitechController;
     }
 
     /**
-     * 📎 Get the operator Xbox controller. 
+     * Get the operator Xbox controller. 
      *
-     * 📋 @return The operator Xbox controller. 
+     * @return The operator Xbox controller. 
      */
     public XboxController getOperatorXboxController() {
         return mOperatorXboxController;
     }
 
     /**
-     * 📎 Get the operator PS4 controller. 
+     * Get the operator PS4 controller. 
      *
-     * 📋 @return The operator PS4 controller. 
+     * @return The operator PS4 controller. 
      */
     public PS4Controller getOperatorPS4Controller() {
         return mOperatorPS4Controller;
     }
 
     /**
-     * 📎 Get the operator Logitech controller. 
+     * Get the operator Logitech controller. 
      *
-     * 📋 @return The operator Logitech controller. 
+     * @return The operator Logitech controller. 
      */
     public Joystick getOperatorLogitechController() {
         return mOperatorLogitechController;
