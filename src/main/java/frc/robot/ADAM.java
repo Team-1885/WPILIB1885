@@ -6,9 +6,7 @@ package frc.robot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import edu.wpi.first.wpilibj.DriverStation;
