@@ -25,6 +25,8 @@ Before you start working with our repository, please ensure that you have the fo
 
 - **[[-] FRC PathPlanner:](https://github.com/mjansen4857/pathplanner)** FRC PathPlanner is a specialized tool used for generating motion profiles and trajectories for the robot's autonomous movements. Installing FRC PathPlanner enables developers to design precise and smooth robot paths.
 
+- **[[-] SpotBugs:](https://spotbugs.readthedocs.io/en/stable/installing.html)** SpotBugs is a program which uses static analysis to look for bugs in Java code. It is free software, distributed under the terms of the GNU Lesser General Public License.
+
 - **[[-] VisualVM:](https://visualvm.github.io/download.html)** VisualVM is a tool that provides a visual interface for viewing detailed information about Java applications while they are running on a Java Virtual Machine (JVM). VisualVM organizes JVM data that is retrieved by the Java Development Kit (JDK) tools and presents the information in a way that allows data on multiple Java applications to be quickly viewed.
 
 - **[[-] Gradle:](https://gradle.org/install/)** Gradle is a build automation tool that simplifies the process of compiling and managing dependencies in the FRC robot code. Installing Gradle is essential for building and deploying the robot's code to the roboRIO.
