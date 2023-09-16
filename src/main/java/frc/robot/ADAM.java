@@ -22,7 +22,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         OFF(0, "No logging"),
         FATAL(100, "The application is unusable. Action needs to be taken immediately."),
         ERROR(200, "An error occurred in the application."),
-        WARN(300, "Something unexpected—though not necessarily an error—happened and needs to be watched."),
+        WARN(300, "Something unexpected though not necessarily an error—happened and needs to be watched."),
         INFO(400, "A normal, expected, relevant event happened."),
         DEBUG(500, "Used for debugging purposes"),
         TRACE(600, "Used for debugging purposes—includes the most detailed information");
@@ -172,7 +172,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         TimeZone estTimeZone = TimeZone.getTimeZone("America/New_York");
 
         // Format date in 12-hour time with AM/PM and Eastern Standard Time (EST)
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a", Locale.US);
         sdf.setTimeZone(estTimeZone);
         String formattedTime = sdf.format(new Date());
 

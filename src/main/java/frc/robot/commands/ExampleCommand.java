@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ADAM;
 import frc.robot.subsystems.ExampleSubsystem;
 
+@SuppressWarnings("PMD")
 public class ExampleCommand extends CommandBase {
 
   private final ADAM adam = new ADAM(null);

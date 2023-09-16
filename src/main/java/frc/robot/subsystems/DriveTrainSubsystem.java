@@ -170,7 +170,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     try {
-
+      int x = 10;
+      System.out.print(x);
     } catch (Exception e) {
       logger.log(Level.SEVERE, "DriveTrainSubsystem periodic failed", e);
       DriverStation.reportError("DriveTrainSubsystem periodic failed: " + e.getMessage(), true);
@@ -215,10 +216,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         mRightDrivePrimaryMotor.set(rightOutput);
 
         updateSmartDashboard();
-      }
-
-      else {
-
       }
     } catch (Exception e) {
       logger.log(Level.SEVERE, "DriveTrainSubsystem set failed", e);

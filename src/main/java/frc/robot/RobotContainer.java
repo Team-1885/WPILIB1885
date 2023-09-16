@@ -31,9 +31,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-
-    Safety.performSafetyChecks(ExampleSubsystem.class);
-    Safety.performSafetyChecks(DriveTrainSubsystem.class);
   }
 
   /**
