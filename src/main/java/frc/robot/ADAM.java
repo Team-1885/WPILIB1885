@@ -4,49 +4,53 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.*;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import edu.wpi.first.wpilibj.DriverStation;
+
 
 /**
  * The ADAM class represents an error handling and logging utility for the robot.
- * It provides methods to determine error codes, log errors, and enforce rate limiting for logging based on error counts.
  */
 public class ADAM implements Thread.UncaughtExceptionHandler {
 
-    // Define an enum for error codes
-    public enum ADAMErrorCodes {
+  /**
+   * Determines error codes.
+   */
+  public enum ADAMErrorCodes {
         OFF(0, "No logging"),
         FATAL(100, "The application is unusable. Action needs to be taken immediately."),
         ERROR(200, "An error occurred in the application."),
-        WARN(300, "Something unexpected though not necessarily an error—happened and needs to be watched."),
+        WARN(300, "Something unexpected happened and needs to be watched."),
         INFO(400, "A normal, expected, relevant event happened."),
         DEBUG(500, "Used for debugging purposes"),
         TRACE(600, "Used for debugging purposes—includes the most detailed information");
-        // Add more error codes as needed
+    // Add more error codes as needed
 
-        private final int code;
-        private final String message;
+    private final int code;
+    private final String message;
 
-        ADAMErrorCodes(int code, String message) {
-            this.code = code;
-            this.message = message;
-        }
-
-        public int getCode() {
-            return code;
-        }
-
-        public String getMessage() {
-            return message;
-        }
+    ADAMErrorCodes(int code, String message) {
+      this.code = code;
+      this.message = message;
     }
 
-    // Define an enum for exception severity levels
-    public enum ADAMSeverity {
+    public int getCode() {
+      return code;
+    }
+
+    public String getMessage() {
+      return message;
+    }
+  }
+
+  /**
+   *  Adam Severity.
+   */
+  public enum ADAMSeverity {
         ALL(Level.ALL),
         CONFIG(Level.CONFIG),
         FINE(Level.FINE),
@@ -57,16 +61,16 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         SEVERE(Level.SEVERE),
         WARNING(Level.WARNING);
 
-        private final Level level;
+    private final Level level;
 
-        ADAMSeverity(Level level) {
-            this.level = level;
-        }
-
-        public Level getLevel() {
-            return level;
-        }
+    ADAMSeverity(Level level) {
+      this.level = level;
     }
+
+    public Level getLevel() {
+      return level;
+    }
+  }
 
     private static ADAMSeverity getSeverityForError(Throwable e) {
         // Map each exception to its corresponding severity level
@@ -215,9 +219,9 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         logger.log(logger.getLevel(), logMessage);
 
         // Log error to driver station with custom message and error code
-        // DriverStation.reportError(logMessage, false);
+        DriverStation.reportError(logMessage, false);
 
         // Log error to console with custom message and error code
-        // System.err.println(logMessage);
+        System.err.println(logMessage);
     }
 }
