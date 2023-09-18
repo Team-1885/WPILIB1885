@@ -4,32 +4,49 @@
 
 package frc.robot;
 
+/**
+ * This class serves as a placeholder for reference purposes.
+ * It provides a template for creating and testing runnable methods.
+ */
 public class ExampleClass {
 
-    private final static ADAM adam = new ADAM(null);
+  private static final ADAM adam = new ADAM(null);
 
-    public static void main(String[] args) {
-        runTest(() -> {
-            // Code
-        });
-    }
+  /**
+   * The main method serves as the entry point for the class.
+   *
+   * @param args Command-line arguments provided when running the program.
+   */
+  public static void main(String[] args) {
+    runTest(() -> {
+        // Code
+    });
+  }
 
-    public static void myMethod() {
-        runTest(() -> {
-            // Code
-        });
-    }
+  /**
+   * tester method for class.
+   */
+  public static void myMethod() {
+    runTest(() -> {
+        // Code
+    });
+  }
 
-    public void debugClass() {
-        runTest(() -> main(null));
-        runTest(() -> myMethod());
-    }
+  public void debugClass() {
+    runTest(() -> main(null));
+    runTest(() -> myMethod());
+  }
 
-    public static void runTest(Runnable code) {
-        try {
-            code.run();
-        } catch (Exception e) {
-            adam.uncaughtException(Thread.currentThread(), e);
-        }
+  /**
+   * Runs the provided code as a runnable task. If the code throws an exception, it is caught, and an uncaught exception is passed to the default uncaught exception handler for the current thread.
+   *
+   * @param code The runnable task to be executed.
+   */
+  public static void runTest(Runnable code) {
+    try {
+      code.run();
+    } catch (Exception e) {
+      adam.uncaughtException(Thread.currentThread(), e);
     }
+  }
 }

@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 
 /** 
  * This class is where the bulk of the robot should be declared. 
@@ -19,14 +17,9 @@ import frc.robot.subsystems.ExampleSubsystem;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-
-  /** 
-  *  private final ExampleSubsystem mExampleSubsystem = new ExampleSubsystem();
-  *   
-  *  private final ExampleCommand mExampleCommand = new ExampleCommand(mExampleSubsystem);
-  */
   
 
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings

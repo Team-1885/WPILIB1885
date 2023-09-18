@@ -8,18 +8,21 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ADAM;
 import frc.robot.subsystems.ExampleSubsystem;
 
+/**
+ * An example command for use as a template.
+ */
 @SuppressWarnings("PMD")
 public class ExampleCommand extends CommandBase {
 
   private final ADAM adam = new ADAM(null);
-  private final ExampleSubsystem mExampleSubsystem;
+  private final ExampleSubsystem exampleSubsystem;
 
   /** Creates a new ExampleCommand. */
-  public ExampleCommand(ExampleSubsystem mExampleSubsystem) {
+  public ExampleCommand(ExampleSubsystem exampleSubsystem) {
     debugCommand();
     // Use addRequirements() here to declare subsystem dependencies.
-    this.mExampleSubsystem = mExampleSubsystem;
-    addRequirements(mExampleSubsystem);
+    this.exampleSubsystem = exampleSubsystem;
+    addRequirements(exampleSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -52,12 +55,25 @@ public class ExampleCommand extends CommandBase {
     return false;
   }
 
+  /**
+   * Executes debugging actions for testing purposes.
+   * Calls initialize(), execute(), and end() within a testing environment.
+   *
+   * @see #initialize()
+   * @see #execute()
+   * @see #end(boolean)
+   */
   public void debugCommand() {
     runTest(() -> initialize());
     runTest(() -> execute());
     runTest(() -> end(false));
   }
 
+  /**
+   * Runs the provided code as a runnable task. If the code throws an exception, it is caught, and an uncaught exception is passed to the default uncaught exception handler for the current thread.
+   *
+   * @param code The runnable task to be executed.
+   */
   public void runTest(Runnable code) {
     try {
       code.run();

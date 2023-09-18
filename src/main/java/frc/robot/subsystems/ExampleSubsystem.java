@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
 
+/**
+ * A demonstration and testing subsystem that extends SubsystemBase.
+ */
 @SuppressWarnings("PMD")
 public class ExampleSubsystem extends SubsystemBase {
 
@@ -27,17 +30,34 @@ public class ExampleSubsystem extends SubsystemBase {
     });
   }
 
+  /**
+   * Executes a custom method, running it within a testing environment.
+   * This method is intended for testing and validation of specific functionality.
+   *
+   * @see #runTest(Runnable)
+   */
   public void myMethod() {
     runTest(() -> {
       // Code for method
     });
   }
 
+  /**
+   * Executes custom testing and validation methods within a controlled testing environment.
+   * Any exceptions thrown during execution are caught and logged.
+   *
+   * @see #runTest(Runnable)
+   */
   public void debugSubsystem() {
     runTest(() -> periodic());
     runTest(() -> myMethod());
   }
 
+  /**
+   * Runs the provided code as a runnable task. If the code throws an exception, it is caught, and an uncaught exception is passed to the default uncaught exception handler for the current thread.
+   *
+   * @param code The runnable task to be executed.
+   */
   public void runTest(Runnable code) {
     try {
       code.run();
