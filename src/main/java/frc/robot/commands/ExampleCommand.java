@@ -11,7 +11,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 /**
  * An example command for use as a template.
  */
-@SuppressWarnings("PMD")
+
 public class ExampleCommand extends CommandBase {
 
   private final ADAM adam = new ADAM(null);
@@ -19,7 +19,6 @@ public class ExampleCommand extends CommandBase {
 
   /** Creates a new ExampleCommand. */
   public ExampleCommand(ExampleSubsystem exampleSubsystem) {
-    debugCommand();
     // Use addRequirements() here to declare subsystem dependencies.
     this.exampleSubsystem = exampleSubsystem;
     addRequirements(exampleSubsystem);

@@ -10,7 +10,7 @@ import frc.robot.ADAM;
 /**
  * A demonstration and testing subsystem that extends SubsystemBase.
  */
-@SuppressWarnings("PMD")
+
 public class ExampleSubsystem extends SubsystemBase {
 
   // Create an instance of ADAM to handle exception logging
@@ -18,9 +18,7 @@ public class ExampleSubsystem extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
-    runTest(() -> {
-      debugSubsystem();
-    });
+    
   }
 
   @Override
