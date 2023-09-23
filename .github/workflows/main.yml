@@ -1,4 +1,4 @@
-# This is a basic workflow to build robot code. P.S. Michael M was here
+# This is a basic workflow to build robot code.
 
 name: CI
 
@@ -36,3 +36,11 @@ jobs:
     # Runs a single command using the runners shell
     - name: Compile and run tests on robot code
       run: ./gradlew build
+
+    # Publish the PMD report as an artifact
+    - name: Publish PMD Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: pmd-report
+        path: build/reports/pmd/main.html
+
