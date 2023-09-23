@@ -42,5 +42,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: pmd-report
-        path: /
+        path: build/reports/pmd/main.html
 
