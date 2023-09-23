@@ -30,7 +30,7 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         WARN(300, "Something unexpected happened and needs to be watched."),
         INFO(400, "A normal, expected, relevant event happened."),
         DEBUG(500, "Used for debugging purposes"),
-        TRACE(600, "Used for debugging purposes—includes the most detailed information");
+        TRACE(600, "Used for debugging purposes, includes the most detailed information");
     // Add more error codes as needed
 
     private final int code;
