@@ -1,5 +1,7 @@
 # FRC Team 1885 - README.md
 
+[![CI](https://github.com/Team-1885/WPILIB1885/actions/workflows/main.yml/badge.svg)](https://github.com/Team-1885/WPILIB1885/actions/workflows/main.yml)
+
 In this repository, you will find our latest FRC robot's source code, documentation, and related materials. 
 
 We believe in open-source principles and encourage collaboration within the FRC community. Whether you are a student, mentor, or simply a robotics enthusiast, we welcome your feedback, suggestions, and contributions.
