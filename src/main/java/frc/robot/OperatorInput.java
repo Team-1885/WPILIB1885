@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
  * Operator Interface (OI) class that handles controller input and button bindings. 
  * This class provides access to the driver and operator controllers and allows configuring button, axis, and POV bindings. 
  */
-public class OI {
+public class OperatorInput {
 
   private static final ADAM adam = new ADAM(null);
 
@@ -28,7 +28,7 @@ public class OI {
    * Constructs a new instance of the OI class. 
    * Initializes driver and operator controllers.
    */
-  public OI() {
+  public OperatorInput() {
     runTest(() -> {
       driverXBXCtrlr = new XboxController(RobotMap.DriverConstants.kDriverXBXCtrlrPort);
       driverPS4Ctrlr = new PS4Controller(RobotMap.DriverConstants.kDriverPS4CtrlrPort);
