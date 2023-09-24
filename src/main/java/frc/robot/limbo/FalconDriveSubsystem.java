@@ -16,7 +16,7 @@ public class FalconDriveSubsystem extends SubsystemBase {
   // Create an instance of ADAM to handle exception logging
   private final ADAM adam = new ADAM(null);
 
-  /** Creates a new ExampleSubsystem. */
+  /** Creates a new FalconDriveSubsystem. */
   public FalconDriveSubsystem() {
     
   }
