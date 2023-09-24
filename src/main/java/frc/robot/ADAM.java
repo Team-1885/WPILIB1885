@@ -33,8 +33,8 @@ public class ADAM implements Thread.UncaughtExceptionHandler {
         TRACE(600, "Used for debugging purposes, includes the most detailed information");
     // Add more error codes as needed
 
-    private final int code;
-    private final String message;
+    private final int code; // code
+    private final String message; // message
 
     ADAMErrorCodes(int code, String message) {
       this.code = code;
