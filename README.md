@@ -37,6 +37,8 @@ Before you start working with our repository, please ensure that you have the fo
 
 - **[[-] VisualVM:](https://visualvm.github.io/download.html)** VisualVM is a tool that provides a visual interface for viewing detailed information about Java applications while they are running on a Java Virtual Machine (JVM). VisualVM organizes JVM data that is retrieved by the Java Development Kit (JDK) tools and presents the information in a way that allows data on multiple Java applications to be quickly viewed.
 
+- **[[-] Wireshark:](https://www.wireshark.org/)** Wireshark is a free and open-source packet analyzer. It is used for network troubleshooting, analysis, software and communications protocol development, and education
+
 - **[[-] AdvantageScope:](https://github.com/Mechanical-Advantage/AdvantageScope)** AdvantageScope is a robot diagnostics, log review/analysis, and data visualization application for FIRST Robotics Competition teams. It reads logs in WPILOG, DS log, and RLOG file formats, plus live robot data viewing using NT4 or RLOG streaming. AdvantageScope can be used with any WPILib project, but is also optimized for use with our AdvantageKit logging framework.
 
 - **[[-] Synthesis:](https://synthesis.autodesk.com/)** Synthesis is an open source simulator used to design, test, and experiment with 3D CAD models.
