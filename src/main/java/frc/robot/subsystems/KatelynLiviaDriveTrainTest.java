@@ -28,6 +28,14 @@ public class KatelynLiviaDriveTrainTest {
     private CANSparkMax rightDriveFollower2 = new CANSparkMax(RobotMap.DriveConstants.kRDF2_ID,
     MotorType.kBrushless);
 
+    private RelativeEncoder leftEncoder;
+    private RelativeEncoder rightEncoder;
+
+    private PIDController leftPIDController;
+    private PIDController rightPIDController;
+
+    private final ADAM adam = new ADAM(null);
+
     public KatelynLiviaDriveTrainTest() {
         initializeMotors();
         initializeEncoders();
@@ -70,4 +78,85 @@ public class KatelynLiviaDriveTrainTest {
         rightDriveFollower1.setInverted(false);
         rightDriveFollower2.setInverted(false);
       }
+      private void initializeEncoders() {
+        // Assigning encoders to track the position and velocity of the right and left drivetrain sides
+        // By calling the 'getEncoder()' method on the right and left primary motor controllers, we obtain the corresponding encoders and store them in 'mRightEncoder' and 'mLeftEncoder' variables respectively.
+    
+        leftEncoder = leftDrivePrimary.getEncoder();
+        rightEncoder = rightDrivePrimary.getEncoder();
+      }
+      private void initializePIDControllers() {
+        // Create PID controllers for left and right sides of the drive train with the
+        // specified proportional (kP), integral (kI), and derivative (kD) gains.
+    
+        leftPIDController = new PIDController(RobotMap.PIDConstants.kP, RobotMap.PIDConstants.kI, RobotMap.PIDConstants.kD);
+        rightPIDController = new PIDController(RobotMap.PIDConstants.kP, RobotMap.PIDConstants.kI, RobotMap.PIDConstants.kD);
+      }
+
+      public void setDriveSpeeds(double leftSpeed, double rightSpeed) {  
+        runTest(() -> {
+          // Calculate errors compared to speed setpoints
+          double leftSetpoint = Math.max(-1.0, Math.min(leftSpeed, 1.0));
+          double rightSetpoint = Math.max(-1.0, Math.min(rightSpeed, 1.0));
+            
+          double leftError = leftSetpoint - getLeftVelocity();
+          double rightError = rightSetpoint - getRightVelocity();
+          
+              // Use PID controllers to calculate outputs
+          double leftOutput = leftPIDController.calculate(leftError);
+          double rightOutput = rightPIDController.calculate(rightError);
+
+          // Set motor speeds  
+          leftDrivePrimary.set(leftOutput);
+          rightDrivePrimary.set(rightOutput);
+          
+          // Update dashboard
+          updateSmartDashboard();
+        });
+      }
+      public double getLeftVelocity() {
+        return leftEncoder.getVelocity();
+      }
+      public double getRightVelocity() {
+        return rightEncoder.getVelocity();
+      }
+      public double getRightPosition() {
+        return rightEncoder.getPosition();
+      }
+      public double getLeftPosition() {
+        return leftEncoder.getPosition();
+      }
+
+      private void updateSmartDashboard() {
+        runTest(() -> {
+          // Update SmartDashboard with encoder values
+    
+          SmartDashboard.putNumber("Left Encoder Position", getLeftPosition());
+          SmartDashboard.putNumber("Right Encoder Position", getRightPosition());
+          SmartDashboard.putNumber("Left Encoder Velocity", getLeftVelocity());
+          SmartDashboard.putNumber("Right Encoder Velocity", getRightVelocity());
+    
+          // Displaying motor output values on the SmartDashboard
+    
+          SmartDashboard.putNumber("Left Motor Output", leftDrivePrimary.getAppliedOutput());
+          SmartDashboard.putNumber("Right Motor Output", rightDrivePrimary.getAppliedOutput());
+    
+          // Calculating and displaying PID controller output values on the SmartDashboard
+    
+          SmartDashboard.putNumber("Left PID Output", leftPIDController.calculate(getLeftVelocity()));
+          SmartDashboard.putNumber("Right PID Output", rightPIDController.calculate(getRightVelocity()));
+        });
+      }
+
+    public void runTest(Runnable code) {
+        try {
+          code.run();
+        } catch (Exception e) {
+          adam.uncaughtException(Thread.currentThread(), e);
+        }
+      }
+
+
+      //11/14 - added up to updateSmartDashboard()
+      //referenced from DriveTrainSubsystem
 }
