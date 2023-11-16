@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 
-/**
- * Operator Interface (OI) class that handles controller input and button bindings. 
- * This class provides access to the driver and operator controllers and allows configuring button, axis, and POV bindings. 
+/** 
+ * Manages controller input and bindings for the Operator Interface (OI). 
  */
+
 public class OperatorInput {
 
   private static final ADAM adam = new ADAM(null);
@@ -30,9 +30,9 @@ public class OperatorInput {
    */
   public OperatorInput() {
     runTest(() -> {
-      driverXBXCtrlr = new XboxController(RobotMap.DriverConstants.kDriverXBXCtrlrPort);
-      driverPS4Ctrlr = new PS4Controller(RobotMap.DriverConstants.kDriverPS4CtrlrPort);
-      driverLGTCtrlr = new Joystick(RobotMap.DriverConstants.kDriverLGTCtrlrPort);
+      driverXBXCtrlr = new XboxController(RobotMap.DriverConstants.DriverXBXCtrlrPort);
+      driverPS4Ctrlr = new PS4Controller(RobotMap.DriverConstants.DriverPS4CtrlrPort);
+      driverLGTCtrlr = new Joystick(RobotMap.DriverConstants.DriverLGTCtrlrPort);
 
       operatorXBXCtrlr = new XboxController(RobotMap.OperatorConstants.kOperatorXBXCtrlrPort);
       operatorPS4Ctrlr = new PS4Controller(RobotMap.OperatorConstants.kOperatorPS4CtrlrPort);

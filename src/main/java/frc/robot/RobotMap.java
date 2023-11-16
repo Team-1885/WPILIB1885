@@ -18,23 +18,42 @@ public final class RobotMap {
    *  (k) [constants] for drive || drive-related robot systems.
    */
   public static final class DriveConstants {
-    public static final int kLDP_ID = 0;   
-    public static final int kLDF1_ID = 1;  
-    public static final int kLDF2_ID = 2;  
+
+    // ========================================
+    // DO NOT MODIFY THESE PHYSICAL CONSTANTS
+    // ========================================
+
+    //need to modify with new robot:
+    public static final double GEARBOX_RATIO = (12.0 / 40.0) * (16.0 / 38.0);
+    public static final double WHEEL_DIAMETER_FT = 0.5;
+    public static final double WHEEL_DIAMETER_IN = 6;
+    //still need to change:
+    public static final double TRACK_WIDTH_FEET = 1.8;
     
-    public static final int kRDP_ID = 3;   
-    public static final int kRDF1_ID = 4;  
-    public static final int kRDF2_ID = 5;  
+
+    public static final double WHEEL_CIRCUM_FT = WHEEL_DIAMETER_FT * Math.PI;
+    public static final double DRIVE_NEO_POS_FACTOR = GEARBOX_RATIO * WHEEL_CIRCUM_FT;
+    public static final double DRIVE_NEO_VEL_FACTOR = DRIVE_NEO_POS_FACTOR / 60.0;
+    public static final double MAX_VELOCITY_RPM = 5676;
+    public static final double PULSES_PER_ROTATION = 256.0;
+    public static final double CURRENT_LIMIT_AMPS = 60.0;
+    public static final int MAX_LIMELIGHT_FOV = 22;
     
+
+    public static final int LDP_ID = 0;   
+    public static final int LDF_ID = 1;  
+    
+    public static final int RDP_ID = 3;   
+    public static final int RDF_ID = 4;  
   }
 
   /**
    * (k) [constants] for drivers & associated hardware/other usages.
    */
   public static final class DriverConstants {
-    public static final int kDriverXBXCtrlrPort = 0;
-    public static final int kDriverPS4CtrlrPort = 0;
-    public static final int kDriverLGTCtrlrPort = 0;
+    public static final int DriverXBXCtrlrPort = 0;
+    public static final int DriverPS4CtrlrPort = 0;
+    public static final int DriverLGTCtrlrPort = 0;
   }
 
   /**

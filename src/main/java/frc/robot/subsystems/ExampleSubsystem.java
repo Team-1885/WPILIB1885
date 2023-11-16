@@ -14,15 +14,14 @@ import frc.robot.ADAM;
 public class ExampleSubsystem extends SubsystemBase {
 
   // Create an instance of ADAM to handle exception logging
-  private final ADAM adam = new ADAM(null);
+  private final transient ADAM adam = new ADAM(null);
 
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {
-    
+    // Wsg 
   }
 
-  @Override
-  public void periodic() {
+  @Override public void periodic() {
     runTest(() -> {
       // This method will be called once per scheduler run
     });
