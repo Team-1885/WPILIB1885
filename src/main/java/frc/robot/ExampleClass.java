@@ -4,45 +4,62 @@
 
 package frc.robot;
 
+import lombok.Getter;
+
 /**
  * This class serves as a placeholder for reference purposes.
  * It provides a template for creating and testing runnable methods.
  */
-public class ExampleClass {
+@SuppressWarnings("PMD.CommentSize") public class ExampleClass {
 
-  private static final ADAM adam = new ADAM(null);
+  /**
+   * ...
+   */
+  private @Getter static ADAM adam = new ADAM(null);
+
+  /**
+   * ...
+   */
+  public ExampleClass() {
+    // ...
+  }
 
   /**
    * The main method serves as the entry point for the class.
    *
    * @param args Command-line arguments provided when running the program.
    */
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     runTest(() -> {
-        // Code
+      // Code
     });
   }
 
   /**
-   * tester method for class.
+   * ...
    */
   public static void myMethod() {
     runTest(() -> {
-        // Code
+      // Code
     });
   }
 
+  /**
+   * ...
+   */
   public void debugClass() {
     runTest(() -> main(null));
     runTest(() -> myMethod());
   }
 
   /**
-   * Runs the provided code as a runnable task. If the code throws an exception, it is caught, and an uncaught exception is passed to the default uncaught exception handler for the current thread.
+   * Runs the provided code as a runnable task. If the code throws an exception,
+   * it is caught, and an uncaught exception is passed to the default uncaught
+   * exception handler for the current thread.
    *
    * @param code The runnable task to be executed.
    */
-  public static void runTest(Runnable code) {
+  public static void runTest(final Runnable code) {
     try {
       code.run();
     } catch (Exception e) {

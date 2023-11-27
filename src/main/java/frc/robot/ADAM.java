@@ -5,232 +5,266 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import lombok.Getter;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
- * The ADAM class represents an error handling and logging utility for the robot.
+ * The ADAM class represents an error handling and logging utility for the
+ * robot.
  */
-public class ADAM implements Thread.UncaughtExceptionHandler {
+@SuppressWarnings("PMD.CommentSize") public class ADAM implements Thread.UncaughtExceptionHandler {
 
   /**
-   * Determines error codes.
+   * ...
+   */
+  private @Getter String errorMessage;
+  /**
+   * ...
+   */
+  private @Getter ADAMErrorCodes errorCode;
+  /**
+   * ...
+   */
+  private @Getter Logger logger = Logger.getLogger(ADAM.class.getName());
+
+  /**
+   * ...
+   */
+  private @Getter final Map<ADAMErrorCodes, Integer> errorCounts = new ConcurrentHashMap<>();
+  /**
+   * ...
+   */
+  private @Getter static final int MAX_ERROR_COUNT = 5; // Maximum allowed errors within the time window
+  /**
+   * ...
+   */
+  private @Getter static final long TIME_WINDOW_MS = 10_000; // Time window in milliseconds (e.g., 10 seconds)
+  /**
+   * ...
+   */
+  private @Getter long lastErrorTime = -1;
+  /**
+   * ...
+   */
+  private @Getter final long robotStartTime;
+
+  /**
+   * ...
    */
   public enum ADAMErrorCodes {
-        OFF(0, "No logging"),
-        FATAL(100, "The application is unusable. Action needs to be taken immediately."),
-        ERROR(200, "An error occurred in the application."),
-        WARN(300, "Something unexpected happened and needs to be watched."),
-        INFO(400, "A normal, expected, relevant event happened."),
-        DEBUG(500, "Used for debugging purposes"),
-        TRACE(600, "Used for debugging purposes, includes the most detailed information");
+    OFF(0, "No logging"),
+    FATAL(100, "The application is unusable. Action needs to be taken immediately."),
+    ERROR(200, "An error occurred in the application."),
+    WARN(300, "Something unexpected happened and needs to be watched."),
+    INFO(400, "A normal, expected, relevant event happened."),
+    DEBUG(500, "Used for debugging purposes"),
+    TRACE(600, "Used for debugging purposes, includes the most detailed information");
     // Add more error codes as needed
 
-    private final int code; 
-    private final String message; 
+    /**
+     * ...
+     */
+    private @Getter final int code;
+    /**
+     * ...
+     */
+    private @Getter final String message;
 
-    ADAMErrorCodes(int code, String message) {
+    ADAMErrorCodes(final int code, final String message) {
       this.code = code;
       this.message = message;
     }
-
-    public int getCode() {
-      return code;
-    }
-
-    public String getMessage() {
-      return message;
-    }
   }
 
   /**
-   *  Adam Severity.
+   * Adam Severity.
    */
   public enum ADAMSeverity {
-        ALL(Level.ALL),
-        CONFIG(Level.CONFIG),
-        FINE(Level.FINE),
-        FINER(Level.FINER),
-        FINEST(Level.FINEST),
-        INFO(Level.INFO),
-        OFF(Level.OFF),
-        SEVERE(Level.SEVERE),
-        WARNING(Level.WARNING);
+    ALL(Level.ALL),
+    CONFIG(Level.CONFIG),
+    FINE(Level.FINE),
+    FINER(Level.FINER),
+    FINEST(Level.FINEST),
+    INFO(Level.INFO),
+    OFF(Level.OFF),
+    SEVERE(Level.SEVERE),
+    WARNING(Level.WARNING);
 
-    private final Level level;
+    /**
+     * ...
+     */
+    private @Getter final Level level;
 
-    ADAMSeverity(Level level) {
+    ADAMSeverity(final Level level) {
       this.level = level;
     }
-
-    public Level getLevel() {
-      return level;
-    }
   }
 
-  private static ADAMSeverity getSeverityForError(Throwable e) {
-    // Map each exception to its corresponding severity level
-    if (e instanceof Exception) {
-      return ADAMSeverity.SEVERE;
-    } else if (e instanceof Exception) {
-      return ADAMSeverity.SEVERE;
-    } else {
-      return ADAMSeverity.WARNING; // Default severity level
+  private static ADAMSeverity getSeverityForError(final Throwable throwable) {
+    ADAMSeverity severity = ADAMSeverity.WARNING;
+
+    if (throwable instanceof Exception) {
+      severity = ADAMSeverity.SEVERE;
+    } else if (throwable instanceof Exception) {
+      severity = ADAMSeverity.SEVERE;
     }
+
+    return severity;
   }
-
-  private final String customErrorMessage;
-  private final ADAMErrorCodes errorCode;
-  private static final Logger logger = Logger.getLogger(ADAM.class.getName());
-
-  // New HashMap to store error counts for each error code
-  private final Map<ADAMErrorCodes, Integer> errorCounts = new HashMap<>();
-  private static final int MAX_ERROR_COUNT = 5; // Maximum allowed errors within the time window
-  private static final long TIME_WINDOW_MS = 10000; // Time window in milliseconds (e.g., 10 seconds)
-  private long lastErrorTime = 0;
-
-  // Add a new field to store the start time of the robot
-  private final long robotStartTime;
 
   /**
    * Constructs an ADAM instance to handle uncaught exceptions and log errors.
    *
    * @param e The uncaught exception.
    */
-  public ADAM(Throwable e) {
-    this.customErrorMessage = determineErrorCode(e).getMessage();
-    this.errorCode = determineErrorCode(e);
-    logger.setLevel(getSeverityForError(e).getLevel());
+  public ADAM(final Throwable throwable) {
+    this.errorMessage = determineErrorCode(throwable).getMessage();
+    this.errorCode = determineErrorCode(throwable);
+    logger.setLevel(getSeverityForError(throwable).getLevel());
 
     // Set the time zone to Eastern Standard Time (EST)
-    TimeZone estTimeZone = TimeZone.getTimeZone("EST");
+    final TimeZone estTimeZone = TimeZone.getTimeZone("EST");
     TimeZone.setDefault(estTimeZone);
 
     // Record the start time of the robot
     robotStartTime = System.currentTimeMillis();
   }
 
-  // Method to determine the error code based on the type of exception
-  private ADAMErrorCodes determineErrorCode(Throwable e) {
-    if (e instanceof Exception) {
-      return ADAMErrorCodes.ERROR;
-    } else if (e instanceof NullPointerException) {
-      return ADAMErrorCodes.FATAL;
-    } else {
-      return ADAMErrorCodes.WARN;
+  private ADAMErrorCodes determineErrorCode(final Throwable throwable) {
+    ADAMErrorCodes errorCode = ADAMErrorCodes.WARN;
+
+    if (throwable instanceof Exception) {
+      errorCode = ADAMErrorCodes.ERROR;
+    } else if (throwable instanceof NullPointerException) {
+      errorCode = ADAMErrorCodes.FATAL;
     }
+
+    return errorCode;
   }
 
+  @SuppressWarnings("PMD.DoNotUseThreads")
   @Override
-  public void uncaughtException(Thread t, Throwable e) {
+  public void uncaughtException(final Thread thread, final Throwable throwable) {
     // Implement rate limiting for logging
     if (shouldLogError()) {
-      logError(e);
+      logError(throwable);
     }
   }
 
   // Method to check if the error should be logged based on rate limiting
   private boolean shouldLogError() {
-    long currentTime = System.currentTimeMillis();
+    final long currentTime = System.currentTimeMillis();
+
+    boolean shouldLog = false; // Default value
+
     if (currentTime - lastErrorTime > TIME_WINDOW_MS) {
       // Reset the error counts if the time window has passed
       errorCounts.clear();
       lastErrorTime = currentTime;
-      return true;
-    }
-
-    int count = errorCounts.getOrDefault(errorCode, 0);
-    if (count < MAX_ERROR_COUNT) {
-      // Log the error if the error count is within the limit
-      errorCounts.put(errorCode, count + 1);
-      return true;
+      shouldLog = true;
     } else {
+      final int count = errorCounts.getOrDefault(errorCode, 0);
+      if (count < MAX_ERROR_COUNT) {
+        // Log the error if the error count is within the limit
+        errorCounts.put(errorCode, count + 1);
+        shouldLog = true;
+      }
       // Don't log the error if the error count exceeds the limit within the time
       // window
-      return false;
     }
+
+    return shouldLog;
   }
 
   // Method to format elapsed time in a human-readable format
-  private String formatElapsedTime(long elapsedTimeMillis) {
-    long seconds = (elapsedTimeMillis / 1000) % 60;
-    long minutes = (elapsedTimeMillis / (1000 * 60)) % 60;
-    long hours = (elapsedTimeMillis / (1000 * 60 * 60)) % 24;
+  private String formatElapsedTime(final long elapsedTimeMillis) {
+    final long seconds = (elapsedTimeMillis / 1000) % 60;
+    final long minutes = (elapsedTimeMillis / (1000 * 60)) % 60;
+    final long hours = (elapsedTimeMillis / (1000 * 60 * 60)) % 24;
     return String.format("%02d:%02d:%02d", hours, minutes, seconds);
   }
 
   // Method to log the error and related information
-  private void logError(Throwable e) {
+  private void logError(final Throwable throwable) {
     // ADAM ASCII art title
-    String adamTitle =
-          "       /)\n"
+    final String adamTitle = "       /)\n"
         + "  .-\"\".L,\"\"-.\n"
         + " ;       :.  :\n"
         + " (       7:  )\n"
         + "  :         ;\n"
         + "   \"..-\"-..\"";
 
-
-
     // Set the time zone to Eastern Standard Time (EST)
-    TimeZone estTimeZone = TimeZone.getTimeZone("America/New_York");
+    final TimeZone estTimeZone = TimeZone.getTimeZone("America/New_York");
 
     // Format date in 12-hour time with AM/PM and Eastern Standard Time (EST)
-    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a", Locale.US);
+    final SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a", Locale.US);
     sdf.setTimeZone(estTimeZone);
-    String formattedTime = sdf.format(new Date());
+    final String formattedTime = sdf.format(new Date());
 
     // Create a separator line
-    String separatorLine = "==================================================";
+    final String separatorLine = "==================================================";
 
     // Log error with the specified logging level
-    StringBuilder logMessageBuilder = new StringBuilder();
-    logMessageBuilder.append(separatorLine).append("\n");
-    logMessageBuilder.append(adamTitle).append(" ADAM v1.0: Michael has nothing on me").append("\n");
-    logMessageBuilder.append(separatorLine).append("\n");
+    final StringBuilder logMessageBuilder = new StringBuilder(200);
 
-    logMessageBuilder.append("[").append(formattedTime).append("] Uncaught exception (Error Code ")
-      .append(errorCode.getCode()).append("): ").append(customErrorMessage);
+    logMessageBuilder.append(separatorLine)
+        .append('\n')
+        .append(adamTitle)
+        .append(" ADAM v1.0: Michael has nothing on me\n")
+        .append(separatorLine)
+        .append("\n[")
+        .append(formattedTime)
+        .append("] Uncaught exception (Error Code ")
+        .append(errorCode.getCode())
+        .append("): ")
+        .append(errorMessage);
 
     // Log the elapsed time since the robot started
-    long currentTime = System.currentTimeMillis();
-    long elapsedTime = currentTime - robotStartTime;
+    final long elapsedTime = System.currentTimeMillis() - robotStartTime;
     logMessageBuilder.append("\nElapsed Time Since Robot Started: ").append(formatElapsedTime(elapsedTime));
 
     // Log class, method, and line number where the error occurred
-    StackTraceElement[] stackTrace = e.getStackTrace();
+    final StackTraceElement[] stackTrace = throwable.getStackTrace();
     if (stackTrace.length > 0) {
-      StackTraceElement topFrame = stackTrace[0];
-      logMessageBuilder.append("\nError occurred in class: ").append(topFrame.getClassName())
-        .append(", method: ").append(topFrame.getMethodName())
-        .append(", line: ").append(topFrame.getLineNumber());
+      final StackTraceElement topFrame = stackTrace[0];
+      final String className = topFrame.getClassName();
+      final String methodName = topFrame.getMethodName();
+      final int lineNumber = topFrame.getLineNumber();
+
+      logMessageBuilder
+          .append("\nError occurred in class: ").append(className)
+          .append(", method: ").append(methodName)
+          .append(", line: ").append(lineNumber);
     }
 
     // Log the original exception message and stack trace
-    logMessageBuilder.append("\n\nOriginal Exception Message: ").append(e.getMessage())
+    logMessageBuilder.append("\n\nOriginal Exception Message: ").append(throwable.getMessage())
         .append("\n\nOriginal Stack Trace:");
-    for (StackTraceElement traceElement : e.getStackTrace()) {
+    for (final StackTraceElement traceElement : stackTrace) {
       logMessageBuilder.append("\n  ").append(traceElement.toString());
     }
 
-    logMessageBuilder.append("\n").append(separatorLine).append("\n");
+    logMessageBuilder.append('\n').append(separatorLine).append('\n');
 
-    String logMessage = logMessageBuilder.toString();
+    final String logMessage = logMessageBuilder.toString();
     if (logger.isLoggable(logger.getLevel())) {
       logger.log(logger.getLevel(), logMessage);
     }
-  
+
     // Log error to driver station with custom message and error code
     DriverStation.reportError(logMessage, false);
 
     // Log error to console with custom message and error code
-    System.err.println(logMessage);
+    logger.info(logMessage);
+
   }
 }

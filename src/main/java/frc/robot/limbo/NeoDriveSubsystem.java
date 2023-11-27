@@ -6,23 +6,27 @@ package frc.robot.limbo;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
+import lombok.Getter;
 
 /**
  * A demonstration and testing subsystem that extends SubsystemBase.
  */
 
-public class NeoDriveSubsystem extends SubsystemBase {
+ @SuppressWarnings("PMD.CommentSize") public class NeoDriveSubsystem extends SubsystemBase {
 
-  // Create an instance of ADAM to handle exception logging
-  private final ADAM adam = new ADAM(null);
+  /**
+   * Lorem Ipsum. 
+   */
+  private @Getter ADAM adam = new ADAM(null);
 
-  /** Creates a new NeoDriveSubsystem. */
+  /** 
+   * Creates a new ExampleSubsystem. 
+   */
   public NeoDriveSubsystem() {
-    
+    super();
   }
 
-  @Override
-  public void periodic() {
+  @Override public void periodic() {
     runTest(() -> {
       // This method will be called once per scheduler run
     });
@@ -40,6 +44,7 @@ public class NeoDriveSubsystem extends SubsystemBase {
     });
   }
 
+
   /**
    * Executes custom testing and validation methods within a controlled testing environment.
    * Any exceptions thrown during execution are caught and logged.
@@ -56,7 +61,7 @@ public class NeoDriveSubsystem extends SubsystemBase {
    *
    * @param code The runnable task to be executed.
    */
-  public void runTest(Runnable code) {
+  public void runTest(final Runnable code) {
     try {
       code.run();
     } catch (Exception e) {

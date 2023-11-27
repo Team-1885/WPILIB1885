@@ -7,18 +7,27 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ADAM;
 import frc.robot.subsystems.ExampleSubsystem;
+import lombok.Getter;
 
 /**
  * An example command for use as a template.
  */
 
-public class ExampleCommand extends CommandBase {
+ @SuppressWarnings("PMD.CommentSize") public class ExampleCommand extends CommandBase {
 
-  private final ADAM adam = new ADAM(null);
-  private final ExampleSubsystem exampleSubsystem;
+  /**
+   * Lorem Ipsum.
+   */
+  private @Getter ADAM adam = new ADAM(null);
+  
+  /**
+   * Lorem Ipsum.
+   */
+  private @Getter ExampleSubsystem exampleSubsystem;
 
   /** Creates a new ExampleCommand. */
-  public ExampleCommand(ExampleSubsystem exampleSubsystem) {
+  public ExampleCommand(final ExampleSubsystem exampleSubsystem) {
+    super();
     // Use addRequirements() here to declare subsystem dependencies.
     this.exampleSubsystem = exampleSubsystem;
     addRequirements(exampleSubsystem);
@@ -39,7 +48,7 @@ public class ExampleCommand extends CommandBase {
   }
 
   // Called once the command ends or is interrupted.
-  @Override public void end(boolean interrupted) {
+  @Override public void end(final boolean interrupted) {
     runTest(() -> {
 
     });
@@ -69,7 +78,7 @@ public class ExampleCommand extends CommandBase {
    *
    * @param code The runnable task to be executed.
    */
-  public void runTest(Runnable code) {
+  public void runTest(final Runnable code) {
     try {
       code.run();
     } catch (Exception e) {

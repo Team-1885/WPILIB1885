@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import lombok.Getter;
+
 import java.util.logging.Logger;
 
 /**
@@ -14,21 +16,38 @@ import java.util.logging.Logger;
  * If you change the name of this class or the package after creating this project, you must also update the build.gradle file in the project.
  */
 
-public class Robot extends TimedRobot {
+ @SuppressWarnings("PMD.CommentSize") public class Robot extends TimedRobot {
 
-  private Command autonomousCommand;
-  private static final Logger mLogger = Logger.getLogger(Robot.class.getName());
-  private RobotContainer robotContainer;
+  /**
+   * Lorem Ipsum.
+   */
+  private @Getter Command autonomousCommand;
+  /**
+   * Lorem Ipsum.
+   */
+  private static final @Getter Logger LOGGER = Logger.getLogger(Robot.class.getName());
+  /**
+   * Lorem Ipsum.
+   */
+  private @Getter RobotContainer robotContainer;
+
+  /**
+   * Default constructor for the Robot class. This constructor is automatically invoked when an instance of the Robot class is created.
+   * Initializes the Robot instance by calling the no-argument constructor of the superclass (TimedRobot).
+   */
+  public Robot() {
+    super();
+  }
 
   /**
    * This function is run when the robot is first started up and should be used for any initialization code.
    */
   @Override public void robotInit() {
-    mLogger.info("Initializing robot...");
+    LOGGER.info("Initializing robot...");
     // Instantiate our RobotContainer. 
     // This will perform all our button bindings, and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
-    mLogger.info("Robot initialization complete.");
+    LOGGER.info("Robot initialization complete.");
   }
 
   /**
@@ -45,9 +64,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override public void disabledInit() {
+    // ...
   }
 
   @Override public void disabledPeriodic() {
+    // ...
   }
 
   /**
@@ -64,6 +85,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override public void autonomousPeriodic() {
+    // ...
   }
 
   @Override public void teleopInit() {
@@ -76,6 +98,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override public void teleopPeriodic() {
+    // ...
   }
 
   @Override public void testInit() {
@@ -85,13 +108,16 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override public void testPeriodic() {
+    // ...
   }
 
   /** This function is called once when the robot is first started up. */
   @Override public void simulationInit() {
+    // ...
   }
 
   /** This function is called periodically whilst in simulation. */
   @Override public void simulationPeriodic() {
+    // ...
   }
 }

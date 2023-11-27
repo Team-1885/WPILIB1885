@@ -22,6 +22,48 @@
     <module name="AvoidNoArgumentSuperConstructorCall"/>
     <module name="AvoidStarImport"/>
     <module name="AvoidStaticImport"/>
+        <module name="BooleanExpressionComplexity"/>
+    <module name="CatchParameterName"/>
+    <module name="ClassDataAbstractionCoupling"/>
+    <module name="ClassFanOutComplexity"/>
+    <module name="ClassMemberImpliedModifier" />
+    <module name="ClassTypeParameterName"/>
+    <module name="CommentsIndentation"/>
+    <module name="ConstantName"/>
+    <module name="CovariantEquals"/>
+    <module name="CustomImportOrder"/>
+    <module name="CyclomaticComplexity">
+      <property name="switchBlockAsSingleDecisionPoint" value="true"/>
+    </module>
+    <module name="DeclarationOrder"/>
+    <module name="DefaultComesLast"/>
+    <module name="DescendantToken">
+      <property name="tokens" value="LITERAL_SWITCH"/>
+      <property name="maximumDepth" value="2"/>
+      <property name="limitedTokens" value="LITERAL_DEFAULT"/>
+      <property name="minimumNumber" value="1"/>
+    </module>
+    <module name="DesignForExtension"/>
+    <module name="EmptyBlock"/>
+    <module name="EmptyCatchBlock"/>
+    <module name="EmptyForInitializerPad"/>
+    <module name="EmptyForIteratorPad"/>
+    <module name="EmptyLineSeparator"/>
+    <module name="EmptyStatement"/>
+    <module name="EqualsAvoidNull"/>
+    <module name="EqualsHashCode"/>
+    <module name="ExecutableStatementCount"/>
+    <module name="ExplicitInitialization"/>
+    <module name="FallThrough"/>
+    <module name="FinalClass"/>
+    <module name="FinalLocalVariable"/>
+    <module name="FinalParameters"/>
+    <module name="GenericWhitespace"/>
+    <module name="HiddenField"/>
+    <module name="HideUtilityClassConstructor"/>
   </module>
+  <module name="Header"/>
+  <module name="FileLength"/>
+  <module name="FileTabCharacter"/>
 </module>
 
