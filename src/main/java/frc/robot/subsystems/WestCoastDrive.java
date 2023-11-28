@@ -177,6 +177,10 @@ public class WestCoastDrive extends SubsystemBase {
     });
   }
 
+  public void setMotorSpeed(double param) {
+    leftMaster.set(param);
+  }
+
   /**
    * Executes custom testing and validation methods in a controlled environment.
    * Any exceptions thrown during execution are caught and logged.

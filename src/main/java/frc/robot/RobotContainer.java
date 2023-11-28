@@ -18,13 +18,16 @@ import frc.robot.subsystems.WestCoastDrive;
 @SuppressWarnings("PMD.CommentSize") public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  WestCoastDrive wcd = new WestCoastDrive();
+  private final WestCoastDrive wcd = new WestCoastDrive();
+  private final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
+  private final DriveCommand driveCommand = new DriveCommand(wcd);
 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    wcd.setDefaultCommand(driveCommand);
   }
 
   /**
@@ -33,6 +36,7 @@ import frc.robot.subsystems.WestCoastDrive;
    */
   private void configureBindings() {
     // Add code here
+
   }
 
   /**
@@ -42,6 +46,6 @@ import frc.robot.subsystems.WestCoastDrive;
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new SequentialCommandGroup(); // basically a placeholder
+    return driveCommand(); // basically a placeholder
   }
 }
