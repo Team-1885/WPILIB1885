@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.WestCoastDrive;
 
 /** 
@@ -46,6 +48,6 @@ import frc.robot.subsystems.WestCoastDrive;
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return driveCommand(); // basically a placeholder
+    return driveCommand; // basically a placeholder
   }
 }
