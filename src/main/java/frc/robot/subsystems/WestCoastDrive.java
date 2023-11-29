@@ -104,51 +104,51 @@ public class WestCoastDrive extends SubsystemBase {
             .withSize(4, 1);
         driveTab.add(label + " - Firmware String", motor.getFirmwareString())
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(0, 2)
+            .withPosition(0, 10)
             .withSize(4, 1);
         driveTab.add(label + " - Set Speed", motor.get())
             .withWidget(BuiltInWidgets.kNumberBar)
-            .withPosition(0, 0)
+            .withPosition(0, 20)
             .withSize(4, 1);
         driveTab.add(label + " - Applied Output", motor.getAppliedOutput())
             .withWidget(BuiltInWidgets.kDial)
-            .withPosition(0, 3)
+            .withPosition(0, 30)
             .withSize(4, 1);
         driveTab.add(label + " - Bus Voltage", motor.getBusVoltage())
             .withWidget(BuiltInWidgets.kGraph)
-            .withPosition(0, 4)
+            .withPosition(0, 40)
             .withSize(4, 1);
         driveTab.add(label + " - Closed Loop Ramp Rate", motor.getClosedLoopRampRate())
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(0, 5)
+            .withPosition(0, 50)
             .withSize(4, 1);
         driveTab.add(label + " - Device ID", motor.getDeviceId())
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(0, 6)
+            .withPosition(0, 60)
             .withSize(4, 1);
         driveTab.add(label + " - Encoder Position", motor.getEncoder().getPosition())
             .withWidget(BuiltInWidgets.kGraph)
-            .withPosition(0, 7)
+            .withPosition(0, 70)
             .withSize(4, 1);
         driveTab.add(label + " - Firmware Version", motor.getFirmwareVersion())
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(0, 7)
+            .withPosition(0, 80)
             .withSize(4, 1);
         driveTab.add(label + " - Motor Temperature", motor.getMotorTemperature())
             .withWidget(BuiltInWidgets.kNumberBar)
-            .withPosition(0, 8)
+            .withPosition(0, 90)
             .withSize(4, 1);
-        driveTab.add(label + " - Motor Temperature", motor.getMotorType())
+        driveTab.add(label + " - Motor Type", motor.getMotorType())
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(0, 8)
+            .withPosition(0, 100)
             .withSize(4, 1);
-        driveTab.add(label + " - Motor Temperature", motor.getOpenLoopRampRate())
+        driveTab.add(label + " - Open Loop Ramp Rate", motor.getOpenLoopRampRate())
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(0, 8)
+            .withPosition(0, 110)
             .withSize(4, 1);
         driveTab.add(label + " - Output Current", motor.getOutputCurrent())
             .withWidget(BuiltInWidgets.kTextView)
-            .withPosition(0, 9)
+            .withPosition(0, 120)
             .withSize(4, 1);
         // Add more widgets for other methods as needed
       };
@@ -177,8 +177,11 @@ public class WestCoastDrive extends SubsystemBase {
     });
   }
 
-  public void setMotorSpeed(double param) {
+  public void setMotorSpeed(final double param) {
     leftMaster.set(param);
+  }
+  public double getMotorSpeed() {
+    return leftMaster.get();
   }
 
   /**

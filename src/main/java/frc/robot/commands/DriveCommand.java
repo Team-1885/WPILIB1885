@@ -44,7 +44,7 @@ import lombok.Getter;
   // Called every time the scheduler runs while the command is scheduled.
   @Override public void execute() {
     runTest(() -> {
-        westCoastDrive.setMotorSpeed(0.3);
+      westCoastDrive.setMotorSpeed(0.3);
     });
   }
 

@@ -4,7 +4,7 @@ plugins {
     id 'pmd'
     id 'jacoco'
     id "edu.wpi.first.GradleRIO" version "2023.4.3"
-    id("io.freefair.lombok") version "8.4"
+    id "io.freefair.lombok" version "8.4"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -51,12 +51,7 @@ def includeDesktopSupport = true
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
-dependencies {
-    compileOnly
-    'org.projectlombok:lombok:1.18.8'
-    annotationProcessor
-    'org.projectlombok:lombok:1.18.8'
-    
+dependencies { 
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
     implementation 'org.apache.logging.log4j:log4j-api:2.22.0'
