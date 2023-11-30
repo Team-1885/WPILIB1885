@@ -15,5 +15,16 @@
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler"
     }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "shuffleboard@1": {
+      "Subscribers": {
+        "open": true
+      }
+    },
+    "visible": true
   }
 }

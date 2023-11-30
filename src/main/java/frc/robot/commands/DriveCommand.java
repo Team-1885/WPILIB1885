@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ADAM;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
 
@@ -37,7 +36,7 @@ import lombok.Getter;
   // Called when the command is initially scheduled.
   @Override public void initialize() {
     runTest(() -> {
-        System.out.println("Starting DriveCommand");
+
     });
   }
 
