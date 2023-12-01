@@ -16,6 +16,16 @@
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler"
     }
   },
+  "NetworkTables": {
+    "transitory": {
+      "Shuffleboard": {
+        "WestCoastDrive": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
   "NetworkTables Info": {
     "Clients": {
       "open": true

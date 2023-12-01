@@ -12,21 +12,22 @@ import lombok.Getter;
  * A demonstration and testing subsystem that extends SubsystemBase.
  */
 
- @SuppressWarnings("PMD.CommentSize") public class ExampleSubsystem extends SubsystemBase {
+public class ExampleSubsystem extends SubsystemBase {
 
   /**
-   * Lorem Ipsum. 
+   * Lorem Ipsum.
    */
   private @Getter ADAM adam = new ADAM(null);
 
-  /** 
-   * Creates a new ExampleSubsystem. 
+  /**
+   * Creates a new ExampleSubsystem.
    */
   public ExampleSubsystem() {
     super();
   }
 
-  @Override public void periodic() {
+  @Override
+  public final void periodic() {
     runTest(() -> {
       // This method will be called once per scheduler run
     });
@@ -44,9 +45,9 @@ import lombok.Getter;
     });
   }
 
-
   /**
-   * Executes custom testing and validation methods within a controlled testing environment.
+   * Executes custom testing and validation methods within a controlled testing
+   * environment.
    * Any exceptions thrown during execution are caught and logged.
    *
    * @see #runTest(Runnable)
@@ -57,7 +58,9 @@ import lombok.Getter;
   }
 
   /**
-   * Runs the provided code as a runnable task. If the code throws an exception, it is caught, and an uncaught exception is passed to the default uncaught exception handler for the current thread.
+   * Runs the provided code as a runnable task. If the code throws an exception,
+   * it is caught, and an uncaught exception is passed to the default uncaught
+   * exception handler for the current thread.
    *
    * @param code The runnable task to be executed.
    */

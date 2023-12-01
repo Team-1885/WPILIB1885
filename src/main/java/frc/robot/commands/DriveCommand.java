@@ -35,8 +35,9 @@ import lombok.Getter;
 
   // Called when the command is initially scheduled.
   @Override public void initialize() {
+    System.out.println("========== STARTING DRIVECOMMAND ==========");
     runTest(() -> {
-
+      
     });
   }
 
@@ -45,6 +46,7 @@ import lombok.Getter;
     runTest(() -> {
       westCoastDrive.setMotorSpeed(0.3);
     });
+    System.out.println("========== MOTOR SPEED IS " + westCoastDrive.getMotorSpeed() + " ==========");
   }
 
   // Called once the command ends or is interrupted.
@@ -56,7 +58,7 @@ import lombok.Getter;
 
   // Returns true when the command should end.
   @Override public boolean isFinished() {
-    return true;
+    return false;
   }
 
   /**

@@ -6,10 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
 
@@ -21,16 +22,17 @@ import lombok.Getter;
 @SuppressWarnings("PMD.CommentSize") public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private @Getter final WestCoastDrive wcd = new WestCoastDrive();
+  private @Getter final WestCoastDrive westCoastDrive = new WestCoastDrive();
+  private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
+  private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+  private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
-  private @Getter final DriveCommand driveCommand = new DriveCommand(wcd);
-
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    wcd.setDefaultCommand(driveCommand);
+    westCoastDrive.setDefaultCommand(driveCommand);
   }
 
   /**
@@ -49,6 +51,6 @@ import lombok.Getter;
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return driveCommand; // basically a placeholder
+    return exampleCommand; // basically a placeholder
   }
 }
