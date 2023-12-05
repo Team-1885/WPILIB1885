@@ -46,7 +46,6 @@ import lombok.Getter;
     runTest(() -> {
       westCoastDrive.setMotorSpeed(0.3);
     });
-    System.out.println("========== MOTOR SPEED IS " + westCoastDrive.getMotorSpeed() + " ==========");
   }
 
   // Called once the command ends or is interrupted.
