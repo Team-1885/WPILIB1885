@@ -26,7 +26,7 @@ import frc.robot.RobotMap;
 import lombok.Getter;
 
 /**
- * Lorem Ipsum.
+ * WestCoastDrive is where all the wheels, encoders, and controllers are created and initialized.
  */
 @SuppressWarnings("PMD.CommentSize")
 public class WestCoastDrive extends SubsystemBase {
@@ -36,14 +36,16 @@ public class WestCoastDrive extends SubsystemBase {
          */
         private @Getter final ADAM adam = new ADAM(null);
         /**
-         * Lorem Ipsum.
+         * Creates a leftMaster Object and leftFollower
+         * Assigns both to a different motor ID that's an even number & makes them brushless
          */
         private static CANSparkMax leftMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_PRIMARY_ID,
                         MotorType.kBrushless),
                         leftFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_FOLLOWER_ID,
                                         MotorType.kBrushless);
         /**
-         * Lorem Ipsum.
+         * Creates a rightMaster Object and rightFollower
+         * Assigns both to a different motor ID that's an odd number & makes them brushless
          */
         private static CANSparkMax rightMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_PRIMARY_ID, MotorType.kBrushless),
 
@@ -51,18 +53,18 @@ public class WestCoastDrive extends SubsystemBase {
 
         
                               
-                                        /**
-         * Lorem Ipsum.
+        /**
+         * Creates the left and right encoders
          */
         private @Getter RelativeEncoder leftEncoder,
                         rightEncoder;
         /**
-         * Lorem Ipsum.
+         * Creates SparkMaxPidControllers
          */
         private static SparkMaxPIDController leftCtrl,
                         rightCtrl;
         /**
-         * Lorem Ipsum.
+         * Creates left and right PIDControllers
          */
         private static PIDController leftPositionPID,
                         rightPositionPID;

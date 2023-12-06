@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
+      "projectName": "WPILIB1885"
+    },
+    {
+      "type": "java",
       "name": "Launch ExampleClass",
       "request": "launch",
       "mainClass": "frc.robot.ExampleClass",

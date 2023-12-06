@@ -21,7 +21,7 @@ import lombok.Getter;
   private @Getter ADAM adam = new ADAM(null);
   
   /**
-   * Lorem Ipsum.
+   * creates a WestCoastDrive variable, westCoastDrive
    */
   private final @Getter WestCoastDrive westCoastDrive;
 
