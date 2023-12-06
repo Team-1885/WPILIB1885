@@ -23,15 +23,15 @@ import java.util.logging.Logger;
 @SuppressWarnings("PMD.CommentSize") public class ADAM implements Thread.UncaughtExceptionHandler {
 
   /**
-   * ...
+   * looks for errors
    */
   private @Getter String errorMessage;
   /**
-   * ...
+   * looks for error code
    */
   private @Getter ADAMErrorCodes errorCode;
   /**
-   * ...
+   * loggs error
    */
   private @Getter Logger logger = Logger.getLogger(ADAM.class.getName());
 

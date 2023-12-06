@@ -26,24 +26,24 @@ import frc.robot.RobotMap;
 import lombok.Getter;
 
 /**
- * Lorem Ipsum.
+ * Limits comment size
  */
 @SuppressWarnings("PMD.CommentSize")
 public class WestCoastDrive extends SubsystemBase {
 
         /**
-         * Lorem Ipsum.
+         * States that WestCoastDrive is part of SystemBases
          */
         private @Getter final ADAM adam = new ADAM(null);
         /**
-         * Lorem Ipsum.
+         * N/A
          */
         private static CANSparkMax leftMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_PRIMARY_ID,
                         MotorType.kBrushless),
                         leftFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_FOLLOWER_ID,
                                         MotorType.kBrushless);
         /**
-         * Lorem Ipsum.
+         * Set up drive system- makes motor ID, power amt, motor output, and stop motor
          */
         private static CANSparkMax rightMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_PRIMARY_ID, MotorType.kBrushless),
 
@@ -52,21 +52,26 @@ public class WestCoastDrive extends SubsystemBase {
         
                               
                                         /**
-         * Lorem Ipsum.
+         * ensures that the 'follower' follows the 'master'
          */
         private @Getter RelativeEncoder leftEncoder,
                         rightEncoder;
         /**
-         * Lorem Ipsum.
+         * generates getter method, which avoids manually writing the getter method
          */
         private static SparkMaxPIDController leftCtrl,
                         rightCtrl;
         /**
-         * Lorem Ipsum.
+         * controls a brushless motor by defult
          */
+
+         /**
+          *code comments are listed above code now 
+          *position
+          */
         private static PIDController leftPositionPID,
                         rightPositionPID;
-
+        //display robot info
         private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
         private GenericEntry testEntry = 
                 tab.add("===== SET MOTOR SPEED =====", 0)
