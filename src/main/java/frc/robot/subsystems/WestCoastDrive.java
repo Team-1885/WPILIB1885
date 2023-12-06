@@ -26,47 +26,54 @@ import frc.robot.RobotMap;
 import lombok.Getter;
 
 /**
- * Lorem Ipsum.
+ * The "@SuppressWarnings("PMD.CommentSize")"" suppresses the comment size limitation rule
  */
 @SuppressWarnings("PMD.CommentSize")
 public class WestCoastDrive extends SubsystemBase {
 
         /**
-         * Lorem Ipsum.
+         * "public class WestCoastDrive extends SubsystemBase" 
+         * gives WestCoastDrive the same functions as the SubsystemBase
          */
         private @Getter final ADAM adam = new ADAM(null);
         /**
-         * Lorem Ipsum.
+         * "Don't comment on Adam" -Michael
          */
         private static CANSparkMax leftMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_PRIMARY_ID,
                         MotorType.kBrushless),
                         leftFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_FOLLOWER_ID,
                                         MotorType.kBrushless);
-        /**
-         * Lorem Ipsum.
+        /* CANSparkMax is a motor controller
+         * leftMaster is a motor
+         * CANSparkMax controls leftMaster
+         * "MotorType.kBrushless" is a type of motor
+         * leftFollower follows leftMaster
          */
         private static CANSparkMax rightMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_PRIMARY_ID, MotorType.kBrushless),
 
         rightFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_FOLLOWER_ID, MotorType.kBrushless);
-
-        
-                              
-                                        /**
-         * Lorem Ipsum.
+         
+        /*This is the same code as lines 42-45, except on the right side
          */
         private @Getter RelativeEncoder leftEncoder,
                         rightEncoder;
         /**
-         * Lorem Ipsum.
+         * "@Getter" generates getter methods, which retrieve private variables from the class
+         * the getter methods are generated in the leftEncoder and rightEncoder fields
          */
         private static SparkMaxPIDController leftCtrl,
                         rightCtrl;
         /**
-         * Lorem Ipsum.
+         * SparkMaxPIDController is a class that has methods for controlling the parameters of the SPARK MAX controller
+         * "It allows you to set the controller reference value based on the selected control mode" -Perplexity AI
          */
         private static PIDController leftPositionPID,
                         rightPositionPID;
-
+        /**
+         * PIDController is a control loop feedback mechanism
+         * leftPositionPID/rightPositionPID is the PID control for the right and left motors
+        */                
+        
         private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
         private GenericEntry testEntry = 
                 tab.add("===== SET MOTOR SPEED =====", 0)
