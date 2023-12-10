@@ -45,13 +45,11 @@ public class WestCoastDrive extends SubsystemBase {
         /**
          * Lorem Ipsum.
          */
-        private static CANSparkMax rightMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_PRIMARY_ID, MotorType.kBrushless),
-
-        rightFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_FOLLOWER_ID, MotorType.kBrushless);
-
-        
-                              
-                                        /**
+        private static CANSparkMax rightMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_PRIMARY_ID,
+                        MotorType.kBrushless),
+                        rightFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_FOLLOWER_ID,
+                                        MotorType.kBrushless);
+        /**
          * Lorem Ipsum.
          */
         private @Getter RelativeEncoder leftEncoder,
@@ -71,7 +69,6 @@ public class WestCoastDrive extends SubsystemBase {
         private GenericEntry testEntry = 
                 tab.add("===== SET MOTOR SPEED =====", 0)
                         .getEntry();
-                
         /** Creates a new WestCoastDrive. */
         public WestCoastDrive() {
                 super();
@@ -106,9 +103,6 @@ public class WestCoastDrive extends SubsystemBase {
         public void periodic() {
                 runTest(() -> {
                         testEntry.setDouble(leftMaster.get());
-                        testEntry.setDouble(leftFollower.get());
-                        testEntry.setDouble(rightMaster.get());
-                        testEntry.setDouble(rightFollower.get());
                         // ... Other periodic tasks
                 });
         }
@@ -128,7 +122,6 @@ public class WestCoastDrive extends SubsystemBase {
         }
 
         public void setMotorSpeed(final double param) {
-
                 leftMaster.set(param);
                 leftFollower.set(param);
                 rightMaster.set(param);
