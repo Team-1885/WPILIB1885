@@ -3,21 +3,30 @@ package frc.robot.hardware;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.DriverStation;
 
 public class REVLibCAN {
+
+  // ==========
+  // DO NOT EDIT THESE PHYSICAL CONSTANTS
+  // ==========
+  private static final Logger logger = Logger.getLogger(REVLibCAN.class.getName());
+
   public static void reportFaults(CANSparkMax REVLibCAN) {
     if(hasFaults(REVLibCAN)) {
-      getFaultList(REVLibCAN, fault ->)
+      getFaultList(REVLibCAN, fault -> logger.log(Level.SEVERE, "Fault " + fault.name() + " detected on Spark MAX ID " + REVLibCAN.getDeviceId()));
     }
   }
 
-  public static void reportStickyFaults(CANSparkMax REVLibCan) {
+  public static void reportStickyFaults(CANSparkMax REVLibCAN) {
     if(hasFaults(REVLibCAN)) {
-      getStickyFaultList(REVLibCAN, fault ->)
+      getStickyFaultList(REVLibCan, fault -> Level.SEVERE, "Sticky Fault " + fault.name() + " detected on Spark MAX ID " + REVLibCAN.getDeviceId()));
     }
   }
 
