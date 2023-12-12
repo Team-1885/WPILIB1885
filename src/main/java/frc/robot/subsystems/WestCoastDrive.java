@@ -26,34 +26,30 @@ import frc.robot.RobotMap;
 import lombok.Getter;
 
 /**
- * Lorem Ipsum.
+ * Runs the WestCoastDrive --> robot's motor and wheels
  */
 @SuppressWarnings("PMD.CommentSize")
 public class WestCoastDrive extends SubsystemBase {
 
         /**
-         * Lorem Ipsum.
+         * instance of the exception handler
          */
         private @Getter final ADAM adam = new ADAM(null);
         /**
-         * Lorem Ipsum.
+         * sets the id for every instance of CANSparkMax for the leftMaster
          */
-        private static CANSparkMax leftMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_PRIMARY_ID,
-                        MotorType.kBrushless),
-                        leftFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_FOLLOWER_ID,
-                                        MotorType.kBrushless);
+        private static CANSparkMax leftMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_PRIMARY_ID, MotorType.kBrushless),
+        leftFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_FOLLOWER_ID, MotorType.kBrushless);
         /**
-         * Lorem Ipsum.
+         * sets the id for every instance of CANSparkMax for the rightMaster
          */
+
         private static CANSparkMax rightMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_PRIMARY_ID, MotorType.kBrushless),
-
-        rightFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_FOLLOWER_ID, MotorType.kBrushless);
-
-        
-                              
-                                        /**
-         * Lorem Ipsum.
-         */
+        rightFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_FOLLOWER_ID, MotorType.kBrushless);                           /**
+         
+        /**
+        * instantiates variables for the positions of the motor, intended to return the number of rotations for each encoder
+        */
         private @Getter RelativeEncoder leftEncoder,
                         rightEncoder;
         /**
@@ -62,7 +58,8 @@ public class WestCoastDrive extends SubsystemBase {
         private static SparkMaxPIDController leftCtrl,
                         rightCtrl;
         /**
-         * Lorem Ipsum.
+         * feedback loop for error control based on proportional, derivative and integral terms
+         * sets variables for the left and right pid data
          */
         private static PIDController leftPositionPID,
                         rightPositionPID;

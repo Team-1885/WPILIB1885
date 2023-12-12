@@ -19,15 +19,15 @@ import java.util.logging.Logger;
  @SuppressWarnings("PMD.CommentSize") public class Robot extends TimedRobot {
 
   /**
-   * Lorem Ipsum.
+   * instantiates a new Command
    */
   private @Getter Command autonomousCommand;
   /**
-   * Lorem Ipsum.
+   * instantiates a final variable logger to log data
    */
   private static final @Getter Logger LOGGER = Logger.getLogger(Robot.class.getName());
   /**
-   * Lorem Ipsum.
+   * instantiates a new robotContainer for the bulk code
    */
   private @Getter RobotContainer robotContainer;
 

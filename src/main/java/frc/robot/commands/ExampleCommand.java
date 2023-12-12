@@ -10,18 +10,18 @@ import frc.robot.subsystems.ExampleSubsystem;
 import lombok.Getter;
 
 /**
- * An example command for use as a template.
+ * Used to show the functionality of DriveCommand methods
  */
 
  @SuppressWarnings("PMD.CommentSize") public class ExampleCommand extends CommandBase {
 
   /**
-   * Lorem Ipsum.
+   * instantiates a new error handler
    */
   private @Getter ADAM adam = new ADAM(null);
   
   /**
-   * Lorem Ipsum.
+   * instantiates a new exampleSubsystem
    */
   private @Getter ExampleSubsystem exampleSubsystem;
 

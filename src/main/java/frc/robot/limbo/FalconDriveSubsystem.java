@@ -15,7 +15,7 @@ import lombok.Getter;
 @SuppressWarnings("PMD.CommentSize") public class FalconDriveSubsystem extends SubsystemBase {
 
   /**
-   * Lorem Ipsum. 
+   * instantiates a new error handler
    */
   private @Getter ADAM adam = new ADAM(null);
 

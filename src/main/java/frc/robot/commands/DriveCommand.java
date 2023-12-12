@@ -10,22 +10,24 @@ import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
 
 /**
- * An example command for use as a template.
+ * 
  */
 
  @SuppressWarnings("PMD.CommentSize") public class DriveCommand extends CommandBase {
 
   /**
-   * Lorem Ipsum.
+   * instantiates a new error handler
    */
   private @Getter ADAM adam = new ADAM(null);
   
   /**
-   * Lorem Ipsum.
+   * instance of a WestCoastDrive
    */
   private final @Getter WestCoastDrive westCoastDrive;
 
-  /** Creates a new ExampleCommand. */
+  /**  
+   * Creates a new DriveCommand
+  */
   public DriveCommand(final WestCoastDrive westCoastDrive) {
     super();
     // Use addRequirements() here to declare subsystem dependencies.
@@ -41,7 +43,7 @@ import lombok.Getter;
     });
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is scheduled. Sets motor speed to the parameter
   @Override public void execute() {
     runTest(() -> {
       westCoastDrive.setMotorSpeed(0.3);

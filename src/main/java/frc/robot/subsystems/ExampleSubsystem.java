@@ -15,7 +15,7 @@ import lombok.Getter;
 public class ExampleSubsystem extends SubsystemBase {
 
   /**
-   * Lorem Ipsum.
+   * Linstantiates a new error handler
    */
   private @Getter ADAM adam = new ADAM(null);
 
