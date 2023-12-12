@@ -121,11 +121,12 @@ public class WestCoastDrive extends SubsystemBase {
                 });
         }
 
-        public void setMotorSpeed(final double param) {
-                leftMaster.set(param);
-                leftFollower.set(param);
-                rightMaster.set(param);
-                rightFollower.set(param);
+        public void setMotorSpeed(final double leftSpeed, final double rightSpeed) {
+                leftMaster.set(leftSpeed);
+                leftFollower.set(leftSpeed);
+
+                rightMaster.set(rightSpeed);
+                rightFollower.set(rightSpeed);
         }
 
         public double getMotorSpeed() {

@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ADAM;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
 
@@ -13,13 +14,14 @@ import lombok.Getter;
  * An example command for use as a template.
  */
 
- @SuppressWarnings("PMD.CommentSize") public class DriveCommand extends CommandBase {
+@SuppressWarnings("PMD.CommentSize")
+public class DriveCommand extends CommandBase {
 
   /**
    * Lorem Ipsum.
    */
   private @Getter ADAM adam = new ADAM(null);
-  
+
   /**
    * Lorem Ipsum.
    */
@@ -34,29 +36,56 @@ import lombok.Getter;
   }
 
   // Called when the command is initially scheduled.
-  @Override public void initialize() {
+  @Override
+  public void initialize() {
     System.out.println("========== STARTING DRIVECOMMAND ==========");
     runTest(() -> {
-      
+
     });
   }
 
   // Called every time the scheduler runs while the command is scheduled.
-  @Override public void execute() {
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
     runTest(() -> {
-      westCoastDrive.setMotorSpeed(0.3);
+      double forwardSpeed = -RobotContainer.logitech.getRawAxis(1); // Get Y-axis value of left stick
+      double turnSpeed = RobotContainer.logitech.getRawAxis(0); // Get X-axis value of left stick
+
+      // You may want to add deadzones to prevent small joystick values from causing
+      // unintended movement
+      forwardSpeed = applyDeadzone(forwardSpeed, 0.1);
+      turnSpeed = applyDeadzone(turnSpeed, 0.1);
+
+      // Calculate left and right motor speeds for tank drive
+      double leftSpeed = forwardSpeed + turnSpeed;
+      double rightSpeed = forwardSpeed - turnSpeed;
+
+      // Set motor speeds in the WestCoastDrive subsystem
+      westCoastDrive.setMotorSpeed(leftSpeed, rightSpeed);
     });
   }
 
+  // Helper method to apply a deadzone to joystick values
+  private double applyDeadzone(double value, double deadzone) {
+    if (Math.abs(value) < deadzone) {
+      return 0.0;
+    } else {
+      return value;
+    }
+  }
+
   // Called once the command ends or is interrupted.
-  @Override public void end(final boolean interrupted) {
+  @Override
+  public void end(final boolean interrupted) {
     runTest(() -> {
 
     });
   }
 
   // Returns true when the command should end.
-  @Override public boolean isFinished() {
+  @Override
+  public boolean isFinished() {
     return false;
   }
 
@@ -75,7 +104,9 @@ import lombok.Getter;
   }
 
   /**
-   * Runs the provided code as a runnable task. If the code throws an exception, it is caught, and an uncaught exception is passed to the default uncaught exception handler for the current thread.
+   * Runs the provided code as a runnable task. If the code throws an exception,
+   * it is caught, and an uncaught exception is passed to the default uncaught
+   * exception handler for the current thread.
    *
    * @param code The runnable task to be executed.
    */

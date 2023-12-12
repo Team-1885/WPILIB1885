@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,6 +28,8 @@ import lombok.Getter;
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
+  @Getter
+  public final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -42,6 +45,12 @@ import lombok.Getter;
   private void configureBindings() {
     // Add code here
 
+    if(logitech.getRawButton(1)) {
+      driveCommand.schedule();
+    }
+
+    logitech.getRawAxis(0); // X
+    logitech.getRawAxis(1); // Y
   }
 
   /**

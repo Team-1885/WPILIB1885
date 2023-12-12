@@ -7,15 +7,37 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class REVLibCAN {
 
-  // ==========
-  // DO NOT EDIT THESE PHYSICAL CONSTANTS
-  // ==========
+  // ====================================
+  // DO NOT EDIT THESE PHYSICAL CONSTANTS - WESTCOASTDRIVE
+  // ====================================
+  
+  public static final double GEARBOX_RATIO = (12.0 / 40.0) * (16.0 / 38.0);
+  public static final double WHEEL_DIAMETER_FT = 0.5;
+  public static final double WHEEL_DIAMETER_IN = 6;
+  public static final double TRACK_WIDTH_FEET = 1.8;
+  public static final double WHEEL_CIRCUM_FT = WHEEL_DIAMETER_FT * Math.PI;
+  public static final double NEO_POS_FACTOR = GEARBOX_RATIO * WHEEL_CIRCUM_FT;
+  public static final double NEO_VEL_FACTOR = NEO_POS_FACTOR / 60.0;
+  public static final double MAX_VELOCITY_RPM = 5676;
+  public static final double PULSES_PER_ROTATION = 256.0;
+  public static final double CURRENT_LIMIT_AMPS = 60.0;
+  public static final int L_MASTER_ID = 2;
+  public static final int L_FOLLOWER_ID = 4;
+  
+
+  // =======================================
+  // DO NOT EDIT THESE CONFIGURATION OPTIONS - WESTCOASTDRIVE
+  // =======================================
+
+  public static final MotorType MOTOR_TYPE = MotorType.kBrushless;
+
   private static final Logger logger = Logger.getLogger(REVLibCAN.class.getName());
 
   public static void reportFaults(CANSparkMax REVLibCAN) {
