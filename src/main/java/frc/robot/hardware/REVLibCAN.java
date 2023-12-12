@@ -26,7 +26,7 @@ public class REVLibCAN {
 
   public static void reportStickyFaults(CANSparkMax REVLibCAN) {
     if(hasFaults(REVLibCAN)) {
-      getStickyFaultList(REVLibCan, fault -> Level.SEVERE, "Sticky Fault " + fault.name() + " detected on Spark MAX ID " + REVLibCAN.getDeviceId()));
+      getStickyFaultList(REVLibCAN, fault -> logger.log(Level.SEVERE, "Sticky Fault " + fault.name() + " detected on Spark MAX ID " + REVLibCAN.getDeviceId()));
     }
   }
 
