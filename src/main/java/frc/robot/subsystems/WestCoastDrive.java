@@ -62,7 +62,7 @@ public class WestCoastDrive extends SubsystemBase {
         private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
         private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0)
                         .getEntry();
-
+                              
         /** Creates a new WestCoastDrive. */
         public WestCoastDrive() {
                 super();

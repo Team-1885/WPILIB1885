@@ -49,29 +49,34 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     runTest(() -> {
-      double forwardSpeed = -RobotContainer.logitech.getRawAxis(1); // Get Y-axis value of left stick
-      double turnSpeed = RobotContainer.logitech.getRawAxis(0); // Get X-axis value of left stick
+      // double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.5; // Get Y-axis value of left stick
+      double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.30;
+      double turnSpeed = -RobotContainer.logitech.getRawAxis(0) * 0.20; // Get X-axis value of left stick
 
       // You may want to add deadzones to prevent small joystick values from causing
       // unintended movement
-      forwardSpeed = applyDeadzone(forwardSpeed, 0.1);
-      turnSpeed = applyDeadzone(turnSpeed, 0.1);
+      forwardSpeed = applyDeadzone(forwardSpeed, 0);
+      turnSpeed = applyDeadzone(turnSpeed, 0);
 
       // Calculate left and right motor speeds for tank drive
       double leftSpeed = forwardSpeed + turnSpeed;
-      if (leftSpeed > .3) {
-        leftSpeed = .1;
+      /* 
+      if (leftSpeed > .5) {
+        leftSpeed = .4;
       }
       if (leftSpeed < -.3) {
         leftSpeed = -.1;
       }
+      */
       double rightSpeed = forwardSpeed - turnSpeed;
+      /* 
       if (rightSpeed > .3) {
         rightSpeed = .1;
       }
       if (rightSpeed < -.3) {
         rightSpeed = -.1;
       }
+      */
 
       // Set motor speeds in the WestCoastDrive subsystem
       westCoastDrive.setMotorSpeed(leftSpeed, rightSpeed);
