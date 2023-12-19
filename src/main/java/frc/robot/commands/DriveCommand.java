@@ -10,6 +10,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
 
+
 /**
  * An example command for use as a template.
  */
@@ -26,6 +27,13 @@ public class DriveCommand extends CommandBase {
    * Lorem Ipsum.
    */
   private final @Getter WestCoastDrive westCoastDrive;
+  private static final double kP = 0.1;
+  private static final double kI = 0.01;
+  private static final double kD = 0.05;
+  private double targetDistance = 100.0;
+  private double integral = 0.0;
+  private double currentPOS = 0.0;
+  private double prevError = 0.0;
 
   /** Creates a new ExampleCommand. */
   public DriveCommand(final WestCoastDrive westCoastDrive) {
@@ -87,6 +95,17 @@ public class DriveCommand extends CommandBase {
     }
   }
 
+  public void controlMotor(){
+    double error = targetDistance - currentPOS;
+    integral += error;
+    double derivative = error - prevError;
+    prevError = error;
+    //Calculate Motor Output using PID equation//
+    double motorOutput = kP * error + kI * integral + kD * derivative;
+
+
+  }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(final boolean interrupted) {
@@ -129,4 +148,6 @@ public class DriveCommand extends CommandBase {
       adam.uncaughtException(Thread.currentThread(), e);
     }
   }
+
+  
 }
