@@ -59,7 +59,19 @@ public class DriveCommand extends CommandBase {
 
       // Calculate left and right motor speeds for tank drive
       double leftSpeed = forwardSpeed + turnSpeed;
+      if (leftSpeed > .3) {
+        leftSpeed = .1;
+      }
+      if (leftSpeed < -.3) {
+        leftSpeed = -.1;
+      }
       double rightSpeed = forwardSpeed - turnSpeed;
+      if (rightSpeed > .3) {
+        rightSpeed = .1;
+      }
+      if (rightSpeed < -.3) {
+        rightSpeed = -.1;
+      }
 
       // Set motor speeds in the WestCoastDrive subsystem
       westCoastDrive.setMotorSpeed(leftSpeed, rightSpeed);

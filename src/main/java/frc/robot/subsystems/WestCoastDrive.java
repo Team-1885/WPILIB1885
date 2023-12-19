@@ -4,25 +4,20 @@
 
 package frc.robot.subsystems;
 
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
-import frc.robot.RobotMap;
+import frc.robot.hardware.REVLibCAN;
 import lombok.Getter;
 
 /**
@@ -30,7 +25,6 @@ import lombok.Getter;
  */
 @SuppressWarnings("PMD.CommentSize")
 public class WestCoastDrive extends SubsystemBase {
-
         /**
          * Lorem Ipsum.
          */
@@ -38,17 +32,17 @@ public class WestCoastDrive extends SubsystemBase {
         /**
          * Lorem Ipsum.
          */
-        private static CANSparkMax leftMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_PRIMARY_ID,
-                        MotorType.kBrushless),
-                        leftFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.L_D_FOLLOWER_ID,
-                                        MotorType.kBrushless);
+        private static CANSparkMax leftMaster = new CANSparkMax(REVLibCAN.L_MASTER_ID,
+                        REVLibCAN.MOTOR_TYPE),
+                        leftFollower = new CANSparkMax(REVLibCAN.L_FOLLOWER_ID,
+                                        REVLibCAN.MOTOR_TYPE);
         /**
          * Lorem Ipsum.
          */
-        private static CANSparkMax rightMaster = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_PRIMARY_ID,
-                        MotorType.kBrushless),
-                        rightFollower = new CANSparkMax(RobotMap.WestCoastDriveConstants.R_D_FOLLOWER_ID,
-                                        MotorType.kBrushless);
+        private static CANSparkMax rightMaster = new CANSparkMax(REVLibCAN.R_MASTER_ID,
+                        REVLibCAN.MOTOR_TYPE),
+                        rightFollower = new CANSparkMax(REVLibCAN.R_FOLLOWER_ID,
+                                        REVLibCAN.MOTOR_TYPE);
         /**
          * Lorem Ipsum.
          */
@@ -66,9 +60,9 @@ public class WestCoastDrive extends SubsystemBase {
                         rightPositionPID;
 
         private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
-        private GenericEntry testEntry = 
-                tab.add("===== SET MOTOR SPEED =====", 0)
+        private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0)
                         .getEntry();
+
         /** Creates a new WestCoastDrive. */
         public WestCoastDrive() {
                 super();
@@ -96,13 +90,13 @@ public class WestCoastDrive extends SubsystemBase {
                                 .forEach(motor -> motor.setControlFramePeriodMs(1));
                 Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
                                 .forEach(CANSparkMax::burnFlash);
-
         }
 
         @Override
         public void periodic() {
                 runTest(() -> {
                         testEntry.setDouble(leftMaster.get());
+                        REVLibCAN.logFaults(Stream.of(leftMaster, leftFollower, rightMaster, rightFollower));
                         // ... Other periodic tasks
                 });
         }
