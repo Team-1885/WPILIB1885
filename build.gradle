@@ -12,6 +12,11 @@ targetCompatibility = JavaVersion.VERSION_11
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.
 deploy {
@@ -55,6 +60,7 @@ dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
     implementation 'org.apache.logging.log4j:log4j-api:2.22.0'
+    implementation 'com.github.flybotix:highfrequencyrobots:2022.4.20'
 
     roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
     roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)

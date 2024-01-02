@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import java.util.Map;
 import java.util.stream.Stream;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -30,18 +29,18 @@ public class WestCoastDrive extends SubsystemBase {
          */
         private @Getter final ADAM adam = new ADAM(null);
         /**
-         * Lorem Ipsum.
+         * Creates two CANSparkMax motors, inheriting physical constants from the {@link #REVLibCAN} helper class.
          */
-        private static CANSparkMax leftMaster = new CANSparkMax(REVLibCAN.L_MASTER_ID,
+        private static CANSparkMax REV_0xM1 = new CANSparkMax(REVLibCAN.L_MASTER_ID,
                         REVLibCAN.MOTOR_TYPE),
-                        leftFollower = new CANSparkMax(REVLibCAN.L_FOLLOWER_ID,
+                        REV_0xF1 = new CANSparkMax(REVLibCAN.L_FOLLOWER_ID,
                                         REVLibCAN.MOTOR_TYPE);
         /**
-         * Lorem Ipsum.
+         * Creates two CANSparkMax motors, inheriting physical constants from the {@link #REVLibCAN} helper class.
          */
-        private static CANSparkMax rightMaster = new CANSparkMax(REVLibCAN.R_MASTER_ID,
+        private static CANSparkMax REV_0xM2 = new CANSparkMax(REVLibCAN.R_MASTER_ID,
                         REVLibCAN.MOTOR_TYPE),
-                        rightFollower = new CANSparkMax(REVLibCAN.R_FOLLOWER_ID,
+                        REV_0xF2 = new CANSparkMax(REVLibCAN.R_FOLLOWER_ID,
                                         REVLibCAN.MOTOR_TYPE);
         /**
          * Lorem Ipsum.
@@ -62,41 +61,44 @@ public class WestCoastDrive extends SubsystemBase {
         private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
         private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0)
                         .getEntry();
-                              
+
         /** Creates a new WestCoastDrive. */
         public WestCoastDrive() {
+                /**
+                 * 
+                 */
                 super();
-                Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(CANSparkMax::restoreFactoryDefaults);
                 final Map<CANSparkMax, CANSparkMax> masterFollowerMap = Map.of(
-                                leftMaster, leftFollower,
-                                rightMaster, rightFollower);
+                                REV_0xM1, REV_0xF1,
+                                REV_0xM2, REV_0xF2);
                 masterFollowerMap.forEach((master, follower) -> follower.follow(master));
-                Stream.of(leftMaster, leftFollower)
+                Stream.of(REV_0xM1, REV_0xF1)
                                 .forEach(motor -> motor.setInverted(false));
-                Stream.of(rightMaster, rightFollower)
+                Stream.of(REV_0xM2, REV_0xF2)
                                 .forEach(motor -> motor.setInverted(true));
-                Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(motor -> motor.setIdleMode(CANSparkMax.IdleMode.kCoast));
-                Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(motor -> motor.setSmartCurrentLimit(30, 35, 100));
-                leftEncoder = leftMaster.getEncoder();
-                rightEncoder = rightMaster.getEncoder();
-                Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
+                leftEncoder = REV_0xM1.getEncoder();
+                rightEncoder = REV_0xM2.getEncoder();
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(motor -> motor.setClosedLoopRampRate(0.5));
-                Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(motor -> motor.setOpenLoopRampRate(0.5));
-                Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(motor -> motor.setControlFramePeriodMs(1));
-                Stream.of(leftMaster, leftFollower, rightMaster, rightFollower)
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(CANSparkMax::burnFlash);
         }
 
         @Override
         public void periodic() {
                 runTest(() -> {
-                        testEntry.setDouble(leftMaster.get());
-                        REVLibCAN.logFaults(Stream.of(leftMaster, leftFollower, rightMaster, rightFollower));
+                        testEntry.setDouble(REV_0xM1.get());
+                        REVLibCAN.logFaults(Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2));
                         // ... Other periodic tasks
                 });
         }
@@ -110,21 +112,21 @@ public class WestCoastDrive extends SubsystemBase {
                 runTest(() -> {
                         Stream.of(leftEncoder, rightEncoder)
                                         .forEach(encoder -> encoder.setPosition(0));
-                        Stream.of(leftMaster, rightMaster)
+                        Stream.of(REV_0xM1, REV_0xM2)
                                         .forEach(motor -> motor.stopMotor());
                 });
         }
 
         public void setMotorSpeed(final double leftSpeed, final double rightSpeed) {
-                leftMaster.set(leftSpeed);
-                leftFollower.set(leftSpeed);
+                REV_0xM1.set(leftSpeed);
+                REV_0xF1.set(leftSpeed);
 
-                rightMaster.set(rightSpeed);
-                rightFollower.set(rightSpeed);
+                REV_0xM2.set(rightSpeed);
+                REV_0xF2.set(rightSpeed);
         }
 
         public double getMotorSpeed() {
-                return leftMaster.get();
+                return REV_0xM1.get();
         }
 
         /**

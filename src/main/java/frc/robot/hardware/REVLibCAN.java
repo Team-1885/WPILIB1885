@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.ADAM;
@@ -19,7 +20,7 @@ import lombok.Getter;
 public class REVLibCAN {
 
   // ====================================
-  // DO NOT EDIT THESE PHYSICAL CONSTANTS - WESTCOASTDRIVE
+  // DO NOT EDIT THESE PHYSICAL CONSTANTS
   // ====================================
 
   public static @Getter final double GEARBOX_RATIO = (12.0 / 40.0) * (16.0 / 38.0);
@@ -38,10 +39,19 @@ public class REVLibCAN {
   public static @Getter final int R_FOLLOWER_ID = 3;
 
   // =======================================
-  // DO NOT EDIT THESE CONFIGURATION OPTIONS - WESTCOASTDRIVE
+  // DO NOT EDIT THESE CONFIGURATION OPTIONS
   // =======================================
 
-  public static final MotorType MOTOR_TYPE = MotorType.kBrushless;
+  public static @Getter int CAN_TIMEOUT = 100;
+  public static @Getter int CONTROL_FRAME_PERIOD = 10;
+  public static @Getter IdleMode IDLE_MODE = IdleMode.kCoast;
+  public static @Getter int STATUS_0_PERIOD_MS = 10;
+  public static @Getter int STATUS_1_PERIOD_MS = 20;
+  public static @Getter int STATUS_2_PERIOD_MS = 50;
+  public static @Getter double RAMP_RATE = 0.0;
+  public static @Getter int SMART_CURRENT_LIMIT = 55;
+  public static @Getter double SECONDARY_CURRENT_LIMIT = 40.0;
+  public static @Getter final MotorType MOTOR_TYPE = MotorType.kBrushless;
 
   private @Getter static ADAM adam = new ADAM(null);
   private static final Logger logger = Logger.getLogger(REVLibCAN.class.getName());
@@ -129,9 +139,7 @@ public class REVLibCAN {
   }
 
   /**
-   * Runs the provided code as a runnable task. If the code throws an exception,
-   * it is caught, and an uncaught exception is passed to the default uncaught
-   * exception handler for the current thread.
+   * Runs the provided code as a runnable task. If the code throws an exception, it is caught, and an uncaught exception is passed to the default uncaught exception handler for the current thread.
    *
    * @param code The runnable task to be executed.
    */
