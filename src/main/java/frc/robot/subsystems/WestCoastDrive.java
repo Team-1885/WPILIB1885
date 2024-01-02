@@ -8,9 +8,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -20,52 +17,33 @@ import frc.robot.hardware.REVLibCAN;
 import lombok.Getter;
 
 /**
- * Lorem Ipsum.
+ * WestCoastDrive Subsystem.
  */
 @SuppressWarnings("PMD.CommentSize")
 public class WestCoastDrive extends SubsystemBase {
-        /**
-         * Lorem Ipsum.
-         */
         private @Getter final ADAM adam = new ADAM(null);
-        /**
-         * Creates two CANSparkMax motors, inheriting physical constants from the {@link #REVLibCAN} helper class.
-         */
-        private static CANSparkMax REV_0xM1 = new CANSparkMax(REVLibCAN.L_MASTER_ID,
-                        REVLibCAN.MOTOR_TYPE),
-                        REV_0xF1 = new CANSparkMax(REVLibCAN.L_FOLLOWER_ID,
-                                        REVLibCAN.MOTOR_TYPE);
-        /**
-         * Creates two CANSparkMax motors, inheriting physical constants from the {@link #REVLibCAN} helper class.
-         */
-        private static CANSparkMax REV_0xM2 = new CANSparkMax(REVLibCAN.R_MASTER_ID,
-                        REVLibCAN.MOTOR_TYPE),
-                        REV_0xF2 = new CANSparkMax(REVLibCAN.R_FOLLOWER_ID,
-                                        REVLibCAN.MOTOR_TYPE);
+
+        // Creates two CANSparkMax motors, inheriting physical constants from the {@link#REVLibCAN} helper class.
+        private static CANSparkMax REV_0xM1 = new CANSparkMax(REVLibCAN.L_MASTER_ID, REVLibCAN.MOTOR_TYPE),
+                        REV_0xF1 = new CANSparkMax(REVLibCAN.L_FOLLOWER_ID, REVLibCAN.MOTOR_TYPE);
+
+        // Creates two CANSparkMax motors, inheriting physical constants from the {@link#REVLibCAN} helper class.
+        private static CANSparkMax REV_0xM2 = new CANSparkMax(REVLibCAN.R_MASTER_ID, REVLibCAN.MOTOR_TYPE),
+                        REV_0xF2 = new CANSparkMax(REVLibCAN.R_FOLLOWER_ID, REVLibCAN.MOTOR_TYPE);
         /**
          * Lorem Ipsum.
          */
         private @Getter RelativeEncoder leftEncoder,
                         rightEncoder;
-        /**
-         * Lorem Ipsum.
-         */
-        private static SparkMaxPIDController leftCtrl,
-                        rightCtrl;
-        /**
-         * Lorem Ipsum.
-         */
-        private static PIDController leftPositionPID,
-                        rightPositionPID;
 
         private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
         private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0)
                         .getEntry();
 
-        /** Creates a new WestCoastDrive. */
+        /** Constructor for the Subsystem */
         public WestCoastDrive() {
                 /**
-                 * 
+                 * Low-level configurations for the hardware objects
                  */
                 super();
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
@@ -95,7 +73,7 @@ public class WestCoastDrive extends SubsystemBase {
         }
 
         @Override
-        public void periodic() {
+        public void periodic() { // This method will be called once per scheduler run (usually, once every 20 ms),
                 runTest(() -> {
                         testEntry.setDouble(REV_0xM1.get());
                         REVLibCAN.logFaults(Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2));
@@ -110,6 +88,7 @@ public class WestCoastDrive extends SubsystemBase {
          */
         public void reset() {
                 runTest(() -> {
+                        // Resets
                         Stream.of(leftEncoder, rightEncoder)
                                         .forEach(encoder -> encoder.setPosition(0));
                         Stream.of(REV_0xM1, REV_0xM2)
@@ -118,6 +97,7 @@ public class WestCoastDrive extends SubsystemBase {
         }
 
         public void setMotorSpeed(final double leftSpeed, final double rightSpeed) {
+                // Setting motor speed using the ".set()" method from the CANSparkMax class
                 REV_0xM1.set(leftSpeed);
                 REV_0xF1.set(leftSpeed);
 
@@ -126,6 +106,7 @@ public class WestCoastDrive extends SubsystemBase {
         }
 
         public double getMotorSpeed() {
+                // Getting motor speed using the ".get()" method from the CANSparkMax class
                 return REV_0xM1.get();
         }
 
