@@ -12,7 +12,7 @@ import lombok.Getter;
  * A demonstration and testing subsystem that extends SubsystemBase.
  */
 
- @SuppressWarnings("PMD.CommentSize") public class LimelightSubsystem extends SubsystemBase {
+ @SuppressWarnings("PMD.CommentSize") public class Limelight extends SubsystemBase {
 
   /**
    * Lorem Ipsum. 
