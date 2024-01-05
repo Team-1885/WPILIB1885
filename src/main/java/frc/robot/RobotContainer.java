@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SpinCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WestCoastDrive;
+import frc.robot.subsystems.AviSamSpinMotor;
 import lombok.Getter;
 
 /** 
@@ -24,6 +26,8 @@ import lombok.Getter;
 
   // The robot's subsystems and commands are defined here...
   private @Getter final WestCoastDrive westCoastDrive = new WestCoastDrive();
+  private @Getter final AviSamSpinMotor aviSamSpinMotor = new AviSamSpinMotor();
+  private @Getter final SpinCommand spinCommand = new SpinCommand(aviSamSpinMotor);
   private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
