@@ -5,15 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PS4Controller;
-import edu.wpi.first.wpilibj.XboxController;
 import lombok.Getter;
 
 /** 
  * Manages controller input and bindings for the Operator Interface (OI). 
  */
 
- @SuppressWarnings("PMD.CommentSize") public class OperatorInput {
+ @SuppressWarnings("PMD.CommentSize") public class InputMap {
 
   /**
    * ...
@@ -23,24 +21,8 @@ import lombok.Getter;
   /**
    * ...
    */
-  private @Getter XboxController driverXBXCtrlr;
-  /**
-   * ...
-   */
-  private @Getter PS4Controller driverPS4Ctrlr;
-  /**
-   * ...
-   */
   private @Getter Joystick driverLGTCtrlr;
 
-  /**
-   * ...
-   */
-  private @Getter XboxController operatorXBXCtrlr;
-  /**
-   * ...
-   */
-  private @Getter PS4Controller operatorPS4Ctrlr;
   /**
    * ...
    */
@@ -50,16 +32,29 @@ import lombok.Getter;
    * Constructs a new instance of the OI class. 
    * Initializes driver and operator controllers.
    */
-  public OperatorInput() {
+  public InputMap() {
     runTest(() -> {
-      driverXBXCtrlr = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
-      driverPS4Ctrlr = new PS4Controller(RobotMap.DriverConstants.D_PS4_PORT);
       driverLGTCtrlr = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
-
-      operatorXBXCtrlr = new XboxController(RobotMap.OperatorConstants.O_XBOX_PORT);
-      operatorPS4Ctrlr = new PS4Controller(RobotMap.OperatorConstants.O_PS4_PORT);
       operatorLGTCtrlr = new Joystick(RobotMap.OperatorConstants.O_LOGITECH_PORT);
     });
+  }
+
+  /**
+   * ================================
+   * // ...
+   * ================================
+   */
+  public static class DRIVER {
+
+  }
+
+  /**
+   * ================================
+   * // ...
+   * ================================
+   */
+  public static class OPERATOR {
+
   }
 
   /**
