@@ -1,4 +1,4 @@
-package frc.robot.software;
+package frc.robot.hardware;
 
 public class PIDGains {
   
