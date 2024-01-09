@@ -11,10 +11,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.LaunchNote;
+import frc.robot.commands.PrepareLaunch;
 import frc.robot.commands.SpinCommand;
+import frc.robot.hardware.Constants.LauncherConstants;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WestCoastDrive;
 import frc.robot.subsystems.AviSamSpinMotor;
+import frc.robot.subsystems.CANLauncher;
 import lombok.Getter;
 
 /** 
@@ -33,6 +37,7 @@ import lombok.Getter;
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
+  private final CANLauncher m_launcher = new CANLauncher();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -47,7 +52,18 @@ import lombok.Getter;
    */
   private void configureBindings() {
     // Add code here
-
+    while(logitech.getRawButton(5))
+    {
+      m_launcher.getIntakeCommand();
+    }
+    if (logitech.getRawButton(1)) {
+      // Code to execute when the 'A' button is pressed
+  
+      new PrepareLaunch(m_launcher)
+          .withTimeout(LauncherConstants.kLauncherDelay)
+          .andThen(new LaunchNote(m_launcher))
+          .handleInterrupt(() -> m_launcher.stop());
+  }
     if(logitech.getRawButton(1)) {
       driveCommand.schedule();
     }
