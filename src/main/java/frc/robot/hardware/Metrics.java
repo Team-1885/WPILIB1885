@@ -1,11 +1,11 @@
 package frc.robot.hardware;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.simulation.AnalogTriggerSim;
+import static java.lang.Math.*;
 
 public class Metrics {
   public static double rpm_to_rads_per_sec(double rpm) {
-    return rpm * 2.0 * Math.PI / 60.0;
+    return rpm * 2.0 * PI / 60.0;
   }
 
   public static double rads_per_sec_to_rpm(double rads_per_sec) {
@@ -76,7 +76,7 @@ public class Metrics {
     }
 
     public Angle fromNormal() {
-      return fromRadians(Math.PI / 2 - mRadians);
+      return fromRadians(PI / 2 - mRadians);
     }
 
     public Angle fromDegrees(double pDegrees) {
@@ -84,7 +84,11 @@ public class Metrics {
     }
 
     public Angle fromRadians(double pRadians) {
-      return new AnalogTriggerSim(pRadians);
+      return new Angle(pRadians);
     }
+  }
+
+  public class Distance {
+    
   }
 }

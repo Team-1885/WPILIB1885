@@ -1,4 +1,4 @@
-package frc.robot.network;
+package frc.common.reusables.roborio.network;
 
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
