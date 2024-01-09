@@ -1,4 +1,4 @@
-package frc.robot.network;
+package frc.common.reusables.roborio.network;
 
 import edu.wpi.first.net.PortForwarder;
 import lombok.Getter;
