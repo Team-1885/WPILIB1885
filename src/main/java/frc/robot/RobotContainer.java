@@ -22,11 +22,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
-import frc.robot.subsystems.PWMDrivetrain;
-import frc.robot.subsystems.PWMLauncher;
 
-// import frc.robot.subsystems.CANDrivetrain;
-// import frc.robot.subsystems.CANLauncher;
+import frc.robot.subsystems.CANDrivetrain;
+import frc.robot.subsystems.CANLauncher;
 
 /** 
  * This class is where the bulk of the robot should be declared. 
@@ -44,8 +42,8 @@ import frc.robot.subsystems.PWMLauncher;
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
 
   // From KitBot
-  private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
-  private final PWMLauncher m_launcher = new PWMLauncher();
+  private final CANDrivetrain m_drivetrain = new CANDrivetrain();
+  private final CANLauncher m_launcher = new CANLauncher();
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
