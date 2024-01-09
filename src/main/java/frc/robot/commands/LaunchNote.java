@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.hardware.Constants;
+import frc.robot.hardware.Constants.LauncherConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CANLauncher;
@@ -30,8 +30,8 @@ public class LaunchNote extends CommandBase {
   @Override
   public void initialize() {
     // Set the wheels to launching speed
-    m_launcher.setLaunchWheel(Constants.LauncherConstants.kLauncherSpeed);
-    m_launcher.setFeedWheel(Constants.LauncherConstants.kLaunchFeederSpeed);
+    m_launcher.setLaunchWheel(LauncherConstants.kLauncherSpeed);
+    m_launcher.setFeedWheel(LauncherConstants.kLaunchFeederSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

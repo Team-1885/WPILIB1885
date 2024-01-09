@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.hardware.Constants;
+import frc.robot.hardware.Constants.LauncherConstants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,11 +16,11 @@ public class CANLauncher extends SubsystemBase {
 
   /** Creates a new Launcher. */
   public CANLauncher() {
-    m_launchWheel = new CANSparkMax(Constants.LauncherConstants.kLauncherID, MotorType.kBrushed);
-    m_feedWheel = new CANSparkMax(Constants.LauncherConstants.kFeederID, MotorType.kBrushed);
+    m_launchWheel = new CANSparkMax(LauncherConstants.kLauncherID, MotorType.kBrushed);
+    m_feedWheel = new CANSparkMax(LauncherConstants.kFeederID, MotorType.kBrushed);
 
-    m_launchWheel.setSmartCurrentLimit(Constants.LauncherConstants.kLauncherCurrentLimit);
-    m_feedWheel.setSmartCurrentLimit(Constants.LauncherConstants.kFeedCurrentLimit);
+    m_launchWheel.setSmartCurrentLimit(LauncherConstants.kLauncherCurrentLimit);
+    m_feedWheel.setSmartCurrentLimit(LauncherConstants.kFeedCurrentLimit);
   }
 
   /**
@@ -36,8 +36,8 @@ public class CANLauncher extends SubsystemBase {
     return this.startEnd(
         // When the command is initialized, set the wheels to the intake speed values
         () -> {
-          setFeedWheel(Constants.LauncherConstants.kIntakeFeederSpeed);
-        setLaunchWheel(Constants.LauncherConstants.kIntakeLauncherSpeed);
+          setFeedWheel(LauncherConstants.kIntakeFeederSpeed);
+        setLaunchWheel(LauncherConstants.kIntakeLauncherSpeed);
         },
         // When the command stops, stop the wheels
         () -> {

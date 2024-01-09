@@ -9,9 +9,6 @@ import java.util.stream.Stream;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -40,10 +37,6 @@ public class AviSamSpinMotor extends SubsystemBase {
                                         rightEncoder;
                     
        
-        private static SparkMaxPIDController leftCtrl;
-                        
-        
-        private static PIDController leftPositionPID;
                         
 
         private ShuffleboardTab tab = Shuffleboard.getTab("===== SPIN ROBOT =====");
