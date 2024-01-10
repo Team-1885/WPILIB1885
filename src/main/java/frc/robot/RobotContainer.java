@@ -14,8 +14,10 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.commands.SpinCommand;
+import frc.robot.commands.SpinIntakeCommand;
 import frc.robot.hardware.Constants.LauncherConstants;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SpinIntake;
 import frc.robot.subsystems.WestCoastDrive;
 import frc.robot.subsystems.AviSamSpinMotor;
 import frc.robot.subsystems.CANLauncher;
@@ -38,6 +40,10 @@ import lombok.Getter;
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
   private final CANLauncher m_launcher = new CANLauncher();
+  private @Getter final SpinIntake intake = new SpinIntake();
+  private @Getter final SpinIntakeCommand intakeMotor = new SpinIntakeCommand(intake);
+
+
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
