@@ -14,6 +14,8 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
+import frc.robot.commands.MotorCommandPeyton;
+import frc.robot.subsystems.MotorSpinPeyton;
 
 /** 
  * This class is where the bulk of the robot should be declared. 
@@ -30,12 +32,16 @@ import lombok.Getter;
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   @Getter
   public final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
+  private @Getter final MotorSpinPeyton motorSpinPeyton = new MotorSpinPeyton();
+  private @Getter final MotorCommandPeyton motorCommandPeyton = new MotorCommandPeyton(motorSpinPeyton);
+  
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
     westCoastDrive.setDefaultCommand(driveCommand);
+    motorSpinPeyton.setDefaultCommand(motorCommandPeyton);
   }
 
   /**
