@@ -17,15 +17,8 @@ public class SpinIntake extends SubsystemBase {
         
         private @Getter final ADAM adam = new ADAM(null);
 
-        private static CANSparkMax intakeMotor = new CANSparkMax(9,
+        private CANSparkMax intakeMotor = new CANSparkMax(9,
                         REVLibCAN.MOTOR_TYPE);
-                       
-                    
-       
-                        
-
-        
-        
 
         public void setMotorSpeed(final double leftSpeed) {
                 intakeMotor.set(leftSpeed);
