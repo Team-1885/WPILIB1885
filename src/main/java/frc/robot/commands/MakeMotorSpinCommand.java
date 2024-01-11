@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+<<<<<<< refs/remotes/origin/Theresa1/4/24
 import frc.robot.ADAM;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.MakeMotorSpin;
@@ -36,10 +37,18 @@ public class MakeMotorSpinCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.makeMotorSpin = makeMotorSpin;
     addRequirements(makeMotorSpin);
+=======
+
+public class MakeMotorSpinCommand extends CommandBase {
+  /** Creates a new MakeMotorSpinCommand. */
+  public MakeMotorSpinCommand() {
+    // Use addRequirements() here to declare subsystem dependencies.
+>>>>>>> spin motor- i think
   }
 
   // Called when the command is initially scheduled.
   @Override
+<<<<<<< refs/remotes/origin/Theresa1/4/24
   public void initialize() {
     System.out.println("========== STARTING DRIVECOMMAND ==========");
     runTest(() -> {
@@ -102,12 +111,24 @@ public class MakeMotorSpinCommand extends CommandBase {
 
     });
   }
+=======
+  public void initialize() {}
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {}
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
+>>>>>>> spin motor- i think
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
   }
+<<<<<<< refs/remotes/origin/Theresa1/4/24
 
   /**
    * Executes debugging actions for testing purposes.
@@ -137,4 +158,6 @@ public class MakeMotorSpinCommand extends CommandBase {
       adam.uncaughtException(Thread.currentThread(), e);
     }
   }
+=======
+>>>>>>> spin motor- i think
 }
