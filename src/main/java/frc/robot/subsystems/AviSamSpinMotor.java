@@ -24,13 +24,13 @@ import lombok.Getter;
 public class AviSamSpinMotor extends SubsystemBase {
         
         private @Getter final ADAM adam = new ADAM(null);
-
-        private static CANSparkMax leftMaster = new CANSparkMax(2,
+        // TODO: FIX MOTOR IDS
+        private static CANSparkMax leftMaster = new CANSparkMax(12,
                         REVLibCAN.MOTOR_TYPE),
-                        leftFollower = new CANSparkMax(REVLibCAN.L_FOLLOWER_ID,
+                        leftFollower = new CANSparkMax(13,
                                         REVLibCAN.MOTOR_TYPE);
 
-        private static CANSparkMax rightMaster = new CANSparkMax(1,
+        private static CANSparkMax rightMaster = new CANSparkMax(10,
                         REVLibCAN.MOTOR_TYPE);
         
         private @Getter RelativeEncoder leftEncoder,
