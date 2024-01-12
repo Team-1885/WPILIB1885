@@ -226,4 +226,6 @@ import edu.wpi.first.wpilibj.XboxController;
      */
     public static final int LOGITECH_AX_R_Y = 5;
   }
+
+public static final String MakeMotorSpinConstant = null;
 }
