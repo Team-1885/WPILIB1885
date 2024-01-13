@@ -6,7 +6,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
 import frc.robot.hardware.REVLibCAN;
@@ -17,6 +19,9 @@ import lombok.Getter;
  */
 @SuppressWarnings("PMD.CommentSize")
 public class SpinIntake extends SubsystemBase {
+        private ShuffleboardTab tab = Shuffleboard.getTab("SPIN INTAKE");
+        private GenericEntry testEntry = tab.add("SET MOTOR SPEED", 0)
+                        .getEntry();
         
         private @Getter final ADAM adam = new ADAM(null);
 
@@ -24,8 +29,14 @@ public class SpinIntake extends SubsystemBase {
 
         public void setMotorSpeed(final double leftSpeed) {
                 intakeMotor.set(ControlMode.PercentOutput, leftSpeed);
-        }
+                
 
+        }
+        @Override
+        public void periodic(){
+                // testEntry.setDouble(intakeMotor.getMotorOutputPercent());
+        }
+        
         public double getMotorSpeed() {
                 return intakeMotor.getMotorOutputPercent();
         }

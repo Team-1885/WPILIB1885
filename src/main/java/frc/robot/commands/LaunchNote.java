@@ -9,15 +9,14 @@ import frc.robot.hardware.Constants.LauncherConstants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CANLauncher;
 
-/*This is an example of creating a command as a class. The base Command class provides a set of methods that your command
- * will override.
- */
+ 
 public class LaunchNote extends CommandBase {
+  /* 
   CANLauncher m_launcher;
 
   // CANLauncher m_launcher;
 
-  /** Creates a new LaunchNote. */
+  /** Creates a new LaunchNote.
   public LaunchNote(CANLauncher launcher) {
     // save the launcher system internally
     m_launcher = launcher;
@@ -56,4 +55,5 @@ public class LaunchNote extends CommandBase {
     // Stop the wheels when the command ends.
     m_launcher.stop();
   }
+  */
 }

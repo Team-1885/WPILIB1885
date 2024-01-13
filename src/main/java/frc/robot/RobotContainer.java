@@ -13,13 +13,11 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
-import frc.robot.commands.SpinCommand;
 import frc.robot.commands.SpinIntakeCommand;
 import frc.robot.hardware.Constants.LauncherConstants;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SpinIntake;
 import frc.robot.subsystems.WestCoastDrive;
-import frc.robot.subsystems.AviSamSpinMotor;
 import frc.robot.subsystems.CANLauncher;
 import lombok.Getter;
 
@@ -32,8 +30,6 @@ import lombok.Getter;
 
   // The robot's subsystems and commands are defined here...
   private @Getter final WestCoastDrive westCoastDrive = new WestCoastDrive();
-  private @Getter final AviSamSpinMotor aviSamSpinMotor = new AviSamSpinMotor();
-  private @Getter final SpinCommand spinCommand = new SpinCommand(aviSamSpinMotor);
   private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
@@ -50,6 +46,7 @@ import lombok.Getter;
     // Configure the trigger bindings
     configureBindings();
     intake.setDefaultCommand(intakeMotor);
+
   }
 
   /**
@@ -58,6 +55,7 @@ import lombok.Getter;
    */
   private void configureBindings() {
     // Add code here
+    /* 
     while(logitech.getRawButton(5))
     {
       m_launcher.getIntakeCommand();
@@ -76,8 +74,9 @@ import lombok.Getter;
 
     logitech.getRawAxis(0); // X
     logitech.getRawAxis(1); // Y
+    */
   }
-
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

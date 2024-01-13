@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+ package frc.robot.subsystems;
 
 import frc.robot.hardware.Constants.LauncherConstants;
 import com.revrobotics.CANSparkMax;
@@ -11,10 +11,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANLauncher extends SubsystemBase {
+  /*
   CANSparkMax m_launchWheel;
   CANSparkMax m_feedWheel;
 
-  /** Creates a new Launcher. */
+  /** Creates a new Launcher. 
   public CANLauncher() {
     m_launchWheel = new CANSparkMax(LauncherConstants.kLauncherID, MotorType.kBrushed);
     m_feedWheel = new CANSparkMax(LauncherConstants.kFeederID, MotorType.kBrushed);
@@ -23,13 +24,13 @@ public class CANLauncher extends SubsystemBase {
     m_feedWheel.setSmartCurrentLimit(LauncherConstants.kFeedCurrentLimit);
   }
 
-  /**
+  
    * This method is an example of the 'subsystem factory' style of command creation. A method inside
    * the subsytem is created to return an instance of a command. This works for commands that
    * operate on only that subsystem, a similar approach can be done in RobotContainer for commands
    * that need to span subsystems. The Subsystem class has helper methods, such as the startEnd
    * method used here, to create these commands.
-   */
+   
   public Command getIntakeCommand() {
     // The startEnd helper method takes a method to call when the command is initialized and one to
     // call when it ends
@@ -61,4 +62,5 @@ public class CANLauncher extends SubsystemBase {
     m_launchWheel.set(0);
     m_feedWheel.set(0);
   }
-}
+  */
+} 
