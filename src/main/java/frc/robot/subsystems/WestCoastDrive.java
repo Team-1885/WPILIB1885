@@ -4,13 +4,17 @@
 
 package frc.robot.subsystems;
 
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
 import frc.robot.hardware.vendors.thirdparties.revlib.REVLibCAN;
@@ -70,6 +74,7 @@ public class WestCoastDrive extends SubsystemBase {
                                 .forEach(motor -> motor.setControlFramePeriodMs(1));
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(CANSparkMax::burnFlash);
+
         }
 
         @Override
@@ -134,4 +139,5 @@ public class WestCoastDrive extends SubsystemBase {
                         adam.uncaughtException(Thread.currentThread(), e);
                 }
         }
+
 }
