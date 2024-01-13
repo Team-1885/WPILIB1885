@@ -52,7 +52,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
   /**
    * Button mappings to different FIRST approved controllers 
-   * {@linkplain https://docs.wpilib.org/en/stable/docs/software/basic-programming/joystick.html}.
+   * @see <a href="https://docs.wpilib.org/en/stable/docs/software/basic-programming/joystick.html">WPILIB documentation</a>
    */
   public static final class ButtonMappings {
     /**

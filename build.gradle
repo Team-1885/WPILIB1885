@@ -7,8 +7,10 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2023.4.3"
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
@@ -128,3 +130,8 @@ checkstyle {
 
 
 check.dependsOn 'pmdMain'
+
+//Javadocs
+javadoc {
+    destinationDir = file("${buildDir}/docs/javadoc")
+}

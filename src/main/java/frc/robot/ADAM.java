@@ -25,11 +25,13 @@ import java.util.logging.Logger;
   /**
    * ...
    */
-  private @Getter String errorMessage;
+  @Getter 
+  private String errorMessage;
   /**
    * ...
    */
-  private @Getter ADAMErrorCodes errorCode;
+  @Getter
+  private ADAMErrorCodes errorCode;
   /**
    * ...
    */
@@ -108,6 +110,11 @@ import java.util.logging.Logger;
     }
   }
 
+  
+  /** 
+   * @param throwable
+   * @return ADAMSeverity
+   */
   private static ADAMSeverity getSeverityForError(final Throwable throwable) {
     ADAMSeverity severity = ADAMSeverity.WARNING;
 
@@ -123,7 +130,7 @@ import java.util.logging.Logger;
   /**
    * Constructs an ADAM instance to handle uncaught exceptions and log errors.
    *
-   * @param e The uncaught exception.
+   * @param throwable The uncaught exception.
    */
   public ADAM(final Throwable throwable) {
     this.errorMessage = determineErrorCode(throwable).getMessage();
@@ -136,8 +143,63 @@ import java.util.logging.Logger;
 
     // Record the start time of the robot
     robotStartTime = System.currentTimeMillis();
+
+    
   }
 
+  
+  /** 
+   * @param errorMessage
+   */
+  public void setErrorMessage(String errorMessage) {
+    this.errorMessage = errorMessage;
+  }
+
+  
+  /** 
+   * @param errorCode
+   */
+  public void setErrorCode(ADAMErrorCodes errorCode) {
+    this.errorCode = errorCode;
+  }
+
+  
+  /** 
+   * @param logger
+   */
+  public void setLogger(Logger logger) {
+    this.logger = logger;
+  }
+
+  
+  /** 
+   * @return int
+   */
+  public static int getMaxErrorCount() {
+    return MAX_ERROR_COUNT;
+  }
+
+  
+  /** 
+   * @return long
+   */
+  public static long getTimeWindowMs() {
+    return TIME_WINDOW_MS;
+  }
+
+  
+  /** 
+   * @param lastErrorTime
+   */
+  public void setLastErrorTime(long lastErrorTime) {
+    this.lastErrorTime = lastErrorTime;
+  }
+
+  
+  /** 
+   * @param throwable
+   * @return ADAMErrorCodes
+   */
   private ADAMErrorCodes determineErrorCode(final Throwable throwable) {
     ADAMErrorCodes errorCode = ADAMErrorCodes.WARN;
 
@@ -150,6 +212,11 @@ import java.util.logging.Logger;
     return errorCode;
   }
 
+  
+  /** 
+   * @param thread
+   * @param throwable
+   */
   @SuppressWarnings("PMD.DoNotUseThreads")
   @Override
   public void uncaughtException(final Thread thread, final Throwable throwable) {
@@ -159,6 +226,10 @@ import java.util.logging.Logger;
     }
   }
 
+  
+  /** 
+   * @return boolean
+   */
   // Method to check if the error should be logged based on rate limiting
   private boolean shouldLogError() {
     final long currentTime = System.currentTimeMillis();
@@ -184,6 +255,11 @@ import java.util.logging.Logger;
     return shouldLog;
   }
 
+  
+  /** 
+   * @param elapsedTimeMillis
+   * @return String
+   */
   // Method to format elapsed time in a human-readable format
   private String formatElapsedTime(final long elapsedTimeMillis) {
     final long seconds = (elapsedTimeMillis / 1000) % 60;
@@ -192,6 +268,10 @@ import java.util.logging.Logger;
     return String.format("%02d:%02d:%02d", hours, minutes, seconds);
   }
 
+  
+  /** 
+   * @param throwable
+   */
   // Method to log the error and related information
   private void logError(final Throwable throwable) {
     // ADAM ASCII art title
@@ -267,4 +347,6 @@ import java.util.logging.Logger;
     logger.info(logMessage);
 
   }
+
+
 }

@@ -27,5 +27,12 @@
   ],
   "java.test.defaultConfig": "WPIlibUnitTests",
   "java.checkstyle.configuration": "${workspaceFolder}\\config\\checkstyle\\checkstyle.xml",
-  "java.checkstyle.version": "10.12.3"
+  "java.checkstyle.version": "10.12.3",
+  
+  "terminal.integrated.env.windows": {
+    "JAVA_HOME": "C:\\Users\\Public\\wpilib\\2023\\jdk",
+    "PATH": "C:\\Users\\Public\\wpilib\\2023\\jdk\\bin"
+  },
+  "java.jdt.ls.java.home": "C:\\Users\\Public\\wpilib\\2023\\jdk",
+  
 }
