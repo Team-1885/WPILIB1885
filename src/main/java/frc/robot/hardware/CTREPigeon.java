@@ -1,5 +1,6 @@
 package frc.robot.hardware;
 
+import com.flybotix.hfr.codex.Codex;
 import com.flybotix.hfr.codex.CodexOf;
 
 public class CTREPigeon {
@@ -16,5 +17,7 @@ public class CTREPigeon {
     COLLISION
   }
 
-  public static void map(Codex<Double, EPigeon> pCodex)
+  public static void map(Codex<Double, EPigeon> pCodex) {
+    
+  }
 }
