@@ -87,6 +87,8 @@ public enum ELogitech310 implements CodexOf<Double> {
       case RIGHT_TRIGGER_AXIS:
       case RUMBLE:
         return true;
+      default:
+        break;
     }
     return false;
   }
@@ -109,6 +111,8 @@ public enum ELogitech310 implements CodexOf<Double> {
       case DPAD_LEFT:
       case DPAD_RIGHT:
         return true;
+      default:
+        break;
     }
     return false;
   }

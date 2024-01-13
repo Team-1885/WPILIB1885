@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -48,9 +51,11 @@ import lombok.Getter;
   private void configureBindings() {
     // Add code here
 
-    if(logitech.getRawButton(1)) {
-      driveCommand.schedule();
-    }
+    // Trigger driveTriggerX = new Trigger(() -> logitech.getRawAxis(0) > 0.01); // Replace 0 with the axis number for the X axis
+    // driveTriggerX.whileTrue(driveCommand);
+
+    // Trigger driveTriggerY = new Trigger(() -> logitech.getRawAxis(1) > 0.01); // Replace 1 with the axis number for the Y axis
+    // driveTriggerY.whileTrue(driveCommand);
 
     logitech.getRawAxis(0); // X
     logitech.getRawAxis(1); // Y
@@ -62,7 +67,10 @@ import lombok.Getter;
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return exampleCommand; // basically a placeholder
+    // Load the path you want to follow using its name in the GUI
+    PathPlannerPath path = PathPlannerPath.fromPathFile("New Path");
+
+    // Create a path following command using AutoBuilder. This will also trigger event markers.
+    return AutoBuilder.followPathWithEvents(path);
   }
 }

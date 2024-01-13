@@ -12,7 +12,6 @@ import com.flybotix.hfr.util.log.Logger;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.common.lib.util.Utils;
 public class PIDController implements Sendable {
 

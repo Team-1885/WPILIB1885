@@ -44,39 +44,23 @@ public class DriveCommand extends CommandBase {
     });
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Fixed by Avi Sharma
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     runTest(() -> {
-      // double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.5; // Get Y-axis value of left stick
-      double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.30;
-      double turnSpeed = RobotContainer.logitech.getRawAxis(0) * 0.20; // Get X-axis value of left stick
+      
+      double forwardSpeed = RobotContainer.logitech.getRawAxis(1) * 1;
+      double turnSpeed = RobotContainer.logitech.getZ() * 1; // Get X-axis value of left stick //AVI DID THIS
 
       // You may want to add deadzones to prevent small joystick values from causing
       // unintended movement
-      forwardSpeed = applyDeadzone(forwardSpeed, 0);
-      turnSpeed = applyDeadzone(turnSpeed, 0);
+      forwardSpeed = applyDeadzone(forwardSpeed, 0.05);
+      turnSpeed = applyDeadzone(turnSpeed, 0.05);
 
       // Calculate left and right motor speeds for tank drive
       double leftSpeed = forwardSpeed + turnSpeed;
-      /* 
-      if (leftSpeed > .5) {
-        leftSpeed = .4;
-      }
-      if (leftSpeed < -.3) {
-        leftSpeed = -.1;
-      }
-      */
       double rightSpeed = forwardSpeed - turnSpeed;
-      /* 
-      if (rightSpeed > .3) {
-        rightSpeed = .1;
-      }
-      if (rightSpeed < -.3) {
-        rightSpeed = -.1;
-      }
-      */
 
       // Set motor speeds in the WestCoastDrive subsystem
       westCoastDrive.setMotorSpeed(leftSpeed, rightSpeed);

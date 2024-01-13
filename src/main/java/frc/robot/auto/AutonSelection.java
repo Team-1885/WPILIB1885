@@ -8,14 +8,16 @@ import frc.robot.subsystems.ExampleSubsystem;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * The AutonSelection class is responsible for selecting and retrieving the chosen autonomous
+ * controller for the robot.
+ */
 public class AutonSelection {
   public static ShuffleboardTab mAutonConfiguration = Shuffleboard.getTab("Pre-Match Configuration");
   public static int mDelaySeconds;
   private SendableChooser<Class<?>> mSendableAutonControllers = new SendableChooser<>();
 
-  /**
-   * Update these Auton Controllers whenever new ones are added
-   */
+  //Update these Auton Controllers whenever new ones are added
   private Class<?>[] mAutonControllers = {
       // ShootMoveController.class,
       // TwoBallController.class,
@@ -28,6 +30,9 @@ public class AutonSelection {
       // ThreeBallTrajectoryController.class
   };
 
+  /**
+   * Generates
+   */
   public AutonSelection() {
     mDelaySeconds = ((Double) (mAutonConfiguration.add("Path Delay Seconds", 0)
         .withPosition(2, 0)
