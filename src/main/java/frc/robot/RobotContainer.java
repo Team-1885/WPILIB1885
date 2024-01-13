@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+// import frc.robot.commands.SpinIntakeCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+// import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
 
@@ -27,6 +29,8 @@ import lombok.Getter;
   private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
+  // private @Getter final Intake intake = new Intake();
+  // private @Getter final SpinIntakeCommand intakeCommand = new SpinIntakeCommand(intake);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
   

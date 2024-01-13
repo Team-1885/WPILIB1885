@@ -51,7 +51,7 @@ public class DriveCommand extends CommandBase {
     runTest(() -> {
       // double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.5; // Get Y-axis value of left stick
       double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.30;
-      double turnSpeed = -RobotContainer.logitech.getRawAxis(0) * 0.20; // Get X-axis value of left stick
+      double turnSpeed = RobotContainer.logitech.getRawAxis(0) * 0.20; // Get X-axis value of left stick
 
       // You may want to add deadzones to prevent small joystick values from causing
       // unintended movement
