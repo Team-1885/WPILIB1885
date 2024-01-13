@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Pneumatics;
 import lombok.Getter;
 
 import java.util.logging.Logger;
@@ -31,6 +32,9 @@ import java.util.logging.Logger;
    */
   private @Getter RobotContainer robotContainer;
 
+  //PNEUMATICS
+  public static Pneumatics pne;
+
   /**
    * Default constructor for the Robot class. This constructor is automatically invoked when an instance of the Robot class is created.
    * Initializes the Robot instance by calling the no-argument constructor of the superclass (TimedRobot).
@@ -47,6 +51,7 @@ import java.util.logging.Logger;
     // Instantiate our RobotContainer. 
     // This will perform all our button bindings, and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+    pne = new Pneumatics();
     LOGGER.info("Robot initialization complete.");
   }
 
