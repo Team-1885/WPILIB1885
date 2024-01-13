@@ -49,7 +49,7 @@ import lombok.Getter;
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    westCoastDrive.setDefaultCommand(driveCommand);
+    intake.setDefaultCommand(intakeMotor);
   }
 
   /**
