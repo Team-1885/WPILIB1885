@@ -11,10 +11,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
-// import frc.robot.commands.SpinIntakeCommand;
+import frc.robot.commands.LaunchNote;
+import frc.robot.commands.PrepareLaunch;
+import frc.robot.commands.SpinIntakeCommand;
+import frc.robot.hardware.Constants.LauncherConstants;
 import frc.robot.subsystems.ExampleSubsystem;
-// import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.SpinIntake;
 import frc.robot.subsystems.WestCoastDrive;
+import frc.robot.subsystems.CANLauncher;
 import lombok.Getter;
 
 /** 
@@ -33,12 +37,18 @@ import lombok.Getter;
   // private @Getter final SpinIntakeCommand intakeCommand = new SpinIntakeCommand(intake);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
+  private final CANLauncher m_launcher = new CANLauncher();
+  private @Getter final SpinIntake intake = new SpinIntake();
+  private @Getter final SpinIntakeCommand intakeMotor = new SpinIntakeCommand(intake);
+
+
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    westCoastDrive.setDefaultCommand(driveCommand);
+    intake.setDefaultCommand(intakeMotor);
+
   }
 
   /**
@@ -47,15 +57,28 @@ import lombok.Getter;
    */
   private void configureBindings() {
     // Add code here
-
+    /* 
+    while(logitech.getRawButton(5))
+    {
+      m_launcher.getIntakeCommand();
+    }
+    if (logitech.getRawButton(1)) {
+      // Code to execute when the 'A' button is pressed
+  
+      new PrepareLaunch(m_launcher)
+          .withTimeout(LauncherConstants.kLauncherDelay)
+          .andThen(new LaunchNote(m_launcher))
+          .handleInterrupt(() -> m_launcher.stop());
+  }
     if(logitech.getRawButton(1)) {
       driveCommand.schedule();
     }
 
     logitech.getRawAxis(0); // X
     logitech.getRawAxis(1); // Y
+    */
   }
-
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
