@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,11 +14,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+// import frc.robot.commands.SpinIntakeCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+// import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
-import frc.robot.commands.MotorCommandPeyton;
-import frc.robot.subsystems.MotorSpinPeyton;
 
 /** 
  * This class is where the bulk of the robot should be declared. 
@@ -29,19 +32,16 @@ import frc.robot.subsystems.MotorSpinPeyton;
   private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
+  // private @Getter final Intake intake = new Intake();
+  // private @Getter final SpinIntakeCommand intakeCommand = new SpinIntakeCommand(intake);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
-  @Getter
-  public final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
-  private @Getter final MotorSpinPeyton motorSpinPeyton = new MotorSpinPeyton();
-  private @Getter final MotorCommandPeyton motorCommandPeyton = new MotorCommandPeyton(motorSpinPeyton);
-  
+  public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
     westCoastDrive.setDefaultCommand(driveCommand);
-    motorSpinPeyton.setDefaultCommand(motorCommandPeyton);
   }
 
   /**
@@ -51,9 +51,11 @@ import frc.robot.subsystems.MotorSpinPeyton;
   private void configureBindings() {
     // Add code here
 
-    if(logitech.getRawButton(1)) {
-      driveCommand.schedule();
-    }
+    // Trigger driveTriggerX = new Trigger(() -> logitech.getRawAxis(0) > 0.01); // Replace 0 with the axis number for the X axis
+    // driveTriggerX.whileTrue(driveCommand);
+
+    // Trigger driveTriggerY = new Trigger(() -> logitech.getRawAxis(1) > 0.01); // Replace 1 with the axis number for the Y axis
+    // driveTriggerY.whileTrue(driveCommand);
 
     logitech.getRawAxis(0); // X
     logitech.getRawAxis(1); // Y
@@ -65,7 +67,10 @@ import frc.robot.subsystems.MotorSpinPeyton;
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return exampleCommand; // basically a placeholder
+    // Load the path you want to follow using its name in the GUI
+    PathPlannerPath path = PathPlannerPath.fromPathFile("New Path");
+
+    // Create a path following command using AutoBuilder. This will also trigger event markers.
+    return AutoBuilder.followPathWithEvents(path);
   }
 }

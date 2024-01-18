@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
-import frc.robot.hardware.REVLibCAN;
+import frc.robot.hardware.vendors.thirdparties.revlib.REVLibCAN;
 import lombok.Getter;
 
 /**
@@ -63,13 +63,14 @@ public class WestCoastDrive extends SubsystemBase {
                 leftEncoder = REV_0xM1.getEncoder();
                 rightEncoder = REV_0xM2.getEncoder();
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
-                                .forEach(motor -> motor.setClosedLoopRampRate(0.5));
+                                .forEach(motor -> motor.setClosedLoopRampRate(1));
+                //Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
+                //                .forEach(motor -> motor.setOpenLoopRampRate(0.5));
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
-                                .forEach(motor -> motor.setOpenLoopRampRate(0.5));
-                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
-                                .forEach(motor -> motor.setControlFramePeriodMs(1));
+                               .forEach(motor -> motor.setControlFramePeriodMs(1));
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(CANSparkMax::burnFlash);
+
         }
 
         @Override
@@ -98,11 +99,11 @@ public class WestCoastDrive extends SubsystemBase {
 
         public void setMotorSpeed(final double leftSpeed, final double rightSpeed) {
                 // Setting motor speed using the ".set()" method from the CANSparkMax class
-                REV_0xM1.set(leftSpeed);
-                REV_0xF1.set(leftSpeed);
+                REV_0xM1.set(leftSpeed * 0.5);
+                //REV_0xF1.set(leftSpeed * 0.5);
 
-                REV_0xM2.set(rightSpeed);
-                REV_0xF2.set(rightSpeed);
+                REV_0xM2.set(rightSpeed * 0.5);
+                //REV_0xF2.set(rightSpeed);
         }
 
         public double getMotorSpeed() {
@@ -134,4 +135,5 @@ public class WestCoastDrive extends SubsystemBase {
                         adam.uncaughtException(Thread.currentThread(), e);
                 }
         }
+
 }
