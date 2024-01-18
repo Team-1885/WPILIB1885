@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANLauncher extends SubsystemBase {
-  /*
+  
   CANSparkMax m_launchWheel;
   CANSparkMax m_feedWheel;
 
-  /** Creates a new Launcher. 
+  // Creates a new Launcher. 
   public CANLauncher() {
     m_launchWheel = new CANSparkMax(LauncherConstants.kLauncherID, MotorType.kBrushed);
     m_feedWheel = new CANSparkMax(LauncherConstants.kFeederID, MotorType.kBrushed);
@@ -25,11 +25,11 @@ public class CANLauncher extends SubsystemBase {
   }
 
   
-   * This method is an example of the 'subsystem factory' style of command creation. A method inside
+   /* This method is an example of the 'subsystem factory' style of command creation. A method inside
    * the subsytem is created to return an instance of a command. This works for commands that
    * operate on only that subsystem, a similar approach can be done in RobotContainer for commands
    * that need to span subsystems. The Subsystem class has helper methods, such as the startEnd
-   * method used here, to create these commands.
+   method used here, to create these commands. */
    
   public Command getIntakeCommand() {
     // The startEnd helper method takes a method to call when the command is initialized and one to
@@ -62,5 +62,5 @@ public class CANLauncher extends SubsystemBase {
     m_launchWheel.set(0);
     m_feedWheel.set(0);
   }
-  */
+  
 } 

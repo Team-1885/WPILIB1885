@@ -51,12 +51,12 @@ public class DriveCommand extends CommandBase {
     runTest(() -> {
       // double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.5; // Get Y-axis value of left stick
       double forwardSpeed = -RobotContainer.logitech.getRawAxis(1) * 0.30;
-      double turnSpeed = RobotContainer.logitech.getRawAxis(4) * 0.20; // Get X-axis value of right stick
+      double turnSpeed = RobotContainer.logitech.getZ() * 1; // Get X-axis value of right stick
 
       // You may want to add deadzones to prevent small joystick values from causing
       // unintended movement
-      forwardSpeed = applyDeadzone(forwardSpeed, 0);
-      turnSpeed = applyDeadzone(turnSpeed, 0);
+      forwardSpeed = applyDeadzone(forwardSpeed, 0.05);
+      turnSpeed = applyDeadzone(turnSpeed, 0.05);
 
       // Calculate left and right motor speeds for tank drive
       double leftSpeed = forwardSpeed + turnSpeed;

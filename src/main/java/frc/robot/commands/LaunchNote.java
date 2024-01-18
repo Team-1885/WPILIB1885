@@ -11,12 +11,12 @@ import frc.robot.subsystems.CANLauncher;
 
  
 public class LaunchNote extends CommandBase {
-  /* 
+  
   CANLauncher m_launcher;
 
   // CANLauncher m_launcher;
 
-  /** Creates a new LaunchNote.
+  //Creates a new LaunchNote.
   public LaunchNote(CANLauncher launcher) {
     // save the launcher system internally
     m_launcher = launcher;
@@ -55,5 +55,5 @@ public class LaunchNote extends CommandBase {
     // Stop the wheels when the command ends.
     m_launcher.stop();
   }
-  */
+  
 }

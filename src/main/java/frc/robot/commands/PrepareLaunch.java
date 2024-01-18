@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CANLauncher;
 
 public class PrepareLaunch extends CommandBase {
-/* 
+
 
   CANLauncher m_launcher;
 
-  Creates a new PrepareLaunch.
+  //Creates a new PrepareLaunch.
   public PrepareLaunch(CANLauncher launcher) {
     // save the launcher system internally
     m_launcher = launcher;
@@ -51,5 +51,5 @@ public class PrepareLaunch extends CommandBase {
     // decorator on the command to end it.
     return false;
   }
-  */
+  
 }

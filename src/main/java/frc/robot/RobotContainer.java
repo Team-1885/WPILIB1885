@@ -57,7 +57,6 @@ import lombok.Getter;
    */
   private void configureBindings() {
     // Add code here
-    /* 
     while(logitech.getRawButton(5))
     {
       m_launcher.getIntakeCommand();
@@ -76,7 +75,7 @@ import lombok.Getter;
 
     logitech.getRawAxis(0); // X
     logitech.getRawAxis(1); // Y
-    */
+    
   }
   
   /**
