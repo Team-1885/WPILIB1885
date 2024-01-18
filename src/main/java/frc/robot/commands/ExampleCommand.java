@@ -13,7 +13,8 @@ import lombok.Getter;
  * An example command for use as a template.
  */
 
- @SuppressWarnings("PMD.CommentSize") public class ExampleCommand extends CommandBase {
+ @SuppressWarnings("PMD.CommentSize") 
+ public class ExampleCommand extends CommandBase {
 
   /**
    * Lorem Ipsum.
