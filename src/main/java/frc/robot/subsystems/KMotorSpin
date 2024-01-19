@@ -36,7 +36,43 @@ public class WestCoastDrive extends SubsystemBase {
         followerR.restoreFactoryDefaults;
         followerL.restoreFactoryDefaults;
 
+        motorL.setInverted(false);
+        followerL.setInverted(false);
+
+        motorR.setInverted(true);
+        followerR.setInverted(true);
+
+        encoderL = motorL.getEncoder();
+        encoderR = motorR.getEncoder();
+
+    }
+
+    @Override
+    public void periodic() {
+
+
+    }
+
+    public void reset() {
+
+        encoderL.setPosition(0);
+        encoderR.setPosition(0);
+
+        motorL.stopMotor();
+        motorR.stopMotor();
+
+    }
+
+    public void setMotorSpeed(final double speedL, final double speedR) {
+
+        motorL.set(leftSpeed * 0.5);
+        motorR.set(rightSpeed * 0.5);
+
+    }
+
+    public double getMotorSpeed() {
         
+        return motorL.get();
 
     }
 
