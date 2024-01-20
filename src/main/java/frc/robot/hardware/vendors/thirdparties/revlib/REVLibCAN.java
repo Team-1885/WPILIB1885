@@ -56,9 +56,9 @@ public class REVLibCAN {
   private @Getter static ADAM adam = new ADAM(null);
   private static final Logger logger = Logger.getLogger(REVLibCAN.class.getName());
 
-  public static void logFaults(Stream<CANSparkMax> REVLibCAN) {
+  public static void logFaults(CANSparkMax motor2) {
     runTest(() -> {
-      REVLibCAN.forEach(motor -> {
+      motor2.forEach(motor -> {
         reportFaults(motor);
         reportStickyFaults(motor);
       });

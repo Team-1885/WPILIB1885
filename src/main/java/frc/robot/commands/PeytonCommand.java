@@ -4,7 +4,12 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.util.function.DoubleConsumer;
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.ADAM;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.PeytonDriveTrain;
@@ -12,14 +17,16 @@ import lombok.Getter;
 
 
 @SuppressWarnings("PMD.CommentSize")
-public class PeytonCommand extends CommandBase {
+public class PeytonCommand extends PIDCommand {
 
   private @Getter ADAM adam = new ADAM(null);
 
   private final @Getter PeytonDriveTrain peytonDriveTrain;
 
-  public PeytonCommand(final PeytonDriveTrain peytonDriveTrain) {
-    super();
+  public PeytonCommand(final PeytonDriveTrain peytonDriveTrain, PIDController controller, DoubleSupplier measurementSource, DoubleSupplier setpointSource,
+  DoubleConsumer useOutput, Subsystem... requirements) {
+    super(new PIDController(0, 0, 0), setpointSource, 0, useOutput, requirements);
+    getController();
     this.peytonDriveTrain = peytonDriveTrain;
     addRequirements(peytonDriveTrain);
   }
@@ -27,7 +34,8 @@ public class PeytonCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("========== STARTING PEYTONCOMMAND ==========");
+    super.initialize();
+    System.out.println("==== STARTING PEYTONCOMMAND ====");
     runTest(() -> {
 
     });
@@ -35,6 +43,7 @@ public class PeytonCommand extends CommandBase {
 
   @Override
   public void execute() {
+    super.execute();
     runTest(() -> {
       
       double forwardSpeed = RobotContainer.logitech.getRawAxis(1) * 1;
@@ -60,6 +69,7 @@ public class PeytonCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    super.end(interrupted);
     runTest(() -> {
 
     });
@@ -67,6 +77,7 @@ public class PeytonCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    super.isFinished();
     return false;
   }
 

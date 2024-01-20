@@ -77,7 +77,7 @@ public class WestCoastDrive extends SubsystemBase {
         public void periodic() { // This method will be called once per scheduler run (usually, once every 20 ms),
                 runTest(() -> {
                         testEntry.setDouble(REV_0xM1.get());
-                        REVLibCAN.logFaults(Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2));
+                        REVLibCAN.logFaults((CANSparkMax) Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2));
                         // ... Other periodic tasks
                 });
         }
