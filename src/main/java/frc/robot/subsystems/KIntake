@@ -20,38 +20,30 @@ import lombok.Getter;
  * WestCoastDrive Subsystem.
  */
 @SuppressWarnings("PMD.CommentSize")
-public class WestCoastDrive extends SubsystemBase {
+public class KIntake extends SubsystemBase {
         private @Getter final ADAM adam = new ADAM(null);
 
         // Creates two CANSparkMax motors, inheriting physical constants from the {@link#REVLibCAN} helper class.
-        private static CANSparkMax REV_0xM1 = new CANSparkMax(REVLibCAN.L_MASTER_ID, REVLibCAN.MOTOR_TYPE),
-                        REV_0xF1 = new CANSparkMax(REVLibCAN.L_FOLLOWER_ID, REVLibCAN.MOTOR_TYPE);
-
-        // Creates two CANSparkMax motors, inheriting physical constants from the {@link#REVLibCAN} helper class.
-        private static CANSparkMax REV_0xM2 = new CANSparkMax(REVLibCAN.R_MASTER_ID, REVLibCAN.MOTOR_TYPE),
-                        REV_0xF2 = new CANSparkMax(REVLibCAN.R_FOLLOWER_ID, REVLibCAN.MOTOR_TYPE);
-        /**
+        private static CANSparkMax intakeMotor = new CANSparkMax(REVLibCAN.L_MASTER_ID, REVLibCAN.MOTOR_TYPE);
          * Lorem Ipsum.
          */
-        private @Getter RelativeEncoder leftEncoder,
-                        rightEncoder;
+        private @Getter RelativeEncoder intakeEncoder:
 
-        private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
-        private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0)
-                        .getEntry();
+        private ShuffleboardTab tab = Shuffleboard.getTab("===== INTAKE =====");
+        private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0).getEntry();
+
+        PIDController pid = new PIDController(kP, kI, kD);
 
         /** Constructor for the Subsystem */
-        public WestCoastDrive() {
+        public KIntake() {
                 /**
                  * Low-level configurations for the hardware objects
                  */
                 super();
-                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2).forEach(CANSparkMax::restoreFactoryDefaults);
-                final Map<CANSparkMax, CANSparkMax> masterFollowerMap = Map.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2);
-                masterFollowerMap.forEach((master, follower) -> follower.follow(master));
-                Stream.of(REV_0xM1, REV_0xF1).forEach(motor -> motor.setInverted(false));
-                Stream.of(REV_0xM2, REV_0xF2).forEach(motor -> motor.setInverted(true));
-                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2).forEach(motor -> motor.setIdleMode(CANSparkMax.IdleMode.kCoast));
+                intakeMotor.restoreFactoryDefaults;
+                final Map<CANSparkMax, CANSparkMax> intakeMap = Map.of(intakeMotor);
+                intakeMotor.setInverted(false));
+        tream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2).forEach(motor -> motor.setIdleMode(CANSparkMax.IdleMode.kCoast));
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2).forEach(motor -> motor.setSmartCurrentLimit(30, 35, 100));
                 leftEncoder = REV_0xM1.getEncoder();
                 rightEncoder = REV_0xM2.getEncoder();
