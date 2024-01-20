@@ -2,25 +2,36 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+/*
+ * This is a copy of WestCoastDrive with a few changes (that may or may not work):
+ * -Added a PIDController constructor
+ *      -Added kP, kI, and kD fields to go along with this
+ * -Added a set setpoint method (input is currently 10, this will def have to change)
+ * -In periodic, added a setMotorSpeed with the pid.calculate for the left and right motors
+ *      -Also included an if statement that sees if the robot's at the setpoint, but this may not be needed if calculate can equal zero
+ */
+
 package frc.robot.subsystems;
 
 import java.util.Map;
 import java.util.stream.Stream;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+
+
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
-import frc.robot.hardware.vendors.thirdparties.revlib.REVLibCAN;
+import frc.robot.hardware.REVLibCAN;
 import lombok.Getter;
 
 /**
- * WestCoastDrive Subsystem.
+ * PID Subsystem.
  */
 @SuppressWarnings("PMD.CommentSize")
-public class WestCoastDrive extends SubsystemBase {
+public class PIDSubsystem extends SubsystemBase {
         private @Getter final ADAM adam = new ADAM(null);
 
         // Creates two CANSparkMax motors, inheriting physical constants from the {@link#REVLibCAN} helper class.
@@ -36,12 +47,26 @@ public class WestCoastDrive extends SubsystemBase {
         private @Getter RelativeEncoder leftEncoder,
                         rightEncoder;
 
-        private ShuffleboardTab tab = Shuffleboard.getTab("===== WEST COAST DRIVE =====");
+        private ShuffleboardTab tab = Shuffleboard.getTab("===== PID SUBSYSTEM =====");
         private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0)
                         .getEntry();
 
+
+        //adjust these later
+        private kP = 0.05;
+        private kI = 0.00;
+        private kD = 0.00;
+        
+        // Creates a PIDController with gains kP, kI, and kD
+        PIDController pid = new PIDController(kP, kI, kD);
+
+        //can be used to change setpoint
+        setSetpoint(10);
+
+
+
         /** Constructor for the Subsystem */
-        public WestCoastDrive() {
+        public PIDSubsystem() {
                 /**
                  * Low-level configurations for the hardware objects
                  */
@@ -63,14 +88,13 @@ public class WestCoastDrive extends SubsystemBase {
                 leftEncoder = REV_0xM1.getEncoder();
                 rightEncoder = REV_0xM2.getEncoder();
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
-                                .forEach(motor -> motor.setClosedLoopRampRate(1));
-                //Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
-                //                .forEach(motor -> motor.setOpenLoopRampRate(0.5));
+                                .forEach(motor -> motor.setClosedLoopRampRate(0.5));
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
-                               .forEach(motor -> motor.setControlFramePeriodMs(1));
+                                .forEach(motor -> motor.setOpenLoopRampRate(0.5));
+                Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
+                                .forEach(motor -> motor.setControlFramePeriodMs(1));
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(CANSparkMax::burnFlash);
-
         }
 
         @Override
@@ -79,6 +103,13 @@ public class WestCoastDrive extends SubsystemBase {
                         testEntry.setDouble(REV_0xM1.get());
                         REVLibCAN.logFaults(Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2));
                         // ... Other periodic tasks
+
+                        //setting Motor speed according to the pid calculations, if its at the setpoint stop the motors (idk if the calculate will already do this)
+                        setMotorSpeed(pid.calculate(leftEncoder.getDistance(), setpoint), pid.calculate(rightEncoder.getDistance(), setpoint))
+                        if(pid.atSetpoint())
+                        {
+                            setMotorSpeed(0,0);
+                        }
                 });
         }
 
@@ -99,12 +130,12 @@ public class WestCoastDrive extends SubsystemBase {
 
         public void setMotorSpeed(final double leftSpeed, final double rightSpeed) {
                 // Setting motor speed using the ".set()" method from the CANSparkMax class
-                REV_0xM1.set(leftSpeed * 0.5);
-                //REV_0xF1.set(leftSpeed * 0.5);
+                REV_0xM1.set(leftSpeed);
+                REV_0xF1.set(leftSpeed);
 
-                REV_0xM2.set(rightSpeed * 0.5);
-                //REV_0xF2.set(rightSpeed);
-        }
+                REV_0xM2.set(rightSpeed);
+                REV_0xF2.set(rightSpeed);
+        } 
 
         public double getMotorSpeed() {
                 // Getting motor speed using the ".get()" method from the CANSparkMax class
@@ -135,5 +166,6 @@ public class WestCoastDrive extends SubsystemBase {
                         adam.uncaughtException(Thread.currentThread(), e);
                 }
         }
+
 
 }
