@@ -7,14 +7,23 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.MakeMotorSpinCommand;
+import frc.robot.hardware.KitBotCONSTANT;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.MakeMotorSpin;
 import frc.robot.subsystems.WestCoastDrive;
+import frc.robot.hardware.KitBotCONSTANT.LauncherConstants;
+import frc.robot.hardware.KitBotCONSTANT.OperatorConstants;
+import frc.robot.commands.Autos;
+import frc.robot.commands.LaunchNote;
+import frc.robot.commands.PrepareLaunch;
+import frc.robot.subsystems.PWMDrivetrain;
+import frc.robot.subsystems.PWMLauncher;
 import lombok.Getter;
 
 /** 
@@ -25,12 +34,19 @@ import lombok.Getter;
 @SuppressWarnings("PMD.CommentSize") public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
+  private final PWMLauncher m_launcher = new PWMLauncher();
+  // private final CANLauncher m_launcher = new CANLauncher();
+
+
   private @Getter final WestCoastDrive westCoastDrive = new WestCoastDrive();
   private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
+
+
+  
   private @Getter final MakeMotorSpin makeMotorSpin = new MakeMotorSpin();
   private @Getter final MakeMotorSpinCommand makeMotorSpinCommand = new MakeMotorSpinCommand(makeMotorSpin);
   
@@ -55,6 +71,20 @@ import lombok.Getter;
 
     logitech.getRawAxis(0); // X
     logitech.getRawAxis(1); // Y
+
+    CommandXboxController m_operatorController = new CommandXboxController(0);
+    m_operatorController
+        .a()
+        .whileTrue(
+            new PrepareLaunch(m_launcher)
+                .withTimeout(KitBotCONSTANT.kLauncherDelay)
+                .andThen(new LaunchNote(m_launcher))
+                .handleInterrupt(() -> m_launcher.stop()));
+
+    // Set up a binding to run the intake command while the operator is pressing and holding the
+    // left Bumper
+    m_operatorController.leftBumper().whileTrue(m_launcher.getIntakeCommand());
+ 
   }
 
   /**
