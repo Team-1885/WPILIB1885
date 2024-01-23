@@ -38,6 +38,9 @@ public class REVLibCAN {
   public static @Getter final int R_MASTER_ID = 4;
   public static @Getter final int R_FOLLOWER_ID = 2;
 
+  public static @Getter final int INTAKE_FEEDER_ID = 10;
+  public static @Getter final int INTAKE_ROTATER_ID = 9;
+
   // =======================================
   // DO NOT EDIT THESE CONFIGURATION OPTIONS
   // =======================================

@@ -5,75 +5,66 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.common.types.input.ELogitech310;
 import frc.robot.ADAM;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.WestCoastDrive;
+import frc.robot.subsystems.IntakeSubsystem;
 import lombok.Getter;
+
+import com.flybotix.hfr.codex.CodexOf;
+import com.flybotix.hfr.codex.RobotCodex;
+import edu.wpi.first.wpilibj.Joystick;
+
 
 /**
  * An example command for use as a template.
  */
 
 @SuppressWarnings("PMD.CommentSize")
-public class DriveCommand extends CommandBase {
+public class IntakeCommand extends CommandBase {
 
-  /**
-   * Lorem Ipsum.
-   */
+
   private @Getter ADAM adam = new ADAM(null);
 
-  /**
-   * Lorem Ipsum.
-   */
-  private final @Getter WestCoastDrive westCoastDrive;
+  private final @Getter IntakeSubsystem intakeSubsystem;
 
   /** Creates a new ExampleCommand. */
-  public DriveCommand(final WestCoastDrive westCoastDrive) {
+  public IntakeCommand(final IntakeSubsystem intakeSubsystem) {
     super();
     // Use addRequirements() here to declare subsystem dependencies.
-    this.westCoastDrive = westCoastDrive;
-    addRequirements(westCoastDrive);
+    this.intakeSubsystem = intakeSubsystem;
+    addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("========== STARTING DRIVECOMMAND ==========");
+    System.out.println("========== STARTING INTAKE COMMAND ==========");
     runTest(() -> {
 
     });
   }
 
-  // Fixed by Avi Sharma
   // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
+  public void executeFeeder() {
     runTest(() -> {
       
-      double forwardSpeed = RobotContainer.logitech.getRawAxis(1) * 1;
-      double turnSpeed = RobotContainer.logitech.getZ() * 1; // Get X-axis value of left stick //AVI DID THIS
+      double feedSpeed = 0.5;
 
-      // You may want to add deadzones to prevent small joystick values from causing
-      // unintended movement
-      forwardSpeed = applyDeadzone(forwardSpeed, 0.05);
-      turnSpeed = applyDeadzone(turnSpeed, 0.05);
-
-      // Calculate left and right motor speeds for tank drive
-      double leftSpeed = forwardSpeed + turnSpeed;
-      double rightSpeed = forwardSpeed - turnSpeed;
-
-      // Set motor speeds in the WestCoastDrive subsystem
-      westCoastDrive.setMotorSpeed(leftSpeed, rightSpeed);
+      // Set motor speeds in the IntakeSubsystem
+      intakeSubsystem.setFeederSpeed(feedSpeed);
     });
   }
 
-  // Helper method to apply a deadzone to joystick values
-  private double applyDeadzone(double value, double deadzone) {
-    if (Math.abs(value) < deadzone) {
-      return 0.0;
-    } else {
-      return value;
-    }
+  public void executeRotate() {
+    runTest(() -> {
+
+      double rotateSpeed = 0.5;
+
+      // Set motor speeds in the IntakeSubsystem
+      intakeSubsystem.setRotaterSpeed(rotateSpeed);
+    });
   }
 
   // Called once the command ends or is interrupted.

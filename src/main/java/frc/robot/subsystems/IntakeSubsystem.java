@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
 import frc.robot.RobotMap;
-import frc.robot.hardware.REVLibCAN;
+import frc.robot.hardware.vendors.thirdparties.revlib.REVLibCAN;
 import lombok.Getter;
 
 /**
@@ -29,10 +29,10 @@ public class IntakeSubsystem extends SubsystemBase {
         private @Getter final ADAM adam = new ADAM(null);
 
         // Creates a CANSparkMax motor, inheriting physical constants from the {@link#REVLibCAN} helper class.
-        private static CANSparkMax REV_INTAKE_FEEDER = new CANSparkMax(REVLibCAN.INTAKE_GET_ID, REVLibCAN.MOTOR_TYPE);
+        private static CANSparkMax REV_INTAKE_FEEDER = new CANSparkMax(REVLibCAN.INTAKE_FEEDER_ID, REVLibCAN.MOTOR_TYPE);
 
         // Creates a CANSparkMax motor, inheriting physical constants from the {@link#REVLibCAN} helper class.
-        private static CANSparkMax REV_INTAKE_ROTATER = new CANSparkMax(REVLibCAN.INTAKE_ROTATE_ID, REVLibCAN.MOTOR_TYPE);
+        private static CANSparkMax REV_INTAKE_ROTATER = new CANSparkMax(REVLibCAN.INTAKE_ROTATER_ID, REVLibCAN.MOTOR_TYPE);
         /**
          * Lorem Ipsum.
          */
@@ -98,10 +98,15 @@ public class IntakeSubsystem extends SubsystemBase {
                 REV_INTAKE_ROTATER.set(rotateSpeed);
         }
 
-        public double getMotorSpeed() {
+        public double getFeederSpeed() {
                 // Getting motor speed using the ".get()" method from the CANSparkMax class
-                return REV_0xM1.get();
+                return REV_INTAKE_FEEDER.get();
         }
+
+        public double getRotaterSpeed() {
+                // Getting motor speed using the ".get()" method from the CANSparkMax class
+                return REV_INTAKE_ROTATER.get();
+                }
 
         /**
          * Executes custom testing and validation methods in a controlled environment.

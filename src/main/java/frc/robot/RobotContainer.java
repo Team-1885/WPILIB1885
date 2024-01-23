@@ -14,11 +14,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IntakeCommand;
 // import frc.robot.commands.SpinIntakeCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 // import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
+
+import frc.common.types.input.ELogitech310;
 
 /** 
  * This class is where the bulk of the robot should be declared. 
@@ -32,6 +36,10 @@ import lombok.Getter;
   private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
+
+  private @Getter final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private @Getter final IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
+
   // private @Getter final Intake intake = new Intake();
   // private @Getter final SpinIntakeCommand intakeCommand = new SpinIntakeCommand(intake);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
