@@ -11,50 +11,84 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RetractClimbCommand;
+import frc.robot.subsystems.Climber;
 // import frc.robot.commands.SpinIntakeCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 // import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.WestCoastDrive;
 import lombok.Getter;
 
-/** 
- * This class is where the bulk of the robot should be declared. 
- * Since Command-based is a "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot} periodic methods (other than the scheduler calls). 
- * Instead, the structure of the robot (including subsystems, commands, and trigger mappings) should be declared here.
+/**
+ * This class is where the bulk of the robot should be declared.
+ * Since Command-based is a "declarative" paradigm, very little robot logic
+ * should actually be handled in the {@link Robot} periodic methods (other than
+ * the scheduler calls).
+ * Instead, the structure of the robot (including subsystems, commands, and
+ * trigger mappings) should be declared here.
  */
-@SuppressWarnings("PMD.CommentSize") public class RobotContainer {
+@SuppressWarnings("PMD.CommentSize")
+public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private @Getter final WestCoastDrive westCoastDrive = new WestCoastDrive();
   private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
-  private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-  private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
+  private @Getter final Climber climber = new Climber();
+  private @Getter final ClimbCommand climbCommand = new ClimbCommand(climber);
   // private @Getter final Intake intake = new Intake();
-  // private @Getter final SpinIntakeCommand intakeCommand = new SpinIntakeCommand(intake);
+  // private @Getter final SpinIntakeCommand intakeCommand = new
+  // SpinIntakeCommand(intake);
   private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
-  
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  // THESE ARE NOT THE SAME UPPER ONE FOR DRIVE AND THE BOTTOM ONE IS FOR THE
+  // OPERATOR
+  public @Getter final static Joystick Logitech = new Joystick(RobotMap.OperatorConstants.O_LOGITECH_PORT);
+  public @Getter final static JoystickButton climbButton = new JoystickButton(Logitech, 1);
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
+
   public RobotContainer() {
+    boolean toggle = false;
     // Configure the trigger bindings
     configureBindings();
     westCoastDrive.setDefaultCommand(driveCommand);
+
   }
 
   /**
-   * Use this method to define your trigger->command mappings. 
-   * Triggers can be created via the {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary predicate, or via the named factories in {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight joysticks}.
+   * Use this method to define your trigger->command mappings.
+   * Triggers can be created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary predicate, or via the named factories in
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses
+   * for {@link CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
+   * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
+   * Flight joysticks}.
    */
   private void configureBindings() {
     // Add code here
+    climbButton
+    // Binds a FooCommand to be scheduled when the button is pressed
+    .onTrue(new ClimbCommand(climber))
+    // Binds a BarCommand to be scheduled when that same button is released
+    .onFalse(new RetractClimbCommand(climber));
+//PROBABLY WONT WORK; NEED TO TEST
 
-    // Trigger driveTriggerX = new Trigger(() -> logitech.getRawAxis(0) > 0.01); // Replace 0 with the axis number for the X axis
+    
+
+    // Trigger driveTriggerX = new Trigger(() -> logitech.getRawAxis(0) > 0.01); //
+    // Replace 0 with the axis number for the X axis
     // driveTriggerX.whileTrue(driveCommand);
 
-    // Trigger driveTriggerY = new Trigger(() -> logitech.getRawAxis(1) > 0.01); // Replace 1 with the axis number for the Y axis
+    // Trigger driveTriggerY = new Trigger(() -> logitech.getRawAxis(1) > 0.01); //
+    // Replace 1 with the axis number for the Y axis
     // driveTriggerY.whileTrue(driveCommand);
 
     logitech.getRawAxis(0); // X
@@ -70,7 +104,8 @@ import lombok.Getter;
     // Load the path you want to follow using its name in the GUI
     PathPlannerPath path = PathPlannerPath.fromPathFile("New Path");
 
-    // Create a path following command using AutoBuilder. This will also trigger event markers.
+    // Create a path following command using AutoBuilder. This will also trigger
+    // event markers.
     return AutoBuilder.followPathWithEvents(path);
   }
 }
