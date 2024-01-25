@@ -47,22 +47,28 @@ public class IntakeCommand extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
-  public void executeFeeder() {
+  public void execute() {
     runTest(() -> {
+      double feedSpeed = 0;
+      double rotateSpeed = 0;
+      //input from buttons
+      if(RobotContainer.getXboxController().getAButton())
+      {
+        feedSpeed = 0.5;
+      }
       
-      double feedSpeed = 0.5;
+      //rotate up
+      if(RobotContainer.getXboxController().getLeftBumper())
+      {
+        rotateSpeed = 0.5;
+      }
+      else if(RobotContainer.getXboxController().getLeftTriggerAxis()>=0.5)
+      {
+        rotateSpeed = -0.5;
+      }
 
       // Set motor speeds in the IntakeSubsystem
       intakeSubsystem.setFeederSpeed(feedSpeed);
-    });
-  }
-
-  public void executeRotate() {
-    runTest(() -> {
-
-      double rotateSpeed = 0.5;
-
-      // Set motor speeds in the IntakeSubsystem
       intakeSubsystem.setRotaterSpeed(rotateSpeed);
     });
   }

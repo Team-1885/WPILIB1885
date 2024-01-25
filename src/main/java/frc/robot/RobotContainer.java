@@ -42,7 +42,7 @@ import frc.common.types.input.ELogitech310;
 
   // private @Getter final Intake intake = new Intake();
   // private @Getter final SpinIntakeCommand intakeCommand = new SpinIntakeCommand(intake);
-  private @Getter final XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
+  public @Getter final static XboxController xboxController = new XboxController(RobotMap.DriverConstants.D_XBOX_PORT);
   public @Getter final static Joystick logitech = new Joystick(RobotMap.DriverConstants.D_LOGITECH_PORT);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
