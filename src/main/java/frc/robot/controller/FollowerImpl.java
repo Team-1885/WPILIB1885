@@ -1,4 +1,4 @@
-package us.ilite.robot.controller;
+package frc.robot.controller;
 
 public class FollowerImpl {
 }

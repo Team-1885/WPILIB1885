@@ -14,13 +14,13 @@ public class PWMLauncher extends SubsystemBase {
   PWMSparkMax m_launchWheel;
   PWMSparkMax m_feedWheel;
 
-  /** Creates a new Launcher. */
+  /* Creates a new Launcher. */
   public PWMLauncher() {
     m_launchWheel = new PWMSparkMax(kLauncherID);
     m_feedWheel = new PWMSparkMax(kFeederID);
   }
 
-  /**
+  /*
    * This method is an example of the 'subsystem factory' style of command creation. A method inside
    * the subsytem is created to return an instance of a command. This works for commands that
    * operate on only that subsystem, a similar approach can be done in RobotContainer for commands

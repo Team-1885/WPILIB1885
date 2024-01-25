@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import static frc.robot.hardware.KitBotCONSTANT.LauncherConstants.*;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PWMLauncher;
 
