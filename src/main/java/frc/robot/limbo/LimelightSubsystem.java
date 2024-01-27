@@ -8,16 +8,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
 import lombok.Getter;
 
+import edu.wpi.first.wpilutil.net.PortForwarder;
+
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 /**
  * A demonstration and testing subsystem that extends SubsystemBase.
  */
 
  @SuppressWarnings("PMD.CommentSize") public class LimelightSubsystem extends SubsystemBase {
 
-  /**
-   * Lorem Ipsum. 
-   */
-  private @Getter ADAM adam = new ADAM(null);
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTableEntry tx = table.getEntry("tx");
+  NetworkTableEntry ty = table.getEntry("ty");
+  NetworkTableEntry ta = table.getEntry("ta");
+
+  //private @Getter ADAM adam = new ADAM(null);
 
   /** 
    * Creates a new ExampleSubsystem. 
@@ -28,9 +37,25 @@ import lombok.Getter;
 
   @Override public void periodic() {
     runTest(() -> {
-      // This method will be called once per scheduler run
+      double x = tx.getDouble(0.0);
+      double y = ty.getDouble(0.0);
+      double area = ta.getDouble(0.0);
+
+      SmartDashboard.putNumber("LimelightX", x);
+      SmartDashboard.putNumber("LimelightX", y);
+      SmartDashboard.putNumber("LimelightArea", area);
     });
   }
+
+  @Override
+    public void robotInit() 
+    {
+        // Make sure you only configure port forwarding once in your robot code.
+        // Do not place these function calls in any periodic functions
+        for (int port = 5800; port <= 5807; port++) {
+            PortForwarder.add(port, "limelight.local", port);
+        }
+    }
 
   /**
    * Executes a custom method, running it within a testing environment.
