@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.hardware.REVLibCAN;
 
 
+//using a drivetrain motor because we don't have any others yet
+
 public class PeytonCANLauncher extends SubsystemBase {
   /** Creates a new PeytonCANLauncher. */
   CANSparkMax REV_0xM1;
@@ -20,20 +22,15 @@ public class PeytonCANLauncher extends SubsystemBase {
     REV_0xM1.setSmartCurrentLimit(80); //value found in kitbot constants
   }
 
-  /**
- * @return
- */
-public Command getIntakeCommand() {
+  public Command getIntakeCommand() {
     return this.startEnd(
-      this::extracted,
+      () -> {
+        setLaunchWheel(-1); //value found in kitbot constants
+      },
       // When the command stops, stop the wheels
       () -> {
         stop();
       });
-  }
-
-  private void extracted() {
-    setLaunchWheel(-1);
   }
 
   public void setLaunchWheel(double speed) {
@@ -48,7 +45,6 @@ public Command getIntakeCommand() {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-
   }
 
 
