@@ -3,17 +3,13 @@ package frc.common.types;
 import com.flybotix.hfr.codex.CodexOf;
 
 public enum EIntakeData implements CodexOf<Double> {
-  ARM_STATE,
+  ROTATER_STATE,
 
-  ROLLER_VEL_ft_s,
-  SET_ROLLER_VEL_ft_s,
-  CURRENT_ROLLER_RPM,
-  SET_ROLLER_RPM,
-  ROLLER_PCT,
-  DESIRED_ROLLER_pct,
-  INTAKE_SUPPLY_CURRENT,
-  INTAKE_STATOR_CURRENT,
-  COMPRESSOR_PSI,
-  ROLLER_STATE,
-  PNEUMATIC_STATE;
+  FEEDER_VEL_ft_s,
+  SET_FEEDER_VEL_ft_s,
+  CURRENT_FEEDER_RPM,
+  SET_FEEDER_RPM,
+  FEEDER_PCT,
+  DESIRED_FEEDER_pct,
+  FEEDER_STATE,
 }

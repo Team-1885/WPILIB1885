@@ -191,17 +191,22 @@ public class Enums {
   // =============================================================================
   // Intake Module States
   // =============================================================================
-  public enum ERollerState {
-    NULL,
-    PERCENT_OUTPUT,
-    VELOCITY;
-  }
 
-  public enum EArmState {
-    NULL,
-    EXTEND,
-    RETRACT,
-    DEFAULT;
+  public enum ERotaterState {
+    NULL(0.0),
+    MID_L(45.0),
+    HIGH(90.0),
+    MID_R(135.0);
+
+    final double kAngle;
+
+    ERotaterState(double pAngle) {
+      kAngle = pAngle;
+    }
+
+    public double getAngle() {
+      return kAngle;
+    }
   }
 
   public enum EFeederState {
