@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.ADAM;
 import frc.robot.hardware.vendors.thirdparties.revlib.REVLibCAN;
 import lombok.Getter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Purpose of this class: To create a subsystem with two spinning motors. The top motor spins inverted
 //to the bottom motor. So while the bottom is spinning clockwise, the bottom is anti-clockwise
@@ -38,6 +39,8 @@ public class Climber extends SubsystemBase {
     // get set.
     public Climber() {
         super();
+        SmartDashboard.putNumber("climber1", Motor1.get());
+        SmartDashboard.putNumber("climber2", Motor2.get());
         Stream.of(Motor1, Motor2)
                 .forEach(CANSparkMax::restoreFactoryDefaults);
 
