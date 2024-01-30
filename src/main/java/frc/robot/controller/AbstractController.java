@@ -4,15 +4,12 @@ import com.flybotix.hfr.codex.RobotCodex;
 import edu.wpi.first.wpilibj.Timer;
 import frc.common.lib.util.XorLatch;
 import frc.common.types.EClimberData;
-import frc.common.types.EFeederData;
-import frc.common.types.EIntakeData;
 import frc.robot.Enums;
 import frc.robot.InputMap;
 import frc.robot.Robot;
-import frc.robot.Enums.EArmState;
 import frc.robot.Enums.EDriveState;
+//import frc.robot.Enums.ERotaterData;
 import frc.robot.Enums.EFeederState;
-import frc.robot.Enums.ERollerState;
 import frc.robot.Enums.LEDColorMode;
 import frc.robot.Enums.LEDState;
 import frc.robot.hardware.vendors.firstparties.Clock;
@@ -30,15 +27,6 @@ public abstract class AbstractController {
   protected double mLastTime = 0d;
   protected double dt = 1d;
 
-  protected boolean mIsBallAdded = false;
-  protected boolean mIsBallOut = false;
-  protected int mNumBalls = 0;
-  protected int mBallsShot = 0;
-  protected XorLatch mEntryGate = new XorLatch();
-  protected XorLatch mExitGate = new XorLatch();
-  protected Timer mShotTimer = new Timer();
-  protected boolean mFireWanted = false;
-
   // Was 5000, lowered it to 4500 before match 42.
   // After match 42, we lowered it even further by 1000rpm
   protected double mFeederFireSpeed = 3500d;
@@ -51,15 +39,15 @@ public abstract class AbstractController {
     if (mEnabled) {
       // split this out so we can put additional common elements here
       updateImpl();
-      mExitGate.update(db.feeder.isSet(EFeederData.EXIT_BEAM));
-      mEntryGate.update(db.feeder.isSet(EFeederData.ENTRY_BEAM));
+      //mExitGate.update(db.feeder.isSet(EFeederState.EXIT_BEAM));
+      //mEntryGate.update(db.feeder.isSet(EFeederState.ENTRY_BEAM));
       // Every 10s or so
       mCycleCount++;
     }
     mLastTime = clock.now();
   }
 
-  public void updateBallCount() {
+  /*public void updateBallCount() {
     if (mNumBalls < 0) {
       mNumBalls = 0;
     }
@@ -72,7 +60,7 @@ public abstract class AbstractController {
         setLED(LEDColorMode.PURPLE, Enums.LEDState.SOLID);
       }
     }
-    db.feeder.set(EFeederData.NUM_BALLS, mNumBalls);
+    db.feeder.set(EFeederState.NUM_BALLS, mNumBalls);
   }
 
   protected boolean climberWithinTolerance(double pTolerance) {
@@ -89,7 +77,7 @@ public abstract class AbstractController {
    * Enables / Disables this controller.
    * 
    * @param pEnabled TRUE if enabled
-   */
+   *
   public final void setEnabled(boolean pEnabled) {
     mCycleCount = 0;
     mEnabled = pEnabled;
@@ -109,11 +97,11 @@ public abstract class AbstractController {
       db.intake.set(EIntakeData.DESIRED_ROLLER_pct, 0.0);
       db.intake.set(EIntakeData.ARM_STATE, EArmState.RETRACT);
     }
-  }
+  }*/
 
   protected abstract void updateImpl();
 
-  protected void fireCargo() {
+  /*protected void fireCargo() {
     db.feeder.set(EFeederData.STATE, EFeederState.VELOCITY);
     db.feeder.set(EFeederData.SET_VELOCITY_rpm, mFeederFireSpeed);
     setLED(LEDColorMode.DEFAULT, LEDState.SOLID);
@@ -172,7 +160,7 @@ public abstract class AbstractController {
     db.feeder.set(EFeederData.SET_FEEDER_pct, -1.0);
     mNumBalls = 0;
     db.intake.set(EIntakeData.DESIRED_ROLLER_pct, -1.0);
-  }
+  } 
 
   protected void setLED(Enums.LEDColorMode pColor, Enums.LEDState pState) {
     // pState is in seconds
@@ -267,7 +255,7 @@ public abstract class AbstractController {
       mEntryGate.reset();
       mNumBalls--;
     }
-  }
+  } 
 
   public void reverseFeeder() {
     db.feeder.set(EFeederData.STATE, EFeederState.PERCENT_OUTPUT);
@@ -278,7 +266,7 @@ public abstract class AbstractController {
       mEntryGate.reset();
       mNumBalls--;
     }
-  }
+  } */
 
   /**
    * Provides a way to report on what is used in our codex vs not used. This

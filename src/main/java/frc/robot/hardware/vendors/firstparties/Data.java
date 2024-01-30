@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.common.types.EClimberData;
-import frc.common.types.EFeederData;
-import frc.common.types.EIntakeData;
+import frc.common.types.EFeederState;
+import frc.common.types.ERotaterData;
 import frc.common.types.input.ELogitech310;
 import frc.robot.Enums;
 import frc.robot.InputMap.EDriveData;
@@ -51,8 +51,8 @@ public class Data {
   public final RobotCodex<ERawLimelightData> rawLimelight = new RobotCodex(NULL_CODEX_VALUE, ERawLimelightData.class);
   public final RobotCodex<EClimberData> climber = new RobotCodex(NULL_CODEX_VALUE, EClimberData.class);
   public final RobotCodex<EDriveData> drivetrain = new RobotCodex(NULL_CODEX_VALUE, EDriveData.class);
-  public final RobotCodex<EIntakeData> intake = new RobotCodex(NULL_CODEX_VALUE, EIntakeData.class);
-  public final RobotCodex<EFeederData> feeder = new RobotCodex(NULL_CODEX_VALUE, EFeederData.class);
+  public final RobotCodex<ERotaterData> rotater = new RobotCodex(NULL_CODEX_VALUE, ERotaterData.class);
+  public final RobotCodex<EFeederState> feeder = new RobotCodex(NULL_CODEX_VALUE, EFeederState.class);
   public final RobotCodex<ELimelightData> limelight = new RobotCodex(NULL_CODEX_VALUE, ELimelightData.class);
   public final RobotCodex<ELEDControlData> ledcontrol = new RobotCodex(NULL_CODEX_VALUE, ELEDControlData.class);
   public final RobotCodex[] mAllCodexes = new RobotCodex[] {
@@ -63,7 +63,7 @@ public class Data {
       pdp,
       rawLimelight,
       feeder,
-      intake,
+      rotater,
       climber,
   };
 
@@ -78,7 +78,7 @@ public class Data {
       drivetrain,
       feeder,
       pdp,
-      intake,
+      rotater,
       climber,
   };
 
@@ -108,9 +108,10 @@ public class Data {
     drivetrain.createSimpleBooleanConverter(EDriveData.IS_CURRENT_LIMITING);
     drivetrain.createSimpleEnumConverter(EDriveData.STATE, Enums.EDriveState.class);
     drivetrain.createSimpleEnumConverter(EDriveData.NEUTRAL_MODE, ECommonNeutralMode.class);
+    feeder.createSimpleBooleanConverter(EFeederState.FEEDER_STATE);
 
-    intake.createSimpleEnumConverter(EIntakeData.FEEDER_STATE, Enums.EFeederState.class);
-    intake.createSimpleEnumConverter(EIntakeData.ROTATER_STATE, Enums.ERotaterState.class);
+    
+    rotater.createSimpleEnumConverter(ERotaterData.ACTUAL_POS_degree, Enums.ERotaterState.class);
     
 
     climber.createSimpleEnumConverter(EClimberData.HANGER_STATE, Enums.EClimberMode.class);
@@ -127,10 +128,9 @@ public class Data {
     mConvertedFields.add(EDriveData.IS_CURRENT_LIMITING.name());
     mConvertedFields.add(EDriveData.STATE.name());
     mConvertedFields.add(EDriveData.NEUTRAL_MODE.name());
-    mConvertedFields.add(EIntakeData.ROTATER_STATE.name());
-    mConvertedFields.add(EIntakeData.FEEDER_STATE.name());
-    mConvertedFields.add(EFeederData.ENTRY_BEAM.name());
-    mConvertedFields.add(EFeederData.STATE.name());
+    mConvertedFields.add(ERotaterData.ACTUAL_POS_degree.name());
+    mConvertedFields.add(EFeederState.FEEDER_STATE.name());
+    mConvertedFields.add(EFeederState.ACTUAL_VEL_pct.name());
     mConvertedFields.add(EClimberData.HANGER_STATE.name());
     mConvertedFields.add(EClimberData.SET_COAST.name());
     mConvertedFields.add(EClimberData.IS_DOUBLE_CLAMPED.name());
