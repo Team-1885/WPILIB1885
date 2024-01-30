@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ADAM;
 import frc.robot.RobotContainer;
@@ -18,7 +21,10 @@ public class RetractClimbCommand extends CommandBase {
   //New Climber made
   private @Getter ADAM adam = new ADAM(null);
   private final @Getter Climber climber;
-
+  private ShuffleboardTab tab = Shuffleboard.getTab("===== CLIMBER DRIVE =====");
+  private GenericEntry commandStatusEntry = tab.add("Retract Command Status", "Not Running")
+                                              .withPosition(0, 1)
+                                              .getEntry();
 
 
   public RetractClimbCommand(final Climber climber) {
@@ -31,6 +37,7 @@ public class RetractClimbCommand extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("========== STARTING ClIMBCOMMAND ==========");
+    commandStatusEntry.setString("Running");
     runTest(() -> {
 
     });

@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ADAM;
 import frc.robot.RobotContainer;
@@ -19,6 +22,10 @@ public class ClimbCommand extends CommandBase {
   private @Getter ADAM adam = new ADAM(null);
   private final @Getter Climber climber;
 
+  private ShuffleboardTab tab = Shuffleboard.getTab("===== CLIMBER DRIVE =====");
+  private GenericEntry commandStatusEntry = tab.add("Command Status", "Not Running")
+                                              .withPosition(0, 0)
+                                              .getEntry();
 
 
   public ClimbCommand(final Climber climber) {
@@ -31,12 +38,13 @@ public class ClimbCommand extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("========== STARTING ClIMBCOMMAND ==========");
+    commandStatusEntry.setString("Running");
     runTest(() -> {
 
     });
   }
 
-  // 
+  //
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
