@@ -10,9 +10,14 @@ import lombok.Getter;
 
 public class PeytonCANLaunchCommand extends CommandBase {
 
+  //the equivalent of LaunchNote.java for the KitBot
+  //which is for 2 motors
+  //if we end up using only one, I will switch over to PrepareLaunch.java
+  //which is only for 1 motor to launch the note into the speaker
+
 private final @Getter PeytonCANLauncher peytonCANLauncher;
 
-  /** Creates a new PeytonCANLaunchCommand. */
+  // Creates a new PeytonCANLaunchCommand.
   public PeytonCANLaunchCommand(final PeytonCANLauncher peytonCANLauncher) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.peytonCANLauncher = peytonCANLauncher;
@@ -27,7 +32,9 @@ private final @Getter PeytonCANLauncher peytonCANLauncher;
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    //Do I still need to keep the method if there is nothing in it?
+  }
 
   // Called once the command ends or is interrupted.
   @Override
