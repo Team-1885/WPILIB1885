@@ -32,8 +32,8 @@ import frc.common.types.input.ELogitech310;
 @SuppressWarnings("PMD.CommentSize") public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private @Getter final WestCoastDrive westCoastDrive = new WestCoastDrive();
-  private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
+  //private @Getter final WestCoastDrive westCoastDrive = new WestCoastDrive();
+  //private @Getter final DriveCommand driveCommand = new DriveCommand(westCoastDrive);
   private @Getter final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
   private @Getter final ExampleCommand exampleCommand = new ExampleCommand(exampleSubsystem);
 
@@ -49,7 +49,8 @@ import frc.common.types.input.ELogitech310;
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    westCoastDrive.setDefaultCommand(driveCommand);
+    //westCoastDrive.setDefaultCommand(driveCommand);
+    intakeSubsystem.setDefaultCommand(intakeCommand);
   }
 
   /**

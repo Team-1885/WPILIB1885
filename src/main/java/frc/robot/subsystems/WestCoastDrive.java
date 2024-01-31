@@ -21,7 +21,7 @@ import lombok.Getter;
  */
 @SuppressWarnings("PMD.CommentSize")
 public class WestCoastDrive extends SubsystemBase {
-        private @Getter final ADAM adam = new ADAM(null);
+        /*private @Getter final ADAM adam = new ADAM(null);
 
         // Creates two CANSparkMax motors, inheriting physical constants from the {@link#REVLibCAN} helper class.
         private static CANSparkMax REV_0xM1 = new CANSparkMax(REVLibCAN.L_MASTER_ID, REVLibCAN.MOTOR_TYPE),
@@ -32,7 +32,7 @@ public class WestCoastDrive extends SubsystemBase {
                         REV_0xF2 = new CANSparkMax(REVLibCAN.R_FOLLOWER_ID, REVLibCAN.MOTOR_TYPE);
         /**
          * Lorem Ipsum.
-         */
+         *
         private @Getter RelativeEncoder leftEncoder,
                         rightEncoder;
 
@@ -40,11 +40,11 @@ public class WestCoastDrive extends SubsystemBase {
         private GenericEntry testEntry = tab.add("===== SET MOTOR SPEED =====", 0)
                         .getEntry();
 
-        /** Constructor for the Subsystem */
+        /** Constructor for the Subsystem *
         public WestCoastDrive() {
                 /**
                  * Low-level configurations for the hardware objects
-                 */
+                 *
                 super();
                 Stream.of(REV_0xM1, REV_0xF1, REV_0xM2, REV_0xF2)
                                 .forEach(CANSparkMax::restoreFactoryDefaults);
@@ -86,7 +86,7 @@ public class WestCoastDrive extends SubsystemBase {
          * Executes a custom method, running it within a testing environment.
          *
          * @see #runTest(Runnable)
-         */
+         *
         public void reset() {
                 runTest(() -> {
                         // Resets
@@ -116,7 +116,7 @@ public class WestCoastDrive extends SubsystemBase {
          * Any exceptions thrown during execution are caught and logged.
          *
          * @see #runTest(Runnable)
-         */
+         *
         public void debugSubsystem() {
                 runTest(() -> periodic());
                 runTest(() -> reset());
@@ -127,13 +127,13 @@ public class WestCoastDrive extends SubsystemBase {
          * uncaught exception is passed to the default handler for the current thread.
          *
          * @param code The runnable task to be executed.
-         */
+         *
         public void runTest(final Runnable code) {
                 try {
                         code.run();
                 } catch (Exception e) {
                         adam.uncaughtException(Thread.currentThread(), e);
                 }
-        }
+        }*/
 
 }

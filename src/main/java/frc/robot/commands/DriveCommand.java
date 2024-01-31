@@ -19,15 +19,15 @@ public class DriveCommand extends CommandBase {
 
   /**
    * Lorem Ipsum.
-   */
+   *
   private @Getter ADAM adam = new ADAM(null);
 
   /**
    * Lorem Ipsum.
-   */
+   *
   private final @Getter WestCoastDrive westCoastDrive;
 
-  /** Creates a new ExampleCommand. */
+  /** Creates a new ExampleCommand. *
   public DriveCommand(final WestCoastDrive westCoastDrive) {
     super();
     // Use addRequirements() here to declare subsystem dependencies.
@@ -97,7 +97,7 @@ public class DriveCommand extends CommandBase {
    * @see #initialize()
    * @see #execute()
    * @see #end(boolean)
-   */
+   *
   public void debugCommand() {
     runTest(() -> initialize());
     runTest(() -> execute());
@@ -110,12 +110,12 @@ public class DriveCommand extends CommandBase {
    * exception handler for the current thread.
    *
    * @param code The runnable task to be executed.
-   */
+   *
   public void runTest(final Runnable code) {
     try {
       code.run();
     } catch (Exception e) {
       adam.uncaughtException(Thread.currentThread(), e);
     }
-  }
+  } */
 }
